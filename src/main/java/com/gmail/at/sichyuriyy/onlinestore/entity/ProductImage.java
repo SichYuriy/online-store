@@ -10,6 +10,7 @@ public class ProductImage {
     private Long id;
     private Product product;
     private URL imageUrl;
+    private URL smallVersionUrl;
 
     public Long getId() {
         return id;
@@ -33,5 +34,13 @@ public class ProductImage {
 
     public void setImageUrl(URL imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public URL getSmallVersionUrl() {
+        return smallVersionUrl;
+    }
+
+    public void setSmallVersionUrl(URL smallVersionUrl) {
+        this.smallVersionUrl = smallVersionUrl;
     }
 }
