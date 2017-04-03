@@ -1,6 +1,8 @@
 package com.gmail.at.sichyuriyy.onlinestore.entity;
 
 import java.math.BigDecimal;
+import java.net.URL;
+import java.util.Objects;
 
 /**
  * Created by Yuriy on 3/27/2017.
@@ -15,7 +17,30 @@ public class Product {
     private Integer count;
     private Integer votesCount;
     private Double avgRating;
-    private ProductImage mainImage;
+    private String mainImageUrl;
+    private Boolean enabled;
+
+    public Product() {
+    }
+
+    public Product(Long id) {
+        this.id = id;
+    }
+
+    public Product(Long id, String title, String description, Category category,
+                   BigDecimal price, Integer count, Integer votesCount,
+                   Double avgRating, String mainImageUrl, Boolean enabled) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.category = category;
+        this.price = price;
+        this.count = count;
+        this.votesCount = votesCount;
+        this.avgRating = avgRating;
+        this.mainImageUrl = mainImageUrl;
+        this.enabled = enabled;
+    }
 
     public Long getId() {
         return id;
@@ -81,11 +106,43 @@ public class Product {
         this.avgRating = avgRating;
     }
 
-    public ProductImage getMainImage() {
-        return mainImage;
+    public Boolean getEnabled() {
+        return enabled;
     }
 
-    public void setMainImage(ProductImage mainImage) {
-        this.mainImage = mainImage;
+    public void setEnabled(Boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    public String getMainImageUrl() {
+        return mainImageUrl;
+    }
+
+    public void setMainImageUrl(String mainImageUrl) {
+        this.mainImageUrl = mainImageUrl;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Product product = (Product) o;
+        return Objects.equals(id, product.id) &&
+                Objects.equals(title, product.title) &&
+                Objects.equals(description, product.description) &&
+                Objects.equals(category, product.category) &&
+                Objects.equals(price, product.price) &&
+                Objects.equals(count, product.count) &&
+                Objects.equals(votesCount, product.votesCount) &&
+                Objects.equals(avgRating, product.avgRating) &&
+                Objects.equals(mainImageUrl, product.mainImageUrl) &&
+                Objects.equals(enabled, product.enabled);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, title, description,
+                category, price, count, votesCount,
+                avgRating, mainImageUrl, enabled);
     }
 }

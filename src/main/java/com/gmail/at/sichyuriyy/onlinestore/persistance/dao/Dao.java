@@ -9,8 +9,8 @@ import java.util.List;
 public interface Dao<T, PK extends Serializable> {
 
     PK create(T obj);
-    T findById(PK key);
+    T findById(PK id);
     void update(T obj);
-    void delete(PK key);
+    void delete(PK id);
     List<T> findAll();
 }

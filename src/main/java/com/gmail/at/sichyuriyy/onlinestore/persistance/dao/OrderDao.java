@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Created by Yuriy on 3/28/2017.
  */
-public interface OrderDao {
+public interface OrderDao extends Dao<Order, Long>{
 
     List<Order> findByUser(Long userId);
     List<Order> findPart(int limit, int offset);

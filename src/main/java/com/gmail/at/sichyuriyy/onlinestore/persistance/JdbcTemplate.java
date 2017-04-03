@@ -22,7 +22,7 @@ public class JdbcTemplate {
         this.connectionManager = connectionManager;
     }
 
-    public void query(String query, ResultSetFunction fn, Object... params) {
+    private void query(String query, ResultSetFunction fn, Object... params) {
         Connection conn = connectionManager.getConnection();
 
         if(conn == null)

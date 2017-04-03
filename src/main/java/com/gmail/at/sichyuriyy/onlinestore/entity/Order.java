@@ -3,8 +3,12 @@ package com.gmail.at.sichyuriyy.onlinestore.entity;
 import com.gmail.at.sichyuriyy.onlinestore.util.Pair;
 
 import java.math.BigDecimal;
+import java.sql.Time;
+import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Created by Yuriy on 3/27/2017.
@@ -12,10 +16,23 @@ import java.util.List;
 public class Order {
 
     private Long id;
-    private Date date;
+    private Timestamp date;
     private OrderStatus status;
     private User user;
-    private List<LineItem> lineItems;
+
+    public Order() {
+    }
+
+    public Order(Long id) {
+        this.id = id;
+    }
+
+    public Order(Long id, Timestamp date, OrderStatus status, User user) {
+        this.id = id;
+        this.date = date;
+        this.status = status;
+        this.user = user;
+    }
 
     public Long getId() {
         return id;
@@ -25,11 +42,11 @@ public class Order {
         this.id = id;
     }
 
-    public Date getDate() {
+    public Timestamp getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(Timestamp date) {
         this.date = date;
     }
 
@@ -49,11 +66,19 @@ public class Order {
         this.user = user;
     }
 
-    public List<LineItem> getLineItems() {
-        return lineItems;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Order order = (Order) o;
+        return Objects.equals(id, order.id) &&
+                Objects.equals(date, order.date) &&
+                status == order.status &&
+                Objects.equals(user, order.user);
     }
 
-    public void setLineItems(List<LineItem> lineItems) {
-        this.lineItems = lineItems;
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, date, status, user);
     }
 }

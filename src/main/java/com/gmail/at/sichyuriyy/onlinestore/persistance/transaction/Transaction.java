@@ -1,4 +1,4 @@
-package com.gmail.at.sichyuriyy.onlinestore.persistance.Transaction;
+package com.gmail.at.sichyuriyy.onlinestore.persistance.transaction;
 
 import com.gmail.at.sichyuriyy.onlinestore.persistance.ConnectionManager;
 import com.gmail.at.sichyuriyy.onlinestore.persistance.exception.SQLRuntimeException;
@@ -16,8 +16,7 @@ public interface Transaction {
 
     void process();
 
-    static void tx(Transaction transaction, int transactionIsolationLevel) {
-        ConnectionManager cm = ConnectionManager.getInstance();
+    static void tx(ConnectionManager cm, Transaction transaction, int transactionIsolationLevel) {
         Connection conn = cm.getConnection();
 
         boolean autoCommit;
@@ -39,8 +38,8 @@ public interface Transaction {
             }
 
             throw new SQLRuntimeException(e);
-        } catch (Exception e) {
-            LogManager.getLogger().error("Transaction failed", e);
+        } catch (RuntimeException e) {
+            LogManager.getLogger().error("transaction failed", e);
             throw e;
         } finally {
             try {
@@ -52,6 +51,6 @@ public interface Transaction {
     }
 
     static void tx(ConnectionManager cm, Transaction transaction) {
-        tx(transaction, Connection.TRANSACTION_READ_COMMITTED);
+        tx(cm, transaction, Connection.TRANSACTION_READ_COMMITTED);
     }
 }

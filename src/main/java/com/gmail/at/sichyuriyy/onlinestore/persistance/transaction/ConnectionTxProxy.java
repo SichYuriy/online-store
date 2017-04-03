@@ -1,4 +1,4 @@
-package com.gmail.at.sichyuriyy.onlinestore.persistance.Transaction;
+package com.gmail.at.sichyuriyy.onlinestore.persistance.transaction;
 
 import java.sql.*;
 import java.util.Map;
