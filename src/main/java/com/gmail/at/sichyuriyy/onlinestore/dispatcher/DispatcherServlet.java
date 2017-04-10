@@ -84,18 +84,23 @@ public class DispatcherServlet extends HttpServlet {
 
     private void tryRedirect(HttpServletRequest req, HttpServletResponse resp, RequestService requestService) {
         try {
-            req.getRequestDispatcher(requestService.getRedirectPath()).forward(req, resp);
-        } catch (ServletException |IOException e) {
+            //req.getRequestDispatcher(requestService.getRedirectPath()).forward(req, resp);
+            resp.sendRedirect(requestService.getRedirectPath());
+        } catch (IOException e) {
             LOGGER.warn("An exception happened at redirecting");
         }
     }
 
     private void tryRender(HttpServletRequest req, HttpServletResponse resp, RequestService requestService) {
+        LOGGER.info("tryRender:" + req.getPathInfo());
         try {
             requestService.setPageAttribute("loggedIn", req.getUserPrincipal() != null);
             req.getRequestDispatcher(requestService.getRenderPage()).forward(req, resp);
         } catch (ServletException | IOException e) {
             LOGGER.warn("An exception happened at page rendering phase", e);
+        } catch (NullPointerException e) {
+            LOGGER.error("NULL POINTER", e);
+            throw e;
         }
     }
 }
