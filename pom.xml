@@ -77,9 +77,8 @@
         <artifactId>tomcat7-maven-plugin</artifactId>
         <version>2.2</version>
         <configuration>
-
-            <path>/onlineStore</path>
-            <port>8889</port>
+            <path>/</path>
+            <port>8890</port>
         </configuration>
       </plugin>
     </plugins>
