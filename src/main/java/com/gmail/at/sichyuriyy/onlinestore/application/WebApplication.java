@@ -1,8 +1,6 @@
 package com.gmail.at.sichyuriyy.onlinestore.application;
 
-import com.gmail.at.sichyuriyy.onlinestore.controller.CategoriesController;
-import com.gmail.at.sichyuriyy.onlinestore.controller.HomeController;
-import com.gmail.at.sichyuriyy.onlinestore.controller.RedirectController;
+import com.gmail.at.sichyuriyy.onlinestore.controller.*;
 import com.gmail.at.sichyuriyy.onlinestore.dispatcher.DispatcherServlet;
 import com.gmail.at.sichyuriyy.onlinestore.dispatcher.DispatcherServletBuilder;
 import com.gmail.at.sichyuriyy.onlinestore.dispatcher.HttpMethod;
@@ -63,6 +61,8 @@ public class WebApplication {
         return builder.addMapping("/", new RedirectController("/index"))
                 .addMapping("/index", new HomeController())
                 .addMapping("/categories", new CategoriesController())
+                .addMapping("/login", new LoginController())
+                .addMapping("/logout", new LogoutController())
                 .buildAndRegister("Command Dispatcher Servlet", "/app/*", servletContext);
     }
 

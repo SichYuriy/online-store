@@ -5,7 +5,7 @@
 <%@ page isELIgnored="false" %>
 
 <fmt:setBundle basename="lang" var="rb" />
-
+<script src="/resources/js/components/header.js"></script>
 <div class="row">
     <div class="col-md-3 col-md-offset-1">
         <h3>Online-store</h3>
@@ -21,9 +21,10 @@
             </a>
         </c:if>
         <c:if test="${loggedIn}">
-            <a class="btn btn-default" href="/logout" role="button">
+            <a class="btn btn-default" onclick="logout()" role="button">
                 <fmt:message key="logout" bundle="${rb}"/>
             </a>
         </c:if>
     </div>
 </div>
+

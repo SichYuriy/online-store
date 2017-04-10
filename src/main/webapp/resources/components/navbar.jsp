@@ -14,11 +14,11 @@
         <a class="btn btn-default" href="/cart" role="button">
             <fmt:message key="cart" bundle="${rb}"/>
         </a>
-        <c:if test="loggedIn">
+        <u:if-user role="CUSTOMER">
             <a class="btn btn-info" href="/orders" role="button">
                 <fmt:message key="myOrders" bundle="${rb}"/>
             </a>
-        </c:if>
+        </u:if-user>
         <u:if-user role="ADMINISTRATOR">
             <a class="btn btn-warning" href="/admin/orders" role="button">
                 <fmt:message key="adminOrders" bundle="${rb}"/>

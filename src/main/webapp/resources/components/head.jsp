@@ -2,6 +2,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page isELIgnored="false" %>
 
+<link rel="icon" href="data:;base64,iVBORw0KGgo=">
 
 <link rel="stylesheet" href="resources/libs/bootstrap/css/bootstrap.css"/>
 <script src="resources/libs/jquery/jquery-3.2.0.js"></script>

@@ -8,11 +8,9 @@
 <html>
 <head>
     <title>Online-Store</title>
-    <c:import url="/resources/components/head.html"/>
+    <c:import url="/resources/components/head.jsp"/>
 </head>
 <body>
-
-<c:import url="/resources/components/navbar.html"/>
 
 <div class="container-fluid">
 
