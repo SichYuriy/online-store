@@ -1,8 +1,12 @@
 package com.gmail.at.sichyuriyy.onlinestore.persistance;
 
+import com.gmail.at.sichyuriyy.onlinestore.persistance.transaction.DataSourceTxProxy;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import javax.sql.DataSource;
 import javax.xml.crypto.Data;
 import java.sql.Connection;
@@ -34,6 +38,28 @@ public class ConnectionManager {
     public static ConnectionManager fromDataSource(DataSource dataSource) {
         ConnectionManager cm = new ConnectionManager(dataSource);
         return cm;
+    }
+
+    public static ConnectionManager fromJndi(String name) {
+        try {
+            Context initContext = new InitialContext();
+            Context envContext  = (Context)initContext.lookup("java:/comp/env");
+            DataSource ds = (DataSource)envContext.lookup(name);
+            DataSource txDs = new DataSourceTxProxy(ds);
+
+            ConnectionManager connManager = new ConnectionManager(txDs);
+            return connManager;
+        } catch (NamingException e) {
+            LOGGER.error("Cannot create InitialContext", e);
+            return null;
+        }
+    }
+
+    public void clean() {
+        if (dataSource instanceof DataSourceTxProxy) {
+            DataSourceTxProxy txDs = (DataSourceTxProxy) dataSource;
+            txDs.clean();
+        }
     }
 
 
