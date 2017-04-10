@@ -22,6 +22,8 @@ public interface UserDao extends Dao<User, Long> {
 
     User findByName(String username);
 
+    User findByLoginPassword(String login, String password);
+
     List<User> findPart(int limit, int offset);
 
     List<User> findByBlackList(Boolean blackList, int limit, int offset);

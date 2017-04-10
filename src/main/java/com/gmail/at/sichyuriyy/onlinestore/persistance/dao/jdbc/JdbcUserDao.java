@@ -37,6 +37,9 @@ public class JdbcUserDao implements UserDao {
 
     private static final String SELECT_USER_BY_LOGIN = "SELECT * FROM `user` WHERE `login`=?";
 
+    private static final String SELECT_USER_BY_LOGIN_PASSWORD  = "SELECT * FROM `user` WHERE `login`=? " +
+            "AND `password`=?";
+
     private static final String SELECT_USER_PART = "SELECT * FROM `user` ORDER BY `id` ASC LIMIT ? OFFSET ? ";
 
     private static final String SELECT_USER_PART_BY_BLACK_LIST = "SELECT * FROM `user` WHERE `black_list`=? " +
@@ -62,8 +65,15 @@ public class JdbcUserDao implements UserDao {
 
     @Override
     public User findById(Long id) {
-        return jdbcTemplate.queryObject(SELECT_USER_BY_ID,
-                new UserMapper(), id);
+        final User[] user = new User[1];
+        Transaction.tx(cm, () -> {
+            user[0] = jdbcTemplate.queryObject(SELECT_USER_BY_ID,
+                    new UserMapper(), id);
+            if (user[0] != null)
+                user[0].setRoles(findRoles(id));
+        });
+
+        return user[0];
     }
 
     @Override
@@ -78,8 +88,14 @@ public class JdbcUserDao implements UserDao {
 
     @Override
     public List<User> findAll() {
-        return jdbcTemplate.queryObjects(SELECT_ALL_USERS,
-                new UserMapper());
+        final Object[] users = new Object[1];
+        Transaction.tx(cm, () -> {
+            List<User> userList = jdbcTemplate.queryObjects(SELECT_ALL_USERS,
+                    new UserMapper());
+            userList.forEach((u) -> u.setRoles(findRoles(u.getId())));
+            users[0] = userList;
+        });
+        return (List<User>) users[0];
     }
 
     @Override
@@ -118,19 +134,51 @@ public class JdbcUserDao implements UserDao {
 
     @Override
     public User findByName(String username) {
-        return jdbcTemplate.queryObject(SELECT_USER_BY_LOGIN,
-                new UserMapper(), username);
+        User[] user = new User[1];
+        Transaction.tx(cm, () -> {
+            user[0] = jdbcTemplate.queryObject(SELECT_USER_BY_LOGIN,
+                    new UserMapper(), username);
+            if (user[0] != null) {
+                user[0].setRoles(findRoles(user[0].getId()));
+            }
+        });
+        return user[0];
+    }
+
+    @Override
+    public User findByLoginPassword(String login, String password) {
+        User[] user = new User[1];
+        Transaction.tx(cm, () -> {
+            user[0] = jdbcTemplate.queryObject(SELECT_USER_BY_LOGIN_PASSWORD,
+                    new UserMapper(), login, password);
+            if (user[0] != null) {
+                user[0].setRoles(findRoles(user[0].getId()));
+            }
+        });
+        return user[0];
     }
 
     @Override
     public List<User> findPart(int limit, int offset) {
-        return jdbcTemplate.queryObjects(SELECT_USER_PART,
-                new UserMapper(), limit, offset);
+        final Object[] users = new Object[1];
+        Transaction.tx(cm, () -> {
+            List<User> userList = jdbcTemplate.queryObjects(SELECT_USER_PART,
+                    new UserMapper(), limit, offset);
+            userList.forEach((u) -> u.setRoles(findRoles(u.getId())));
+            users[0] = userList;
+        });
+        return (List<User>) users[0];
     }
 
     @Override
     public List<User> findByBlackList(Boolean blackList, int limit, int offset) {
-        return jdbcTemplate.queryObjects(SELECT_USER_PART_BY_BLACK_LIST,
-                new UserMapper(), blackList, limit, offset);
+        final Object[] users = new Object[1];
+        Transaction.tx(cm, () -> {
+            List<User> userList = jdbcTemplate.queryObjects(SELECT_USER_PART_BY_BLACK_LIST,
+                    new UserMapper(), blackList, limit, offset);
+            userList.forEach((u) -> u.setRoles(findRoles(u.getId())));
+            users[0] = userList;
+        });
+        return (List<User>) users[0];
     }
 }

@@ -8,7 +8,6 @@ import com.gmail.at.sichyuriyy.onlinestore.persistance.TestData;
 import com.gmail.at.sichyuriyy.onlinestore.persistance.dao.jdbc.JdbcUserDao;
 import com.gmail.at.sichyuriyy.onlinestore.persistance.util.ScriptRunner;
 import com.gmail.at.sichyuriyy.onlinestore.util.ResourcesUtil;
-import netscape.security.UserTarget;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
