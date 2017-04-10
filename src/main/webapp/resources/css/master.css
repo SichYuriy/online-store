@@ -1,0 +1,20 @@
+* {
+    border-radius: 0 !important;
+}
+
+body {
+	background: #eef1f8;
+	color: #003580;
+}
+
+hr {
+    border-top: 2px solid #003580;
+}
+
+.floating-plane {
+    padding-top: 25px;
+    padding-bottom: 25px;
+
+    background: white;
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,.33);
+}
