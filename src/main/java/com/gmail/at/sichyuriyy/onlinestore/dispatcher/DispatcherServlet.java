@@ -26,6 +26,8 @@ public class DispatcherServlet extends HttpServlet {
 
     public static final String FLASH_KEY = "__flash";
 
+    public static final String DESTINATION_KEY = "__destination";
+
     private Map<String, Controller> urlControllerMap = new HashMap<>();
 
     @Override
@@ -52,14 +54,14 @@ public class DispatcherServlet extends HttpServlet {
         Controller controller = getController(req);
         RequestService requestService = new RequestService(req, resp);
         if (controller == null) {
-            resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
+            sendError(resp, HttpServletResponse.SC_NOT_FOUND);
         } else {
             controller.execute(requestService);
         }
 
         if (requestService.isRedirect()) {
             tryRedirect(req, resp, requestService);
-        } else {
+        } else if (requestService.isRender()) {
             tryRender(req, resp, requestService);
             requestService.clearFlash();
         }
@@ -101,6 +103,15 @@ public class DispatcherServlet extends HttpServlet {
         } catch (NullPointerException e) {
             LOGGER.error("NULL POINTER", e);
             throw e;
+            //TODO: delete NullPointerException catcher
+        }
+    }
+
+    private void sendError(HttpServletResponse resp, int status) {
+        try {
+            resp.sendError(status);
+        } catch (IOException e) {
+            LOGGER.error("Cannot send error", e);
         }
     }
 }

@@ -63,6 +63,10 @@ public class RequestService {
        return redirectPath != null;
     }
 
+    public boolean isRender() {
+        return renderPage != null;
+    }
+
     public String getRenderPage() {
         return renderPage;
     }
