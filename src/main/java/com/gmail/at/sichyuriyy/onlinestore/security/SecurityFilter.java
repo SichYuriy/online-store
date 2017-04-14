@@ -1,8 +1,12 @@
 package com.gmail.at.sichyuriyy.onlinestore.security;
 
+import com.gmail.at.sichyuriyy.onlinestore.dispatcher.DispatcherServlet;
 import com.gmail.at.sichyuriyy.onlinestore.dispatcher.HttpMethod;
 import com.gmail.at.sichyuriyy.onlinestore.entity.Role;
 import com.gmail.at.sichyuriyy.onlinestore.entity.User;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
@@ -13,12 +17,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+
 /**
  * Created by Yuriy on 4/6/2017.
  */
 @WebFilter(urlPatterns = "/*")
 public class SecurityFilter implements Filter {
 
+    private static final Logger LOGGER = LogManager.getLogger(SecurityFilter.class);
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -36,11 +42,9 @@ public class SecurityFilter implements Filter {
         List<Role> roles = Objects.isNull(currentUser) ?
                 new ArrayList<>() : currentUser.getRoles();
 
-        if(!checkPermissions(servletRequest, servletResponse, roles)) {
-            return;
+        if(checkPermissions(servletRequest, servletResponse, roles)) {
+            filterChain.doFilter(httpRequest, servletResponse);
         }
-
-        filterChain.doFilter(httpRequest, servletResponse);
     }
 
     @Override
@@ -56,19 +60,18 @@ public class SecurityFilter implements Filter {
     private boolean checkPermissions(ServletRequest request, ServletResponse response, List<Role> roles)
             throws ServletException, IOException {
         String extraPath = ((HttpServletRequest) request).getRequestURI();
-
+        LOGGER.info("checkingConstraints for path: " + extraPath);
         HttpMethod method = HttpMethod.valueOf(((HttpServletRequest) request).getMethod());
 
         if(!SecurityContext.INSTANCE.allowed(extraPath, method, roles)) {
             if (!roles.isEmpty()) {
                 ((HttpServletResponse) response).
                         sendError(HttpServletResponse.SC_FORBIDDEN);
-                throw new AccessDeniedException();
+                return false;
             }
-            ((HttpServletRequest) request).getSession().setAttribute("forbidden_page", extraPath);
+            ((HttpServletRequest) request).getSession().setAttribute(DispatcherServlet.DESTINATION_KEY, extraPath);
             request.getRequestDispatcher(SecurityContext.INSTANCE.getLoginPage())
                     .forward(request, response);
-
             return false;
         }
 

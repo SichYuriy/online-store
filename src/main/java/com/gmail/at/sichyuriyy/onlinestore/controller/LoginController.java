@@ -1,6 +1,7 @@
 package com.gmail.at.sichyuriyy.onlinestore.controller;
 
 import com.gmail.at.sichyuriyy.onlinestore.dispatcher.Controller;
+import com.gmail.at.sichyuriyy.onlinestore.dispatcher.DispatcherServlet;
 import com.gmail.at.sichyuriyy.onlinestore.dispatcher.RequestService;
 import com.gmail.at.sichyuriyy.onlinestore.service.AuthService;
 import com.gmail.at.sichyuriyy.onlinestore.util.ServiceLocator;
@@ -33,7 +34,8 @@ public class LoginController extends Controller {
         LOGGER.info("login request");
         String username = reqService.getString("username");
         String password = reqService.getString("password");
-        String destination = (String) reqService.getFlashParameter("forbidden_page");
+        String destination = (String) reqService.getRequest().getSession().getAttribute(DispatcherServlet.DESTINATION_KEY);
+
 
         if (authService.login(reqService.getRequest(), username, password)) {
             LOGGER.info("user: " + username + " login success");

@@ -4,9 +4,9 @@
 
 <link rel="icon" href="data:;base64,iVBORw0KGgo=">
 
-<link rel="stylesheet" href="resources/libs/bootstrap/css/bootstrap.css"/>
-<script src="resources/libs/jquery/jquery-3.2.0.js"></script>
-<script src="resources/libs/bootstrap/js/bootstrap.js"></script>
+<link rel="stylesheet" href="/resources/libs/bootstrap/css/bootstrap.css"/>
+<script src="/resources/libs/jquery/jquery-3.2.0.js"></script>
+<script src="/resources/libs/bootstrap/js/bootstrap.js"></script>
 
 <link rel="stylesheet" href="/resources/css/master.css"/>
 

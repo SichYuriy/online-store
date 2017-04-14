@@ -60,9 +60,11 @@ public class WebApplication {
 
         return builder.addMapping("/", new RedirectController("/index"))
                 .addMapping("/index", new HomeController())
-                .addMapping("/categories", new CategoriesController())
                 .addMapping("/login", new LoginController())
                 .addMapping("/logout", new LogoutController())
+                .withSecurity("/admin/categories", new CategoriesController())
+                    .httpMethods(HttpMethod.all()).roles(Role.adminRoles())
+                    .endConstraints()
                 .buildAndRegister("Command Dispatcher Servlet", "/app/*", servletContext);
     }
 

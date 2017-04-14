@@ -15,7 +15,7 @@ import java.util.List;
 public enum SecurityContext {
     INSTANCE;
 
-    private static final String LOGIN_PAGE = "";//TODO: change
+    private static final String LOGIN_PAGE = "/pages/login.jsp";
 
     private UserDao userDao = ServiceLocator.INSTANCE.get(UserDao.class);
 
