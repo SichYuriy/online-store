@@ -2,6 +2,7 @@ package com.gmail.at.sichyuriyy.onlinestore.persistance.transaction;
 
 import com.gmail.at.sichyuriyy.onlinestore.persistance.ConnectionManager;
 import com.gmail.at.sichyuriyy.onlinestore.persistance.exception.SQLRuntimeException;
+import com.gmail.at.sichyuriyy.onlinestore.persistance.exception.TransactionFailedException;
 import org.apache.logging.log4j.LogManager;
 
 import java.sql.Connection;
@@ -18,6 +19,9 @@ public interface Transaction {
 
     static void tx(ConnectionManager cm, Transaction transaction, int transactionIsolationLevel) {
         Connection conn = cm.getConnection();
+        if (conn == null) {
+            throw new TransactionFailedException();//TODO:
+        }
 
         boolean autoCommit;
         try {

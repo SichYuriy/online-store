@@ -27,12 +27,16 @@ public class ConnectionManager {
     }
 
     public Connection getConnection() {
+        Connection connection = null;
         try {
-            return dataSource.getConnection();
+            connection = dataSource.getConnection();
         } catch (SQLException e) {
             LOGGER.error("Cannot get connection", e);
         }
-        return null;
+        if (connection == null) {
+            LOGGER.error("Cannot get connection");
+        }
+        return connection;
     }
 
     public static ConnectionManager fromDataSource(DataSource dataSource) {
