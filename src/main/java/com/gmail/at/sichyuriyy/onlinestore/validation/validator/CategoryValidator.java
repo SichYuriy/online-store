@@ -9,6 +9,8 @@ import com.gmail.at.sichyuriyy.onlinestore.validation.EntityValidator;
 public class CategoryValidator implements EntityValidator<Category> {
     @Override
     public boolean getValidationStatus(Category entity) {
-        return entity.getTitle() != null && entity.getTitle().trim().length() > 3;
+        return entity.getTitle() != null
+                && entity.getTitle().length() > 3
+                && entity.getTitle().length() < 26;
     }
 }

@@ -24,6 +24,7 @@ public class RequestService {
      * If not null than the dispatcher server will redirect the request to this path
      */
     private String redirectPath = null;
+    private String ajaxRedirectPath = null;
 
     public RequestService(HttpServletRequest request, HttpServletResponse response) {
         this.request = request;
@@ -61,6 +62,10 @@ public class RequestService {
 
     public boolean isRedirect() {
        return redirectPath != null;
+    }
+
+    public boolean isAjaxRedirect() {
+        return ajaxRedirectPath != null;
     }
 
     public boolean isRender() {
@@ -133,5 +138,13 @@ public class RequestService {
 
     public HttpServletRequest getRequest() {
         return request;
+    }
+
+    public void setAjaxRedirectPath(String path) {
+        this.ajaxRedirectPath = path;
+    }
+
+    public String getAjaxRedirectPath() {
+        return ajaxRedirectPath;
     }
 }

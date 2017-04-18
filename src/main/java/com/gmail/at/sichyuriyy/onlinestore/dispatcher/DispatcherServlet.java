@@ -64,6 +64,8 @@ public class DispatcherServlet extends HttpServlet {
         } else if (requestService.isRender()) {
             tryRender(req, resp, requestService);
             requestService.clearFlash();
+        } else if (requestService.isAjaxRedirect()) {
+            tryRedirectAjax(req, resp, requestService);
         }
 
         ConnectionManager cm = ServiceLocator.INSTANCE.get(ConnectionManager.class);
@@ -112,6 +114,15 @@ public class DispatcherServlet extends HttpServlet {
             resp.sendError(status);
         } catch (IOException e) {
             LOGGER.error("Cannot send error", e);
+        }
+    }
+
+    private void tryRedirectAjax(HttpServletRequest req, HttpServletResponse resp, RequestService requestService) {
+        try {
+            resp.setContentType("application/json");
+            resp.getWriter().write("{\"redirect\":\"" + requestService.getAjaxRedirectPath() + "\"}");
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }

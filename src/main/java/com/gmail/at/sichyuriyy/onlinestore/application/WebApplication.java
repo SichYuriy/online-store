@@ -65,6 +65,10 @@ public class WebApplication {
                 .withSecurity("/admin/categories", new CategoriesController())
                     .httpMethods(HttpMethod.all()).roles(Role.adminRoles())
                     .endConstraints()
+                .withSecurity("/admin/newCategory", new AdminNewCategoryController())
+                    .httpMethods(HttpMethod.all())
+                    .roles(Role.adminRoles())
+                    .endConstraints()
                 .buildAndRegister("Command Dispatcher Servlet", "/app/*", servletContext);
     }
 

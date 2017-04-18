@@ -1,6 +1,10 @@
 package com.gmail.at.sichyuriyy.onlinestore.service;
 
 import com.gmail.at.sichyuriyy.onlinestore.persistance.dao.Dao;
+import com.gmail.at.sichyuriyy.onlinestore.persistance.exception.SQLRuntimeException;
+import com.gmail.at.sichyuriyy.onlinestore.persistance.exception.TransactionFailedException;
+import com.gmail.at.sichyuriyy.onlinestore.persistance.transaction.Transaction;
+import org.apache.logging.log4j.LogManager;
 
 import java.io.Serializable;
 import java.util.List;
@@ -30,5 +34,16 @@ public abstract class AbstractCrudService<T, PK extends Serializable> implements
     @Override
     public List<T> findAll() {
         return getBackingDao().findAll();
+    }
+
+    @Override
+    public boolean delete(PK id) {
+        try {
+            LogManager.getLogger().info("try delete " + id);
+            getBackingDao().delete(id);
+        } catch(TransactionFailedException | SQLRuntimeException e) {
+            return false;
+        }
+        return true;
     }
 }

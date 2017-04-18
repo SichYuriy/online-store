@@ -4,6 +4,7 @@ import com.gmail.at.sichyuriyy.onlinestore.entity.Role;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.PriorityQueue;
 import java.util.Scanner;
 
 /**
@@ -11,5 +12,7 @@ import java.util.Scanner;
  */
 public class Main {
     public static void main(String[] args) throws MalformedURLException {
+        PriorityQueue a;
+
     }
 }

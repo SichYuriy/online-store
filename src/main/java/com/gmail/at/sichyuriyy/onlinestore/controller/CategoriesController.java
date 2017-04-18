@@ -3,11 +3,14 @@ package com.gmail.at.sichyuriyy.onlinestore.controller;
 import com.gmail.at.sichyuriyy.onlinestore.dispatcher.Controller;
 import com.gmail.at.sichyuriyy.onlinestore.dispatcher.RequestService;
 import com.gmail.at.sichyuriyy.onlinestore.entity.Category;
+import com.gmail.at.sichyuriyy.onlinestore.persistance.exception.TransactionFailedException;
 import com.gmail.at.sichyuriyy.onlinestore.service.CategoryService;
 import com.gmail.at.sichyuriyy.onlinestore.util.ServiceLocator;
 import com.gmail.at.sichyuriyy.onlinestore.validation.mapper.CategoryRequestMapper;
 import com.gmail.at.sichyuriyy.onlinestore.validation.validator.CategoryValidator;
+import com.sun.media.jfxmedia.logging.Logger;
 import org.apache.logging.log4j.LogManager;
+import sun.rmi.runtime.Log;
 
 import java.util.List;
 
@@ -29,11 +32,25 @@ public class CategoriesController extends Controller {
     public void doPost(RequestService reqService) {
         Category category = new CategoryRequestMapper().map(reqService);
         if (!new CategoryValidator().getValidationStatus(category)) {
-            reqService.putFlashParameter("title", category.getTitle());
-            reqService.setRedirectPath("/admin/new_category.jsp?failed=true");
+            reqService.putFlashParameter("category", category);
+            reqService.setRedirectPath("/admin/newCategory.jsp?failed=true");
         } else {
             categoryService.create(category);
             reqService.setRedirectPath("/admin/categories");
+        }
+    }
+
+    @Override
+    public void doDelete(RequestService reqService) {
+        Long id = reqService.getLong("id");
+        if (id == null)
+            LogManager.getLogger().info("null id");
+        if (categoryService.delete(reqService.getLong("id"))) {
+            reqService.setAjaxRedirectPath("/admin/categories");
+            LogManager.getLogger().info("deleted");
+        } else {
+            reqService.setAjaxRedirectPath("/admin/categories?delete_failed=true");
+            LogManager.getLogger().info("delete_fail");
         }
     }
 }

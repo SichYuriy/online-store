@@ -12,5 +12,6 @@ public interface CrudService<T, PK extends Serializable> {
     T findById(PK id);
     void update(T obj);
     List<T> findAll();
+    boolean delete(PK id);
 
 }

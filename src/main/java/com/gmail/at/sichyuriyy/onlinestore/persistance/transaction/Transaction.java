@@ -41,10 +41,10 @@ public interface Transaction {
                 LogManager.getLogger().error("Cannot rollback transaction", e1);
             }
 
-            throw new SQLRuntimeException(e);
+            throw new TransactionFailedException(e);
         } catch (RuntimeException e) {
             LogManager.getLogger().error("transaction failed", e);
-            throw e;
+            throw new TransactionFailedException(e);
         } finally {
             try {
                 conn.close();
