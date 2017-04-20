@@ -12,6 +12,7 @@ public class CategoryRequestMapper implements RequestMapper<Category> {
     @Override
     public Category map(RequestService requestService) {
         Category category = new Category();
+        category.setId(requestService.getLong("id"));
         category.setTitle(requestService.getString("title"));
         return category;
     }

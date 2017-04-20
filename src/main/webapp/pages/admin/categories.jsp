@@ -10,20 +10,7 @@
     <title>Online-Store</title>
     <c:import url="/resources/components/head.jsp"/>
 </head>
-<script>
-    function delete_ajax(id){
-        alert(id);
-        $.ajax({
-            url : '/admin/categories?id=' + id,
-            type : 'DELETE',
-            success : function(data) {
-                if (data.redirect) {
-                    location.href = data.redirect;
-                }
-            }
-        });
-    };
-</script>
+<script src="/resources/js/categories.js"></script>
 <body>
 
 <div class="container-fluid">

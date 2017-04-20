@@ -1,6 +1,7 @@
 package com.gmail.at.sichyuriyy.onlinestore.dispatcher;
 
 
+import com.gmail.at.sichyuriyy.onlinestore.dispatcher.util.UrlUtil;
 import com.gmail.at.sichyuriyy.onlinestore.persistance.ConnectionManager;
 import com.gmail.at.sichyuriyy.onlinestore.util.ServiceLocator;
 import org.apache.logging.log4j.LogManager;
@@ -27,6 +28,8 @@ public class DispatcherServlet extends HttpServlet {
     public static final String FLASH_KEY = "__flash";
 
     public static final String DESTINATION_KEY = "__destination";
+
+    public static final String METHOD_PARAM = "__method";
 
     private Map<String, Controller> urlControllerMap = new HashMap<>();
 
@@ -80,10 +83,8 @@ public class DispatcherServlet extends HttpServlet {
 
     private Controller getController(HttpServletRequest req) {
         String path = req.getPathInfo();
-        int pageSuffixIndex = path.lastIndexOf(PAGE_SUFFIX);
-        int endIndex = pageSuffixIndex  == -1 ? path.length() : pageSuffixIndex;
-        String controllerUrl = path.substring(0, endIndex);
-        return urlControllerMap.get(controllerUrl);
+
+        return urlControllerMap.get(UrlUtil.getControllerUrl(path));
     }
 
     private void tryRedirect(HttpServletRequest req, HttpServletResponse resp, RequestService requestService) {

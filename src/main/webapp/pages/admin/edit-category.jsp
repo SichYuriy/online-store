@@ -1,3 +1,10 @@
+<%--
+  Created by IntelliJ IDEA.
+  User: Yuriy
+  Date: 4/20/2017
+  Time: 10:32 PM
+  To change this template use File | Settings | File Templates.
+--%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -28,14 +35,16 @@
             <form name="category" method="post" action="/admin/categories" class="col-md-8">
                 <fieldset>
                     <legend>
-                        <fmt:message key="category.create" bundle="${rb}"/>
+                        <fmt:message key="category.update" bundle="${rb}"/>
                     </legend>
+                    <input type="hidden" name="__method" value="PUT"/>
+                    <input type="hidden" name="id" value="${category.id}"/>
                     <%@include file="/resources/components/categories-fieldset.jsp" %>
                 </fieldset>
 
-                <fmt:message key="create" var="create" bundle="${rb}"/>
+                <fmt:message key="update" var="update" bundle="${rb}"/>
                 <br>
-                <input type="submit" class="btn pull-right" value="${create}"/>
+                <input type="submit" class="btn pull-right" value="${update}"/>
             </form>
         </div>
     </div>

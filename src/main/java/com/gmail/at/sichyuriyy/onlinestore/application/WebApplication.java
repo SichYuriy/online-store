@@ -63,12 +63,11 @@ public class WebApplication {
                 .addMapping("/login", new LoginController())
                 .addMapping("/logout", new LogoutController())
                 .withSecurity("/admin/categories", new CategoriesController())
-                    .httpMethods(HttpMethod.all()).roles(Role.adminRoles())
-                    .endConstraints()
+                    .httpMethods(HttpMethod.all()).roles(Role.adminRoles()).endConstraints()
                 .withSecurity("/admin/newCategory", new AdminNewCategoryController())
-                    .httpMethods(HttpMethod.all())
-                    .roles(Role.adminRoles())
-                    .endConstraints()
+                    .httpMethods(HttpMethod.all()).roles(Role.adminRoles()).endConstraints()
+                .withSecurity("/admin/editCategory", new AdminEditCategoryController())
+                    .httpMethods(HttpMethod.all()).roles(Role.adminRoles()).endConstraints()
                 .buildAndRegister("Command Dispatcher Servlet", "/app/*", servletContext);
     }
 

@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Context antiJARLocking="true" path="/" debug="1" reloadable="true">
     <Resource
-            name="jdbc/online_store"
-            author="Container"
-            type="javax.sql.DataSource"
-            maxActive="10"
-            maxIdle="5"
-            maxWait="10000"
-            username="yuriy"
-            password="123321"
-            driverClassName="com.mysql.jdbc.Driver"
-            url="jdbc:mysql://localhost:3306/onlinestore?characterEncoding=utf-8"
+        name="jdbc/online_store"
+        author="Container"
+        type="javax.sql.DataSource"
+        maxActive="10"
+        maxIdle="5"
+        maxWait="10000"
+        username="Yuriy"
+        password="123321"
+        driverClassName="com.mysql.jdbc.Driver"
+        url="jdbc:mysql://localhost:3306/onlinestore?characterEncoding=utf-8"
     />
 </Context>

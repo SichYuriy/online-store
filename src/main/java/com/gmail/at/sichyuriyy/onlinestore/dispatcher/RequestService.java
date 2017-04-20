@@ -29,7 +29,11 @@ public class RequestService {
     public RequestService(HttpServletRequest request, HttpServletResponse response) {
         this.request = request;
         this.response = response;
-        httpMethod = HttpMethod.valueOf(request.getMethod().toUpperCase());
+        String method = request.getParameter(DispatcherServlet.METHOD_PARAM);
+        if (method == null) {
+            method = request.getMethod().toUpperCase();
+        }
+        this.httpMethod = HttpMethod.valueOf(method);
     }
 
     /**

@@ -2,6 +2,7 @@ package com.gmail.at.sichyuriyy.onlinestore.security;
 
 import com.gmail.at.sichyuriyy.onlinestore.dispatcher.DispatcherServlet;
 import com.gmail.at.sichyuriyy.onlinestore.dispatcher.HttpMethod;
+import com.gmail.at.sichyuriyy.onlinestore.dispatcher.util.UrlUtil;
 import com.gmail.at.sichyuriyy.onlinestore.entity.Role;
 import com.gmail.at.sichyuriyy.onlinestore.entity.User;
 import org.apache.logging.log4j.LogManager;
@@ -59,7 +60,7 @@ public class SecurityFilter implements Filter {
 
     private boolean checkPermissions(ServletRequest request, ServletResponse response, List<Role> roles)
             throws ServletException, IOException {
-        String extraPath = ((HttpServletRequest) request).getRequestURI();
+        String extraPath = UrlUtil.getControllerUrl(((HttpServletRequest) request).getRequestURI());
         LOGGER.info("checkingConstraints for path: " + extraPath);
         HttpMethod method = HttpMethod.valueOf(((HttpServletRequest) request).getMethod());
 

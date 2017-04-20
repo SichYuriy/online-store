@@ -44,6 +44,10 @@ public abstract class Controller {
                 withSuffix(requestService.getRequest().getPathInfo()));
     }
 
+    protected void checkId() {
+
+    }
+
     private boolean hasPageSuffix(String pathInfo) {
         int index = pathInfo.lastIndexOf(DispatcherServlet.PAGE_SUFFIX);
         return index + DispatcherServlet.PAGE_SUFFIX.length() == pathInfo.length();

@@ -31,6 +31,7 @@ public class CategoriesController extends Controller {
     @Override
     public void doPost(RequestService reqService) {
         Category category = new CategoryRequestMapper().map(reqService);
+
         if (!new CategoryValidator().getValidationStatus(category)) {
             reqService.putFlashParameter("category", category);
             reqService.setRedirectPath("/admin/newCategory.jsp?failed=true");
@@ -43,14 +44,23 @@ public class CategoriesController extends Controller {
     @Override
     public void doDelete(RequestService reqService) {
         Long id = reqService.getLong("id");
-        if (id == null)
-            LogManager.getLogger().info("null id");
-        if (categoryService.delete(reqService.getLong("id"))) {
+        if (categoryService.delete(id)) {
             reqService.setAjaxRedirectPath("/admin/categories");
             LogManager.getLogger().info("deleted");
         } else {
             reqService.setAjaxRedirectPath("/admin/categories?delete_failed=true");
-            LogManager.getLogger().info("delete_fail");
+        }
+    }
+
+    @Override
+    public void doPut(RequestService reqService) {
+        Category category = new CategoryRequestMapper().map(reqService);
+        if (!new CategoryValidator().getValidationStatus(category)) {
+            reqService.putFlashParameter("category", category);
+            reqService.setRedirectPath("/admin/editCategory.jsp?failed=true");
+        } else {
+            categoryService.update(category);
+            reqService.setRedirectPath("/admin/categories");
         }
     }
 }
