@@ -15,7 +15,7 @@
             <fmt:message key="cart" bundle="${rb}"/>
         </a>
         <u:if-user role="CUSTOMER">
-            <a class="btn btn-info" href="/orders" role="button">
+            <a class="btn btn-info" href="/user/orders" role="button">
                 <fmt:message key="myOrders" bundle="${rb}"/>
             </a>
         </u:if-user>

@@ -72,6 +72,17 @@ public class WebApplication {
                     .httpMethods(HttpMethod.all()).roles(Role.all()).endConstraints()
                 .withSecurity("/user/editReview", new EditReviewController())
                     .httpMethods(HttpMethod.all()).roles(Role.all()).endConstraints()
+                .withSecurity("/admin/users", new AdminUsersController())
+                    .httpMethods(HttpMethod.all()).roles(Role.adminRoles()).endConstraints()
+                .withSecurity("/admin/newAdmin", new NewAdminController())
+                    .httpMethods(HttpMethod.all()).roles(Role.adminRoles()).endConstraints()
+                .withSecurity("/admin/orders", new AdminOrdersController())
+                    .httpMethods(HttpMethod.all()).roles(Role.adminRoles()).endConstraints()
+                .withSecurity("/order", new OrderViewController())
+                    .httpMethods(HttpMethod.all()).roles(Role.all()).endConstraints()
+                .withSecurity("/user/orders", new UserOrdersController())
+                    .httpMethods(HttpMethod.all()).roles(Role.all()).endConstraints()
+                .addMapping("/products", new ProductsController())
                 .buildAndRegister("Command Dispatcher Servlet", "/app/*", servletContext);
     }
 
@@ -87,7 +98,7 @@ public class WebApplication {
 
     private void prepareServices() {
         UserService userService =
-                new UserServiceImpl(daoFactory.getUserDao());
+                new UserServiceImpl(daoFactory.getUserDao(), connectionManager);
         CategoryService categoryService =
                 new CategoryServiceImpl(daoFactory.getCategoryDao());
         AuthService authService =
@@ -99,6 +110,10 @@ public class WebApplication {
                         daoFactory.getUserDao(), daoFactory.getProductDao());
         ProductImageService productImageService =
                 new ProductImageServiceImpl(daoFactory.getProductImageDao());
+        OrderService orderService =
+                new OrderServiceImpl(daoFactory.getOrderDao(), daoFactory.getUserDao(),
+                        daoFactory.getLineItemDao(), daoFactory.getProductDao(),
+                        connectionManager);
 
         //TODO: add all services
 
@@ -108,6 +123,7 @@ public class WebApplication {
         serviceLocator.add(ProductService.class, productService);
         serviceLocator.add(ReviewService.class, reviewService);
         serviceLocator.add(ProductImageService.class, productImageService);
+        serviceLocator.add(OrderService.class, orderService);
     }
 
 }

@@ -7,4 +7,5 @@ import com.gmail.at.sichyuriyy.onlinestore.entity.User;
  */
 public interface UserService extends CrudService<User, Long> {
 
+    void changeBlackListStatus(Long id, boolean blackList);
 }

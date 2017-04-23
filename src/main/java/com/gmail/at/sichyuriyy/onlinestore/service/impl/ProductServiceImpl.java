@@ -32,6 +32,16 @@ public class ProductServiceImpl extends AbstractCrudService<Product, Long> imple
     }
 
     @Override
+    public List<Product> findByCategory(Long categoryId, int limit, int offset) {
+        return productDao.findByCategory(categoryId, limit, offset);
+    }
+
+    @Override
+    public int getProductsCount(Long categoryId) {
+        return productDao.getProductsCount(categoryId);
+    }
+
+    @Override
     public Dao<Product, Long> getBackingDao() {
         return productDao;
     }

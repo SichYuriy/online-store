@@ -102,11 +102,16 @@ public class ReviewServiceImpl extends AbstractCrudService<Review, Long> impleme
 
     @Override
     public List<Review> findByProductId(Long productId) {
-        List<Review> reviews = reviewDao.findByProduct(productId);
-        for (Review review: reviews) {
-            review.setAuthor(userDao.findById(review.getAuthor().getId()));
-        }
-        return reviews;
+        final Object[] result = new Object[1];
+        Transaction.tx(cm, () -> {
+            List<Review> reviews = reviewDao.findByProduct(productId);
+            for (Review review: reviews) {
+                review.setAuthor(userDao.findById(review.getAuthor().getId()));
+            }
+            result[0] = reviews;
+        });
+
+        return (List<Review>) result[0];
     }
 
     @Override

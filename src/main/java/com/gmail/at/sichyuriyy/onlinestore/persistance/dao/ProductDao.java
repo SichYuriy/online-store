@@ -10,5 +10,6 @@ import java.util.List;
 public interface ProductDao extends Dao<Product, Long> {
 
     List<Product> findByDynamicFilter(ProductDynamicFilter filter);
-
+    List<Product> findByCategory(Long categoryId, int limit, int offset);
+    int getProductsCount(Long categoryId);
 }

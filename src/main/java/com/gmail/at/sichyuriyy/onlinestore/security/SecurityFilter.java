@@ -62,7 +62,11 @@ public class SecurityFilter implements Filter {
             throws ServletException, IOException {
         String requestURI = ((HttpServletRequest) request).getRequestURI();
         String controllerUrl = UrlUtil.getControllerUrl(requestURI);
-        String destination = requestURI + "?" + ((HttpServletRequest) request).getQueryString();
+        String queryString = ((HttpServletRequest) request).getQueryString();
+        String destination = requestURI;
+        if (queryString != null) {
+            destination += "?" + queryString;
+        }
         HttpMethod method = UrlUtil.getMethod((HttpServletRequest)request);
 
 

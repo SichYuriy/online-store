@@ -30,7 +30,7 @@
         <div class="col-md-10 col-md-offset-1 floating-plane">
 
             <u:if-user role="ADMINISTRATOR">
-                <a href="/admin/edit-product.jsp?id=${tour.id}" class="btn btn-sm">
+                <a href="/admin/edit-product.jsp?id=${product.id}" class="btn btn-sm">
                     <i class="glyphicon glyphicon-edit"></i>
                     <fmt:message key="product.edit" bundle="${rb}"/>
                 </a>
@@ -77,10 +77,12 @@
                 </div>
             </div>
 
+            <fmt:message key="product.edit_images" var="edit_images" bundle="${rb}"/>
+
             <u:if-user role="ADMINISTRATOR">
                 <div class="col-md-12">
                     <hr/>
-                    <a class="btn btn-warning" href="/admin/productImages?productId=${product.id}">${buy}</a>
+                    <a class="btn btn-warning" href="/admin/productImages?productId=${product.id}">${edit_images}</a>
                 </div>
             </u:if-user>
 
