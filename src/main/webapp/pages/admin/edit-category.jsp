@@ -44,7 +44,7 @@
 
                 <fmt:message key="update" var="update" bundle="${rb}"/>
                 <br>
-                <input type="submit" class="btn pull-right" value="${update}"/>
+                <input type="submit" class="btn" value="${update}"/>
             </form>
         </div>
     </div>

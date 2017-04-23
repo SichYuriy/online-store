@@ -8,7 +8,7 @@ import java.util.List;
  */
 public interface CrudService<T, PK extends Serializable> {
 
-    PK create(T obj);
+    void create(T obj);
     T findById(PK id);
     void update(T obj);
     List<T> findAll();

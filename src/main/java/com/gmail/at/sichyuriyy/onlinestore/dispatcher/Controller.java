@@ -40,7 +40,7 @@ public abstract class Controller {
 
 
     protected void useDefaultRenderPage(RequestService requestService) {
-        requestService.setRenderPage("/pages/" +
+        requestService.setRenderPage("/pages" +
                 withSuffix(requestService.getRequest().getPathInfo()));
     }
 

@@ -15,7 +15,7 @@
 
 <div class="container-fluid">
 
-    <div class="col-md-offset-1 col-md-10 content">
+    <div class="col-md-offset-1 col-md-10">
         <div class="hero-unit">
             <h1>Error ${pageContext.errorData.statusCode}</h1>
             <hr/>

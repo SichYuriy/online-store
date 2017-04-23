@@ -10,7 +10,7 @@ public interface DaoFactory {
     LineItemDao getLineItemDao();
     OrderDao getOrderDao();
     ProductDao getProductDao();
-    ProductImageDao getProductImage();
-    ReviewDao getRewReviewDao();
+    ProductImageDao getProductImageDao();
+    ReviewDao getReviewDao();
     UserDao getUserDao();
 }

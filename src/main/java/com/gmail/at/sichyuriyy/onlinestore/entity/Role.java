@@ -1,5 +1,6 @@
 package com.gmail.at.sichyuriyy.onlinestore.entity;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -11,5 +12,9 @@ public enum Role {
 
     public static List<Role> adminRoles() {
         return Collections.singletonList(ADMINISTRATOR);
+    }
+
+    public static List<Role> all() {
+        return Arrays.asList(values());
     }
 }

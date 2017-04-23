@@ -2,9 +2,11 @@ package com.gmail.at.sichyuriyy.onlinestore.security;
 
 import com.gmail.at.sichyuriyy.onlinestore.dispatcher.HttpMethod;
 import com.gmail.at.sichyuriyy.onlinestore.entity.Role;
+import com.gmail.at.sichyuriyy.onlinestore.entity.User;
 import com.gmail.at.sichyuriyy.onlinestore.persistance.dao.UserDao;
 import com.gmail.at.sichyuriyy.onlinestore.util.ServiceLocator;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.xml.ws.Service;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +16,8 @@ import java.util.List;
  */
 public enum SecurityContext {
     INSTANCE;
+
+    public static final String SESSION_USER = "user";
 
     private static final String LOGIN_PAGE = "/pages/login.jsp";
 
@@ -44,6 +48,10 @@ public enum SecurityContext {
 
     public void addConstraint(String path, List<HttpMethod> methods, List<Role> roles) {
         constraints.add(new SecurityConstraint(path, methods, roles));
+    }
+
+    public User getCurrentUser(HttpServletRequest req) {
+        return (User) req.getSession(true).getAttribute(SESSION_USER);
     }
 
     public static class SecurityConstraint {

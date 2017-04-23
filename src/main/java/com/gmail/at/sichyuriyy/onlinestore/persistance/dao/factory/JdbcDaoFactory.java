@@ -36,12 +36,12 @@ public class JdbcDaoFactory implements DaoFactory {
     }
 
     @Override
-    public ProductImageDao getProductImage() {
+    public ProductImageDao getProductImageDao() {
         return new JdbcProductImageDao(connectionManager);
     }
 
     @Override
-    public ReviewDao getRewReviewDao() {
+    public ReviewDao getReviewDao() {
         return new JdbcReviewDao(connectionManager);
     }
 

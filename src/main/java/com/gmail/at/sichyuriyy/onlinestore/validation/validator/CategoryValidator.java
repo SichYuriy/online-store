@@ -10,7 +10,7 @@ public class CategoryValidator implements EntityValidator<Category> {
     @Override
     public boolean getValidationStatus(Category entity) {
         return entity.getTitle() != null
-                && entity.getTitle().length() > 3
-                && entity.getTitle().length() < 26;
+                && entity.getTitle().length() >= 4
+                && entity.getTitle().length() <= 25;
     }
 }

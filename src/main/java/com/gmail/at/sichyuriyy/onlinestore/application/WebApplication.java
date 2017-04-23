@@ -9,12 +9,8 @@ import com.gmail.at.sichyuriyy.onlinestore.persistance.ConnectionManager;
 import com.gmail.at.sichyuriyy.onlinestore.persistance.dao.factory.DaoFactory;
 import com.gmail.at.sichyuriyy.onlinestore.persistance.dao.factory.JdbcDaoFactory;
 import com.gmail.at.sichyuriyy.onlinestore.security.SecurityContext;
-import com.gmail.at.sichyuriyy.onlinestore.service.AuthService;
-import com.gmail.at.sichyuriyy.onlinestore.service.CategoryService;
-import com.gmail.at.sichyuriyy.onlinestore.service.UserService;
-import com.gmail.at.sichyuriyy.onlinestore.service.impl.AuthServiceImpl;
-import com.gmail.at.sichyuriyy.onlinestore.service.impl.CategoryServiceImpl;
-import com.gmail.at.sichyuriyy.onlinestore.service.impl.UserServiceImpl;
+import com.gmail.at.sichyuriyy.onlinestore.service.*;
+import com.gmail.at.sichyuriyy.onlinestore.service.impl.*;
 import com.gmail.at.sichyuriyy.onlinestore.util.PropertiesLoader;
 import com.gmail.at.sichyuriyy.onlinestore.util.ServiceLocator;
 
@@ -62,12 +58,20 @@ public class WebApplication {
                 .addMapping("/index", new HomeController())
                 .addMapping("/login", new LoginController())
                 .addMapping("/logout", new LogoutController())
+                .addMapping("/register", new RegisterController())
                 .withSecurity("/admin/categories", new CategoriesController())
                     .httpMethods(HttpMethod.all()).roles(Role.adminRoles()).endConstraints()
                 .withSecurity("/admin/newCategory", new AdminNewCategoryController())
                     .httpMethods(HttpMethod.all()).roles(Role.adminRoles()).endConstraints()
                 .withSecurity("/admin/editCategory", new AdminEditCategoryController())
                     .httpMethods(HttpMethod.all()).roles(Role.adminRoles()).endConstraints()
+                .addMapping("/product", new ProductController())
+                .withSecurity("/user/reviews", new ReviewsController())
+                    .httpMethods(HttpMethod.all()).roles(Role.all()).endConstraints()
+                .withSecurity("/user/newReview", new NewReviewController())
+                    .httpMethods(HttpMethod.all()).roles(Role.all()).endConstraints()
+                .withSecurity("/user/editReview", new EditReviewController())
+                    .httpMethods(HttpMethod.all()).roles(Role.all()).endConstraints()
                 .buildAndRegister("Command Dispatcher Servlet", "/app/*", servletContext);
     }
 
@@ -76,7 +80,7 @@ public class WebApplication {
     }
 
     private void preparePersistence() {
-        ConnectionManager connectionManager = ConnectionManager.fromJndi(appProperties.getProperty(AppProperties.CP_JNDI));
+        connectionManager = ConnectionManager.fromJndi(appProperties.getProperty(AppProperties.CP_JNDI));
         serviceLocator.add(ConnectionManager.class, connectionManager);
         daoFactory = new JdbcDaoFactory(connectionManager);
     }
@@ -88,13 +92,22 @@ public class WebApplication {
                 new CategoryServiceImpl(daoFactory.getCategoryDao());
         AuthService authService =
                 new AuthServiceImpl(userService);
+        ProductService productService =
+                new ProductServiceImpl(daoFactory.getProductDao());
+        ReviewService reviewService =
+                new ReviewServiceImpl(connectionManager, daoFactory.getReviewDao(),
+                        daoFactory.getUserDao(), daoFactory.getProductDao());
+        ProductImageService productImageService =
+                new ProductImageServiceImpl(daoFactory.getProductImageDao());
 
         //TODO: add all services
 
         serviceLocator.add(UserService.class, userService);
         serviceLocator.add(AuthService.class, authService);
         serviceLocator.add(CategoryService.class, categoryService);
-
+        serviceLocator.add(ProductService.class, productService);
+        serviceLocator.add(ReviewService.class, reviewService);
+        serviceLocator.add(ProductImageService.class, productImageService);
     }
 
 }

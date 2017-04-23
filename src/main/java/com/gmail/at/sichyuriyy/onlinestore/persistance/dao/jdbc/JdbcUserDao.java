@@ -58,7 +58,7 @@ public class JdbcUserDao implements UserDao {
         final Long[] id = new Long[1];
         Transaction.tx(cm, () -> {
             id[0] = jdbcTemplate.insert(INSERT_USER, user.getLogin(), user.getPassword(), user.getBlackList());
-            addRoles(user.getId(), user.getRoles());
+            addRoles(id[0], user.getRoles());
         });
         return id[0];
     }

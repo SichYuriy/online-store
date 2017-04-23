@@ -22,3 +22,29 @@ hr {
 .pull-right {
     float: right !important;
 }
+
+form .error {
+    color: #ff0000;
+}
+
+.content {
+    width: 80%;
+    float:right;
+    border-left: solid 1px #eee;
+    border-right: solid 1px #eee;
+
+    margin-bottom: 10px;
+}
+
+.vcentered-container {
+    display: table;
+}
+
+.vcentered-container.inline {
+    display: inline-table;
+}
+
+.vcentered-container > .vcentered {
+    display: table-cell;
+    vertical-align: middle;
+}

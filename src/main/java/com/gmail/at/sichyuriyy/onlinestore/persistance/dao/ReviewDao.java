@@ -10,4 +10,5 @@ import java.util.List;
 public interface ReviewDao extends Dao<Review, Long> {
 
     List<Review> findByProduct(Long productId);
+    Review findByUserIdProductId(Long userId, Long productId);
 }

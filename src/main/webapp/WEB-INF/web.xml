@@ -35,4 +35,8 @@
         <error-code>403</error-code>
         <location>/pages/error/error403.jsp</location>
     </error-page>
+    <error-page>
+        <exception-type>com.gmail.at.sichyuriyy.onlinestore.security.AccessDeniedException</exception-type>
+        <location>/pages/error/error403.jsp</location>
+    </error-page>
 </web-app>

@@ -17,11 +17,6 @@ public abstract class AbstractCrudService<T, PK extends Serializable> implements
     public abstract Dao<T, PK> getBackingDao();
 
     @Override
-    public PK create(T obj) {
-        return getBackingDao().create(obj);
-    }
-
-    @Override
     public T findById(PK id) {
         return getBackingDao().findById(id);
     }

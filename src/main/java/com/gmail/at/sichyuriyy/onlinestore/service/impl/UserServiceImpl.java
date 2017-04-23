@@ -21,4 +21,10 @@ public class UserServiceImpl extends AbstractCrudService<User, Long> implements 
     public Dao<User, Long> getBackingDao() {
         return userDao;
     }
+
+    @Override
+    public void create(User user) {
+        Long id = userDao.create(user);
+        user.setId(id);
+    }
 }

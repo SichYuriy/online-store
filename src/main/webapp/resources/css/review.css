@@ -1,0 +1,59 @@
+.review {
+    padding: 12px;
+    margin-bottom: 24px;
+
+    background: white;
+    border: 1px solid #cdcdcd;
+    box-shadow: 0px 0px 4px 1px grey;
+}
+
+.review-content {
+    font-size: 12pt;
+    padding-top: 10px;
+}
+
+.rating-box {
+    height: 30px;
+    width: 25px;
+
+    text-align: center;
+
+    color: white;
+    background: #003580;
+
+    border-radius: 10% !important;
+    font-weight: 500;
+}
+
+.review-header {
+    border-bottom: 1px dashed #cdcdcd;
+    font-size: 16pt;
+    padding-bottom: 12px;
+}
+
+.new-review-stars {
+}
+
+.counter {
+    font-size: 14pt;
+}
+
+
+#new-review-btn {
+    display: inline-block;
+
+    color: #003580;
+    cursor: pointer;
+    font-size: 18pt;
+
+    box-shadow: 0px 2px 3px 0px grey;
+    border-radius: 50% !important
+}
+
+#new-review-btn a:hover {
+    color: #FFBC3B;
+}
+
+.submit {
+    cursor: pointer;
+}

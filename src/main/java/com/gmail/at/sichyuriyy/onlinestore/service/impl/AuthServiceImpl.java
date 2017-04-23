@@ -51,10 +51,9 @@ public class AuthServiceImpl implements AuthService {
         try {
             userService.create(user);
         } catch (Exception e) {
-            user.setId(null);
+            return false;
         }
-
-        return user.getId() != null;
+        return true;
     }
 
     @Override

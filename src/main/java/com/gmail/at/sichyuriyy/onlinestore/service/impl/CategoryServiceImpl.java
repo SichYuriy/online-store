@@ -21,4 +21,12 @@ public class CategoryServiceImpl extends AbstractCrudService<Category, Long> imp
     public Dao<Category, Long> getBackingDao() {
         return categoryDao;
     }
+
+    @Override
+    public void create(Category category) {
+        Long id = categoryDao.create(category);
+        category.setId(id);
+    }
+
+
 }

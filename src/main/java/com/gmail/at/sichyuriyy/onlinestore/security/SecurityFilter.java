@@ -60,17 +60,19 @@ public class SecurityFilter implements Filter {
 
     private boolean checkPermissions(ServletRequest request, ServletResponse response, List<Role> roles)
             throws ServletException, IOException {
-        String extraPath = UrlUtil.getControllerUrl(((HttpServletRequest) request).getRequestURI());
-        LOGGER.info("checkingConstraints for path: " + extraPath);
-        HttpMethod method = HttpMethod.valueOf(((HttpServletRequest) request).getMethod());
+        String requestURI = ((HttpServletRequest) request).getRequestURI();
+        String controllerUrl = UrlUtil.getControllerUrl(requestURI);
+        String destination = requestURI + "?" + ((HttpServletRequest) request).getQueryString();
+        HttpMethod method = UrlUtil.getMethod((HttpServletRequest)request);
 
-        if(!SecurityContext.INSTANCE.allowed(extraPath, method, roles)) {
+
+        if(!SecurityContext.INSTANCE.allowed(controllerUrl, method, roles)) {
             if (!roles.isEmpty()) {
                 ((HttpServletResponse) response).
                         sendError(HttpServletResponse.SC_FORBIDDEN);
                 return false;
             }
-            ((HttpServletRequest) request).getSession().setAttribute(DispatcherServlet.DESTINATION_KEY, extraPath);
+            ((HttpServletRequest) request).getSession().setAttribute(DispatcherServlet.DESTINATION_KEY, destination);
             request.getRequestDispatcher(SecurityContext.INSTANCE.getLoginPage())
                     .forward(request, response);
             return false;

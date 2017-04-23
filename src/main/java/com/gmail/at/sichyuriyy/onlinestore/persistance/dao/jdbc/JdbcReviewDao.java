@@ -28,6 +28,9 @@ public class JdbcReviewDao implements ReviewDao {
 
     private static final String DELETE_REVIEW = "DELETE FROM `review` WHERE `id`=?";
 
+    private static final String SELECT_REVIEW_BY_USER_PRODUCT_ID = "SELECT * FROM `review` WHERE `author_id`=? " +
+            "AND product_id=?";
+
     private ConnectionManager cm;
     private JdbcTemplate jdbcTemplate;
 
@@ -71,5 +74,11 @@ public class JdbcReviewDao implements ReviewDao {
     public List<Review> findByProduct(Long productId) {
         return jdbcTemplate.queryObjects(SELECT_REVIEW_BY_PRODUCT_ID,
                 new ReviewMapper(), productId);
+    }
+
+    @Override
+    public Review findByUserIdProductId(Long userId, Long productId) {
+        return jdbcTemplate.queryObject(SELECT_REVIEW_BY_USER_PRODUCT_ID,
+                new ReviewMapper(), userId, productId);
     }
 }

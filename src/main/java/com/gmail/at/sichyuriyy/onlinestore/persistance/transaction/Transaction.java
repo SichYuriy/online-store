@@ -56,5 +56,6 @@ public interface Transaction {
 
     static void tx(ConnectionManager cm, Transaction transaction) {
         tx(cm, transaction, Connection.TRANSACTION_READ_COMMITTED);
+
     }
 }

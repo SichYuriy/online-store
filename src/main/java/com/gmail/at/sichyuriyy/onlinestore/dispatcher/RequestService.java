@@ -1,5 +1,9 @@
 package com.gmail.at.sichyuriyy.onlinestore.dispatcher;
 
+import com.gmail.at.sichyuriyy.onlinestore.dispatcher.util.UrlUtil;
+import com.gmail.at.sichyuriyy.onlinestore.entity.User;
+import com.gmail.at.sichyuriyy.onlinestore.security.SecurityContext;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
@@ -29,11 +33,7 @@ public class RequestService {
     public RequestService(HttpServletRequest request, HttpServletResponse response) {
         this.request = request;
         this.response = response;
-        String method = request.getParameter(DispatcherServlet.METHOD_PARAM);
-        if (method == null) {
-            method = request.getMethod().toUpperCase();
-        }
-        this.httpMethod = HttpMethod.valueOf(method);
+        this.httpMethod = UrlUtil.getMethod(request);
     }
 
     /**
@@ -150,5 +150,9 @@ public class RequestService {
 
     public String getAjaxRedirectPath() {
         return ajaxRedirectPath;
+    }
+
+    public User getUser() {
+        return SecurityContext.INSTANCE.getCurrentUser(request);
     }
 }
