@@ -33,7 +33,7 @@
             <hr/>
             <c:forEach var="product" items="${products}" >
                 <div class="col-md-4 col-md-offset-4">
-                    <h4><c:out value="${product.title}"/> </h4>
+                    <h4><c:out value="${product.title}"/> (${product.count})</h4>
                     <img src="${fn:escapeXml(product.mainImageUrl)}" style="max-height: 350px;width:100%">
 
                     <a class="btn btn-success" href="/product?id=${product.id}" role="button">

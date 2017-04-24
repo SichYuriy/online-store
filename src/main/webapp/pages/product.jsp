@@ -90,9 +90,13 @@
 
             <div class="col-md-12">
                 <hr/>
-                <a class="btn btn-success" onclick="toCart(${product.id})">${buy}</a>
+                <c:if test="${product.count > 0}" >
+                    <a class="btn btn-success" onclick="toCart(${product.id})">${buy}</a>
+                </c:if>
+                  <fmt:message key="product.left" bundle="${rb}" /> ${product.count}
                 <hr/>
             </div>
+
 
             <div class="col-md-12">
                 <h3>

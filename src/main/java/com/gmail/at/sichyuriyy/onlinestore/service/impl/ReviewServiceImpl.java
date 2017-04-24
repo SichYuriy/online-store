@@ -86,7 +86,12 @@ public class ReviewServiceImpl extends AbstractCrudService<Review, Long> impleme
             double rating = product.getAvgRating() == null ? 0 : product.getAvgRating();
 
             rating = rating * product.getVotesCount() - oldReview.getRating();
-            rating /= product.getVotesCount() - 1;
+            if (product.getVotesCount() - 1 == 0) {
+                rating = 0;
+            } else {
+                rating /= product.getVotesCount() - 1;
+            }
+
             product.setVotesCount(product.getVotesCount() - 1);
             product.setAvgRating(rating);
 
@@ -128,7 +133,7 @@ public class ReviewServiceImpl extends AbstractCrudService<Review, Long> impleme
         if (user == null) {
             return false;
         }
-        LogManager.getLogger().info(user.getBlackList());
         return !user.getBlackList();
     }
+
 }
