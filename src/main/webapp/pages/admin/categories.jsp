@@ -40,7 +40,7 @@
                     <c:forEach var="category" items="${categories}">
                         <tr>
                             <td>
-                                ${category.title}
+                                <c:out value="${category.title}"/>
                             </td>
                             <td>
                                 <a class="btn btn-primary" href="/admin/editCategory?id=${category.id}" role="button">

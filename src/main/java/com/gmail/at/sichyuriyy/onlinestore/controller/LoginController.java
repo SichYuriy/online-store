@@ -48,5 +48,6 @@ public class LoginController extends Controller {
             reqService.setRedirectPath("/login.jsp?failed=true");
             reqService.putFlashParameter("username", username);
         }
+        reqService.getRequest().getSession().removeAttribute(DispatcherServlet.DESTINATION_KEY);
     }
 }

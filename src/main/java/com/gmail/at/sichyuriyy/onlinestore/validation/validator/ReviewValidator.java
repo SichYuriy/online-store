@@ -11,10 +11,6 @@ public class ReviewValidator implements EntityValidator<Review> {
 
     @Override
     public boolean getValidationStatus(Review review) {
-//        LogManager.getLogger().info(review.getDescription());
-//        LogManager.getLogger().info(review.getAuthor().getId());
-//        LogManager.getLogger().info(review.getRating());
-//        LogManager.getLogger().info(review.getProduct().getId());
 
         return review.getDescription() != null
                 && review.getAuthor() != null

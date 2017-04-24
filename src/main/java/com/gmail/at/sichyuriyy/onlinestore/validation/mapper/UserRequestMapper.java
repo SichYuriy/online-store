@@ -11,8 +11,8 @@ public class UserRequestMapper implements RequestMapper<User> {
     @Override
     public User map(RequestService requestService) {
         User user = new User();
-        user.setLogin(requestService.getString("username"));
-        user.setPassword(requestService.getString("password"));
+        user.setLogin(requestService.getString("username").trim());
+        user.setPassword(requestService.getString("password").trim());
         user.setBlackList(requestService.getBool("blackList"));
 
         return user;

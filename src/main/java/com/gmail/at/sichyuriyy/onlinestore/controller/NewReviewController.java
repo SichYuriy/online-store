@@ -29,7 +29,6 @@ public class NewReviewController extends Controller {
         if (oldReview != null) {
             reqService.setRedirectPath("/user/editReview?id=" + oldReview.getId());
         }
-        useDefaultRenderPage(reqService);
         if (failed) {
             reqService.setPageAttribute("failed", true);
             reqService.setPageAttribute("review", review);

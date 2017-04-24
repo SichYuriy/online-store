@@ -13,7 +13,7 @@ public class CategoryRequestMapper implements RequestMapper<Category> {
     public Category map(RequestService requestService) {
         Category category = new Category();
         category.setId(requestService.getLong("id"));
-        category.setTitle(requestService.getString("title"));
+        category.setTitle(requestService.getString("title").trim());
         return category;
     }
 }

@@ -7,6 +7,8 @@ import com.gmail.at.sichyuriyy.onlinestore.entity.Product;
 import com.gmail.at.sichyuriyy.onlinestore.service.CategoryService;
 import com.gmail.at.sichyuriyy.onlinestore.service.ProductService;
 import com.gmail.at.sichyuriyy.onlinestore.util.ServiceLocator;
+import com.gmail.at.sichyuriyy.onlinestore.validation.mapper.ProductRequestMapper;
+import com.gmail.at.sichyuriyy.onlinestore.validation.validator.ProductValidator;
 
 import java.util.List;
 
@@ -30,7 +32,14 @@ public class ProductsController extends Controller {
         int limit = PAGE_SIZE;
         int offset = PAGE_SIZE * (pageNumber - 1);
 
-        List<Product> products = productService.findByCategory(categoryId, limit, offset);
+
+        List<Product> products = null;
+        if (reqService.getRequest().isUserInRole("ADMINISTRATOR")) {
+            products = productService.findByCategory(categoryId, limit, offset);
+        } else {
+            products = productService.findEnabledByCategory(categoryId, limit, offset);
+        }
+
         Integer pagesCount = getPagesCount(productService.getProductsCount(categoryId));
         Category category = categoryService.findById(categoryId);
 
@@ -49,4 +58,34 @@ public class ProductsController extends Controller {
         }
         return result;
     }
+
+
+    @Override
+    public void doPost(RequestService reqService) {
+        Product product = new ProductRequestMapper().map(reqService);
+        boolean validationStatus = new ProductValidator().getValidationStatus(product);
+
+        if (!validationStatus) {
+            reqService.putFlashParameter("product", product);
+            reqService.setRedirectPath("/admin/newProduct?failed=true&categoryId=" + product.getCategory().getId());
+            return;
+        }
+        productService.create(product);
+        reqService.setRedirectPath("/products?categoryId=" + product.getCategory().getId());
+    }
+
+    @Override
+    public void doPut(RequestService reqService) {
+        Product product = new ProductRequestMapper().map(reqService);
+        boolean validationStatus = new ProductValidator().getValidationStatus(product);
+
+        if (!validationStatus) {
+            reqService.putFlashParameter("product", product);
+            reqService.setRedirectPath("/admin/editProduct?failed=true&id=" + product.getId());
+            return;
+        }
+        productService.update(product);
+        reqService.setRedirectPath("/products?categoryId=" + product.getCategory().getId());
+    }
+
 }

@@ -1,6 +1,7 @@
 package com.gmail.at.sichyuriyy.onlinestore.dispatcher;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -11,5 +12,9 @@ public enum HttpMethod {
 
     public static List<HttpMethod> all() {
         return Arrays.asList(HttpMethod.values());
+    }
+
+    public static List<HttpMethod> modifying() {
+        return Arrays.asList(PUT, POST, DELETE);
     }
 }

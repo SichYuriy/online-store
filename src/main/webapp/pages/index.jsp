@@ -28,7 +28,7 @@
                     <c:out value="${category.title}" />
                 </a>
                 <u:if-user role="ADMINISTRATOR">
-                    <a class="btn btn-success" href="/products?categoryId=${category.id}" role="button">
+                    <a class="btn btn-success" href="/admin/newProduct?categoryId=${category.id}" role="button">
                         <fmt:message key="admin.new_product" bundle="${rb}"/>
                     </a>
                 </u:if-user>

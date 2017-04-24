@@ -18,6 +18,9 @@ public class JdbcProductDao implements ProductDao {
 
     private static final String SELECT_PRODUCTS_COUNT = "SELECT COUNT(*) FROM `product` WHERE `category_id`=? ";
 
+    private static final String SELECT_ENABLED_PRODUCTS_BY_CATEGORY_ID = "SELECT * FROM `product`" +
+            "WHERE `category_id`=? AND `enabled`=1  ORDER BY `id` ASC LIMIT ? OFFSET ?";
+
     private static final String SELECT_PRODUCTS_BY_CATEGORY_ID = "SELECT * FROM `product`" +
             "WHERE `category_id`=?  ORDER BY `id` ASC LIMIT ? OFFSET ?";
 
@@ -90,5 +93,11 @@ public class JdbcProductDao implements ProductDao {
     public int getProductsCount(Long categoryId) {
         return jdbcTemplate.queryObject(SELECT_PRODUCTS_COUNT,
                 (rs) -> rs.getInt(1), categoryId);
+    }
+
+    @Override
+    public List<Product> findEnabledByCategory(Long categoryId, int limit, int offset) {
+        return jdbcTemplate.queryObjects(SELECT_ENABLED_PRODUCTS_BY_CATEGORY_ID,
+                new ProductMapper(), categoryId, limit, offset);
     }
 }

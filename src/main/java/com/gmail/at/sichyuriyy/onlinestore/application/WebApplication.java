@@ -82,7 +82,12 @@ public class WebApplication {
                     .httpMethods(HttpMethod.all()).roles(Role.all()).endConstraints()
                 .withSecurity("/user/orders", new UserOrdersController())
                     .httpMethods(HttpMethod.all()).roles(Role.all()).endConstraints()
-                .addMapping("/products", new ProductsController())
+                .withSecurity("/products", new ProductsController())
+                    .httpMethods(HttpMethod.modifying()).roles(Role.adminRoles()).endConstraints()
+                .withSecurity("/admin/newProduct", new AdminNewProductController())
+                    .httpMethods(HttpMethod.all()).roles(Role.adminRoles()).endConstraints()
+                .withSecurity("/admin/editProduct", new AdminEditProductController())
+                    .httpMethods(HttpMethod.all()).roles(Role.adminRoles()).endConstraints()
                 .buildAndRegister("Command Dispatcher Servlet", "/app/*", servletContext);
     }
 
@@ -104,7 +109,7 @@ public class WebApplication {
         AuthService authService =
                 new AuthServiceImpl(userService);
         ProductService productService =
-                new ProductServiceImpl(daoFactory.getProductDao());
+                new ProductServiceImpl(daoFactory.getProductDao(), connectionManager);
         ReviewService reviewService =
                 new ReviewServiceImpl(connectionManager, daoFactory.getReviewDao(),
                         daoFactory.getUserDao(), daoFactory.getProductDao());

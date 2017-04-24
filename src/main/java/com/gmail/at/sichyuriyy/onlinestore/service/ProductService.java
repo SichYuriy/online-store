@@ -14,4 +14,6 @@ public interface ProductService extends CrudService<Product, Long> {
     List<Product> findByCategory(Long categoryId, int limit, int offset);
     int getProductsCount(Long categoryId);
 
+    List<Product> findEnabledByCategory(Long categoryId, int limit, int offset);
+
 }

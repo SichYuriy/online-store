@@ -30,7 +30,7 @@
         <div class="col-md-10 col-md-offset-1 floating-plane">
 
             <u:if-user role="ADMINISTRATOR">
-                <a href="/admin/edit-product.jsp?id=${product.id}" class="btn btn-sm">
+                <a href="/admin/editProduct.jsp?id=${product.id}" class="btn btn-sm">
                     <i class="glyphicon glyphicon-edit"></i>
                     <fmt:message key="product.edit" bundle="${rb}"/>
                 </a>
