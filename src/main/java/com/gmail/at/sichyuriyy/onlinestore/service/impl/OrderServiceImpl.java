@@ -4,8 +4,10 @@ import com.gmail.at.sichyuriyy.onlinestore.entity.*;
 import com.gmail.at.sichyuriyy.onlinestore.persistance.ConnectionManager;
 import com.gmail.at.sichyuriyy.onlinestore.persistance.dao.*;
 import com.gmail.at.sichyuriyy.onlinestore.persistance.transaction.Transaction;
+import com.gmail.at.sichyuriyy.onlinestore.persistance.transaction.TransactionManager;
 import com.gmail.at.sichyuriyy.onlinestore.service.AbstractCrudService;
 import com.gmail.at.sichyuriyy.onlinestore.service.OrderService;
+import com.gmail.at.sichyuriyy.onlinestore.util.ServiceLocator;
 
 import javax.sound.sampled.Line;
 import java.util.List;
@@ -19,14 +21,13 @@ public class OrderServiceImpl extends AbstractCrudService<Order, Long> implement
     private UserDao userDao;
     private LineItemDao lineItemDao;
     private ProductDao productDao;
-    private ConnectionManager cm;
+    private TransactionManager transactionManager = ServiceLocator.INSTANCE.get(TransactionManager.class);
 
-    public OrderServiceImpl(OrderDao orderDao, UserDao userDao, LineItemDao lineItemDao, ProductDao productDao, ConnectionManager cm) {
+    public OrderServiceImpl(OrderDao orderDao, UserDao userDao, LineItemDao lineItemDao, ProductDao productDao) {
         this.orderDao = orderDao;
         this.userDao = userDao;
         this.lineItemDao = lineItemDao;
         this.productDao = productDao;
-        this.cm = cm;
     }
 
     @Override
@@ -38,7 +39,7 @@ public class OrderServiceImpl extends AbstractCrudService<Order, Long> implement
     @Override
     public List<Order> findByUser(Long userId) {
         final Object[] result = new Object[1];
-        Transaction.tx(cm, () -> {
+        transactionManager.tx(() -> {
             List<Order> orders = orderDao.findByUser(userId);
             User user = userDao.findById(userId);
             for (Order order: orders) {
@@ -53,7 +54,7 @@ public class OrderServiceImpl extends AbstractCrudService<Order, Long> implement
     @Override
     public List<Order> findAll() {
         final Object[] result = new Object[1];
-        Transaction.tx(cm, () -> {
+        transactionManager.tx(() -> {
             List<Order> orders = orderDao.findAll();
             for (Order order: orders) {
                 order.setUser(userDao.findById(order.getUser().getId()));
@@ -76,7 +77,7 @@ public class OrderServiceImpl extends AbstractCrudService<Order, Long> implement
 
     @Override
     public void changeOrderStatus(Long id, OrderStatus status) {
-        Transaction.tx(cm, () -> {
+        transactionManager.tx(() -> {
             Order order = orderDao.findById(id);
             order.setStatus(status);
             orderDao.update(order);
@@ -86,7 +87,7 @@ public class OrderServiceImpl extends AbstractCrudService<Order, Long> implement
     @Override
     public List<LineItem> findItems(Long orderId) {
         final Object[] result = new Object[1];
-        Transaction.tx(cm, () -> {
+        transactionManager.tx(() -> {
 
             List<LineItem> items = lineItemDao.findByOrder(orderId);
             for (LineItem item: items) {
@@ -107,7 +108,7 @@ public class OrderServiceImpl extends AbstractCrudService<Order, Long> implement
 
     @Override
     public void cancelOrder(Long id) {
-        Transaction.tx(cm, () -> {
+        transactionManager.tx(() -> {
             Order order = orderDao.findById(id);
             if (order.getStatus().equals(OrderStatus.CREATED)) {
                 order.setStatus(OrderStatus.CANCELED);

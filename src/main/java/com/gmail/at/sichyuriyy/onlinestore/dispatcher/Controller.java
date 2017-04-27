@@ -1,5 +1,7 @@
 package com.gmail.at.sichyuriyy.onlinestore.dispatcher;
 
+import com.gmail.at.sichyuriyy.onlinestore.dispatcher.ResponseResolver.RenderResolver;
+import com.gmail.at.sichyuriyy.onlinestore.dispatcher.ResponseResolver.ResponseResolver;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -9,43 +11,18 @@ import org.apache.logging.log4j.Logger;
 public abstract class Controller {
     private static final Logger LOGGER = LogManager.getLogger(Controller.class);
 
-    public void execute(RequestService reqService) {
-        HttpMethod method = reqService.getHttpMethod();
-
-        switch (method) {
-            case GET:
-                doGet(reqService);
-                break;
-            case POST:
-                doPost(reqService);
-                break;
-            case PUT:
-                doPut(reqService);
-                break;
-            case DELETE:
-                doDelete(reqService);
-                break;
-            default:
-                LOGGER.error("Switch doesn't cover all the enum variants");
-        }
-
-        doAny(reqService);
-    }
-
-    public void doGet(RequestService reqService){}
-    public void doPost(RequestService reqService){}
-    public void doDelete(RequestService reqService){}
-    public void doPut(RequestService reqService){}
-    public void doAny(RequestService reqService){}
+    public void doGet(RequestService reqService, ResponseService respService){}
+    public void doPost(RequestService reqService, ResponseService respService){}
+    public void doDelete(RequestService reqService, ResponseService respService){}
+    public void doPut(RequestService reqService, ResponseService respService){}
+    public void doAny(RequestService reqService, ResponseService respService){}
 
 
-    protected void useDefaultRenderPage(RequestService requestService) {
-        requestService.setRenderPage("/pages" +
-                withSuffix(requestService.getRequest().getPathInfo()));
-    }
-
-    protected void checkId() {
-
+    protected void useDefaultRenderPage(RequestService requestService, ResponseService responseService) {
+        responseService.setResponseResolver(
+                new RenderResolver("/pages" +
+                        withSuffix(requestService.getRequest().getPathInfo()))
+        );
     }
 
     private boolean hasPageSuffix(String pathInfo) {

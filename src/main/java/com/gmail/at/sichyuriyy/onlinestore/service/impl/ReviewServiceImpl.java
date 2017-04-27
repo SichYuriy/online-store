@@ -9,8 +9,10 @@ import com.gmail.at.sichyuriyy.onlinestore.persistance.dao.ProductDao;
 import com.gmail.at.sichyuriyy.onlinestore.persistance.dao.ReviewDao;
 import com.gmail.at.sichyuriyy.onlinestore.persistance.dao.UserDao;
 import com.gmail.at.sichyuriyy.onlinestore.persistance.transaction.Transaction;
+import com.gmail.at.sichyuriyy.onlinestore.persistance.transaction.TransactionManager;
 import com.gmail.at.sichyuriyy.onlinestore.service.AbstractCrudService;
 import com.gmail.at.sichyuriyy.onlinestore.service.ReviewService;
+import com.gmail.at.sichyuriyy.onlinestore.util.ServiceLocator;
 import jdk.nashorn.internal.runtime.options.LoggingOption;
 import org.apache.logging.log4j.LogManager;
 
@@ -23,13 +25,12 @@ import java.util.List;
  */
 public class ReviewServiceImpl extends AbstractCrudService<Review, Long> implements ReviewService {
 
-    private ConnectionManager cm;
+    private TransactionManager transactionManager = ServiceLocator.INSTANCE.get(TransactionManager.class);
     private ReviewDao reviewDao;
     private UserDao userDao;
     private ProductDao productDao;
 
-    public ReviewServiceImpl(ConnectionManager cm, ReviewDao reviewDao, UserDao userDao, ProductDao productDao) {
-        this.cm = cm;
+    public ReviewServiceImpl(ReviewDao reviewDao, UserDao userDao, ProductDao productDao) {
         this.reviewDao = reviewDao;
         this.userDao = userDao;
         this.productDao = productDao;
@@ -38,7 +39,7 @@ public class ReviewServiceImpl extends AbstractCrudService<Review, Long> impleme
     @Override
     public void create(Review review) {
         LogManager.getLogger().info("inserted0");
-        Transaction.tx(cm, () -> {
+        transactionManager.tx(() -> {
             if (canVote(review.getAuthor().getId())) {
                 review.setDate(new Timestamp(new Date().getTime()));
                 Long id = reviewDao.create(review);
@@ -60,7 +61,7 @@ public class ReviewServiceImpl extends AbstractCrudService<Review, Long> impleme
 
     @Override
     public void update(Review review) {
-        Transaction.tx(cm, () -> {
+        transactionManager.tx(() -> {
             Review oldReview = reviewDao.findById(review.getId());
             review.setDate(new Timestamp(new Date().getTime()));
             reviewDao.update(review);
@@ -78,7 +79,7 @@ public class ReviewServiceImpl extends AbstractCrudService<Review, Long> impleme
 
     @Override
     public boolean delete(Long id) {
-        Transaction.tx(cm, () -> {
+        transactionManager.tx(() -> {
             Review oldReview = reviewDao.findById(id);
             reviewDao.delete(id);
 
@@ -108,7 +109,7 @@ public class ReviewServiceImpl extends AbstractCrudService<Review, Long> impleme
     @Override
     public List<Review> findByProductId(Long productId) {
         final Object[] result = new Object[1];
-        Transaction.tx(cm, () -> {
+        transactionManager.tx(() -> {
             List<Review> reviews = reviewDao.findByProduct(productId);
             for (Review review: reviews) {
                 review.setAuthor(userDao.findById(review.getAuthor().getId()));

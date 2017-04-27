@@ -2,6 +2,10 @@ package com.gmail.at.sichyuriyy.onlinestore.controller;
 
 import com.gmail.at.sichyuriyy.onlinestore.dispatcher.Controller;
 import com.gmail.at.sichyuriyy.onlinestore.dispatcher.RequestService;
+import com.gmail.at.sichyuriyy.onlinestore.dispatcher.ResponseResolver.AjaxRedirectResolver;
+import com.gmail.at.sichyuriyy.onlinestore.dispatcher.ResponseResolver.RedirectResolver;
+import com.gmail.at.sichyuriyy.onlinestore.dispatcher.ResponseResolver.RenderResolver;
+import com.gmail.at.sichyuriyy.onlinestore.dispatcher.ResponseService;
 import com.gmail.at.sichyuriyy.onlinestore.entity.Category;
 import com.gmail.at.sichyuriyy.onlinestore.persistance.exception.TransactionFailedException;
 import com.gmail.at.sichyuriyy.onlinestore.service.CategoryService;
@@ -22,45 +26,49 @@ public class CategoriesController extends Controller {
     private CategoryService categoryService = ServiceLocator.INSTANCE.get(CategoryService.class);
 
     @Override
-    public void doGet(RequestService reqService) {
+    public void doGet(RequestService reqService, ResponseService respService) {
         List<Category> categories = categoryService.findAll();
-        reqService.setRenderPage("/pages/admin/categories.jsp");
+        respService.setResponseResolver(new RenderResolver("/pages/admin/categories.jsp"));
         reqService.setPageAttribute("categories", categories);
     }
 
     @Override
-    public void doPost(RequestService reqService) {
+    public void doPost(RequestService reqService, ResponseService respService) {
         Category category = new CategoryRequestMapper().map(reqService);
 
         if (!new CategoryValidator().getValidationStatus(category)) {
             reqService.putFlashParameter("category", category);
-            reqService.setRedirectPath("/admin/newCategory.jsp?failed=true");
+            respService.setResponseResolver(new RedirectResolver("/admin/newCategory.jsp?failed=true"));
         } else {
             categoryService.create(category);
-            reqService.setRedirectPath("/admin/categories");
+            respService.setResponseResolver(new RedirectResolver("/admin/categories"));
         }
     }
 
     @Override
-    public void doDelete(RequestService reqService) {
+    public void doDelete(RequestService reqService, ResponseService respService) {
         Long id = reqService.getLong("id");
         if (categoryService.delete(id)) {
-            reqService.setAjaxRedirectPath("/admin/categories");
+            respService.setResponseResolver(
+                    new AjaxRedirectResolver("/admin/categories"));
             LogManager.getLogger().info("deleted");
         } else {
-            reqService.setAjaxRedirectPath("/admin/categories?delete_failed=true");
+            respService.setResponseResolver(
+                    new AjaxRedirectResolver("/admin/categories?delete_failed=true"));
         }
     }
 
     @Override
-    public void doPut(RequestService reqService) {
+    public void doPut(RequestService reqService, ResponseService respService) {
         Category category = new CategoryRequestMapper().map(reqService);
         if (!new CategoryValidator().getValidationStatus(category)) {
             reqService.putFlashParameter("category", category);
-            reqService.setRedirectPath("/admin/editCategory.jsp?failed=true");
+            respService.setResponseResolver(
+                    new RedirectResolver("/admin/editCategory.jsp?failed=true"));
         } else {
             categoryService.update(category);
-            reqService.setRedirectPath("/admin/categories");
+            respService.setResponseResolver(
+                    new RedirectResolver("/admin/categories"));
         }
     }
 }

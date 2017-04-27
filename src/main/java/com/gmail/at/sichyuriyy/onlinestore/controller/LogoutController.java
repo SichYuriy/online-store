@@ -2,6 +2,8 @@ package com.gmail.at.sichyuriyy.onlinestore.controller;
 
 import com.gmail.at.sichyuriyy.onlinestore.dispatcher.Controller;
 import com.gmail.at.sichyuriyy.onlinestore.dispatcher.RequestService;
+import com.gmail.at.sichyuriyy.onlinestore.dispatcher.ResponseResolver.RedirectResolver;
+import com.gmail.at.sichyuriyy.onlinestore.dispatcher.ResponseService;
 import com.gmail.at.sichyuriyy.onlinestore.service.AuthService;
 import com.gmail.at.sichyuriyy.onlinestore.util.ServiceLocator;
 import org.apache.logging.log4j.LogManager;
@@ -17,8 +19,8 @@ public class LogoutController extends Controller {
     private AuthService authService = ServiceLocator.INSTANCE.get(AuthService.class);
 
     @Override
-    public void doPost(RequestService reqService) {
+    public void doPost(RequestService reqService, ResponseService respService) {
         authService.logout(reqService.getRequest());
-        reqService.setRedirectPath("/login");
+        respService.setResponseResolver(new RedirectResolver("/login"));
     }
 }

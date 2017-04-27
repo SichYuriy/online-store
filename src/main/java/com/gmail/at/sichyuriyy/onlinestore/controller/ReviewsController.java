@@ -2,6 +2,9 @@ package com.gmail.at.sichyuriyy.onlinestore.controller;
 
 import com.gmail.at.sichyuriyy.onlinestore.dispatcher.Controller;
 import com.gmail.at.sichyuriyy.onlinestore.dispatcher.RequestService;
+import com.gmail.at.sichyuriyy.onlinestore.dispatcher.ResponseResolver.AjaxRedirectResolver;
+import com.gmail.at.sichyuriyy.onlinestore.dispatcher.ResponseResolver.RedirectResolver;
+import com.gmail.at.sichyuriyy.onlinestore.dispatcher.ResponseService;
 import com.gmail.at.sichyuriyy.onlinestore.entity.Review;
 import com.gmail.at.sichyuriyy.onlinestore.entity.Role;
 import com.gmail.at.sichyuriyy.onlinestore.entity.User;
@@ -23,22 +26,25 @@ public class ReviewsController extends Controller {
 
 
     @Override
-    public void doPost(RequestService reqService) {
+    public void doPost(RequestService reqService, ResponseService respService) {
         Review review = new ReviewRequestMapper().map(reqService);
         boolean validationStatus = new ReviewValidator().getValidationStatus(review);
 
         if (!validationStatus) {
             reqService.putFlashParameter("review", review);
-            reqService.setRedirectPath("/user/newReview?failed=true&productId=" + review.getProduct().getId());
+            respService.setResponseResolver(
+                    new RedirectResolver("/user/newReview?failed=true&productId="
+                            + review.getProduct().getId()));
             return;
         }
         checkUser(reqService, review);
         reviewService.create(review);
-        reqService.setRedirectPath("/product?id=" + review.getProduct().getId());
+        respService.setResponseResolver(
+                new RedirectResolver("/product?id=" + review.getProduct().getId()));
     }
 
     @Override
-    public void doPut(RequestService reqService) {
+    public void doPut(RequestService reqService, ResponseService respService) {
         LogManager.getLogger().info("update ");
         Review review = new ReviewRequestMapper().map(reqService);
         boolean validationStatus = new ReviewValidator().getValidationStatus(review);
@@ -46,16 +52,17 @@ public class ReviewsController extends Controller {
             LogManager.getLogger().info("validation failed ");
 
             reqService.putFlashParameter("review", review);
-            reqService.setRedirectPath("/user/editReview?failed=true&id=" + review.getId());
+            respService.setResponseResolver(
+                    new RedirectResolver("/user/editReview?failed=true&id=" + review.getId()));
             return;
         }
         checkUser(reqService, review);
         reviewService.update(review);
-        reqService.setRedirectPath("/product?id=" + review.getProduct().getId());
+        respService.setResponseResolver(new RedirectResolver("/product?id=" + review.getProduct().getId()));
     }
 
     @Override
-    public void doDelete(RequestService reqService) {
+    public void doDelete(RequestService reqService, ResponseService respService) {
         Long reviewId = reqService.getLong("id");
 
         Review review = reviewService.findById(reviewId);
@@ -67,7 +74,8 @@ public class ReviewsController extends Controller {
         }
 
         reviewService.delete(reviewId);
-        reqService.setAjaxRedirectPath("/product.jsp?id=" + review.getProduct().getId());
+        respService.setResponseResolver(
+                new AjaxRedirectResolver("/product.jsp?id=" + review.getProduct().getId()));
     }
 
     private void checkUser(RequestService reqService, Review review) {

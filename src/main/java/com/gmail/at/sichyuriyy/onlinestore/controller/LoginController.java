@@ -3,6 +3,8 @@ package com.gmail.at.sichyuriyy.onlinestore.controller;
 import com.gmail.at.sichyuriyy.onlinestore.dispatcher.Controller;
 import com.gmail.at.sichyuriyy.onlinestore.dispatcher.DispatcherServlet;
 import com.gmail.at.sichyuriyy.onlinestore.dispatcher.RequestService;
+import com.gmail.at.sichyuriyy.onlinestore.dispatcher.ResponseResolver.RedirectResolver;
+import com.gmail.at.sichyuriyy.onlinestore.dispatcher.ResponseService;
 import com.gmail.at.sichyuriyy.onlinestore.service.AuthService;
 import com.gmail.at.sichyuriyy.onlinestore.util.ServiceLocator;
 import org.apache.logging.log4j.LogManager;
@@ -18,10 +20,10 @@ public class LoginController extends Controller {
     private AuthService authService = ServiceLocator.INSTANCE.get(AuthService.class);
 
     @Override
-    public void doGet(RequestService reqService) {
+    public void doGet(RequestService reqService, ResponseService respService) {
         Boolean failed = reqService.getBool("failed") != null;
         String username = (String) reqService.getFlashParameter("username");
-        useDefaultRenderPage(reqService);
+        useDefaultRenderPage(reqService, respService);
         if (failed) {
             reqService.setPageAttribute("failed", true);
             reqService.setPageAttribute("username", username);
@@ -30,7 +32,7 @@ public class LoginController extends Controller {
     }
 
     @Override
-    public void doPost(RequestService reqService) {
+    public void doPost(RequestService reqService, ResponseService respService) {
         LOGGER.info("login request");
         String username = reqService.getString("username");
         String password = reqService.getString("password");
@@ -40,12 +42,12 @@ public class LoginController extends Controller {
         if (authService.login(reqService.getRequest(), username, password)) {
             LOGGER.info("user: " + username + " login success");
             if(destination == null) {
-                reqService.setRedirectPath("/");
+                respService.setResponseResolver(new RedirectResolver("/"));
             } else {
-                reqService.setRedirectPath(destination);
+                respService.setResponseResolver(new RedirectResolver(destination));
             }
         } else {
-            reqService.setRedirectPath("/login.jsp?failed=true");
+            respService.setResponseResolver(new RedirectResolver("/login.jsp?failed=true"));
             reqService.putFlashParameter("username", username);
         }
         reqService.getRequest().getSession().removeAttribute(DispatcherServlet.DESTINATION_KEY);

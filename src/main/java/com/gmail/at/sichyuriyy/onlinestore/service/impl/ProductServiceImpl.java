@@ -6,8 +6,10 @@ import com.gmail.at.sichyuriyy.onlinestore.persistance.dao.Dao;
 import com.gmail.at.sichyuriyy.onlinestore.persistance.dao.ProductDao;
 import com.gmail.at.sichyuriyy.onlinestore.persistance.dao.ProductDynamicFilter;
 import com.gmail.at.sichyuriyy.onlinestore.persistance.transaction.Transaction;
+import com.gmail.at.sichyuriyy.onlinestore.persistance.transaction.TransactionManager;
 import com.gmail.at.sichyuriyy.onlinestore.service.AbstractCrudService;
 import com.gmail.at.sichyuriyy.onlinestore.service.ProductService;
+import com.gmail.at.sichyuriyy.onlinestore.util.ServiceLocator;
 
 import java.util.List;
 
@@ -17,11 +19,10 @@ import java.util.List;
 public class ProductServiceImpl extends AbstractCrudService<Product, Long> implements ProductService {
 
     private ProductDao productDao;
-    private ConnectionManager cm;
+    private TransactionManager transactionManager = ServiceLocator.INSTANCE.get(TransactionManager.class);
 
-    public ProductServiceImpl(ProductDao productDao, ConnectionManager cm) {
+    public ProductServiceImpl(ProductDao productDao) {
         this.productDao = productDao;
-        this.cm = cm;
     }
 
     @Override
@@ -34,7 +35,7 @@ public class ProductServiceImpl extends AbstractCrudService<Product, Long> imple
 
     @Override
     public void update(Product product) {
-        Transaction.tx(cm, () -> {
+        transactionManager.tx(() -> {
             Product oldProduct = productDao.findById(product.getId());
             product.setVotesCount(oldProduct.getVotesCount());
             product.setAvgRating(oldProduct.getAvgRating());
@@ -60,6 +61,11 @@ public class ProductServiceImpl extends AbstractCrudService<Product, Long> imple
     @Override
     public List<Product> findEnabledByCategory(Long categoryId, int limit, int offset) {
         return productDao.findEnabledByCategory(categoryId, limit, offset);
+    }
+
+    @Override
+    public Integer getEnabledProductsCount(Long categoryId) {
+        return productDao.getEnabledProductsCount(categoryId);
     }
 
     @Override

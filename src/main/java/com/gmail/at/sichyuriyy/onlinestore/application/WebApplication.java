@@ -8,6 +8,7 @@ import com.gmail.at.sichyuriyy.onlinestore.entity.Role;
 import com.gmail.at.sichyuriyy.onlinestore.persistance.ConnectionManager;
 import com.gmail.at.sichyuriyy.onlinestore.persistance.dao.factory.DaoFactory;
 import com.gmail.at.sichyuriyy.onlinestore.persistance.dao.factory.JdbcDaoFactory;
+import com.gmail.at.sichyuriyy.onlinestore.persistance.transaction.TransactionManager;
 import com.gmail.at.sichyuriyy.onlinestore.security.SecurityContext;
 import com.gmail.at.sichyuriyy.onlinestore.service.*;
 import com.gmail.at.sichyuriyy.onlinestore.service.impl.*;
@@ -97,28 +98,30 @@ public class WebApplication {
 
     private void preparePersistence() {
         connectionManager = ConnectionManager.fromJndi(appProperties.getProperty(AppProperties.CP_JNDI));
+
         serviceLocator.add(ConnectionManager.class, connectionManager);
         daoFactory = new JdbcDaoFactory(connectionManager);
+        TransactionManager transactionManager = new TransactionManager(connectionManager);
+        serviceLocator.add(TransactionManager.class, transactionManager);
     }
 
     private void prepareServices() {
         UserService userService =
-                new UserServiceImpl(daoFactory.getUserDao(), connectionManager);
+                new UserServiceImpl(daoFactory.getUserDao());
         CategoryService categoryService =
                 new CategoryServiceImpl(daoFactory.getCategoryDao());
         AuthService authService =
                 new AuthServiceImpl(userService);
         ProductService productService =
-                new ProductServiceImpl(daoFactory.getProductDao(), connectionManager);
+                new ProductServiceImpl(daoFactory.getProductDao());
         ReviewService reviewService =
-                new ReviewServiceImpl(connectionManager, daoFactory.getReviewDao(),
+                new ReviewServiceImpl(daoFactory.getReviewDao(),
                         daoFactory.getUserDao(), daoFactory.getProductDao());
         ProductImageService productImageService =
                 new ProductImageServiceImpl(daoFactory.getProductImageDao());
         OrderService orderService =
                 new OrderServiceImpl(daoFactory.getOrderDao(), daoFactory.getUserDao(),
-                        daoFactory.getLineItemDao(), daoFactory.getProductDao(),
-                        connectionManager);
+                        daoFactory.getLineItemDao(), daoFactory.getProductDao());
 
         //TODO: add all services
 

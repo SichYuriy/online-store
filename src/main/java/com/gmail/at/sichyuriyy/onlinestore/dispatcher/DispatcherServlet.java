@@ -1,6 +1,7 @@
 package com.gmail.at.sichyuriyy.onlinestore.dispatcher;
 
 
+import com.gmail.at.sichyuriyy.onlinestore.dispatcher.util.ControllerUtil;
 import com.gmail.at.sichyuriyy.onlinestore.dispatcher.util.UrlUtil;
 import com.gmail.at.sichyuriyy.onlinestore.persistance.ConnectionManager;
 import com.gmail.at.sichyuriyy.onlinestore.util.ServiceLocator;
@@ -31,7 +32,6 @@ public class DispatcherServlet extends HttpServlet {
 
     public static final String METHOD_PARAM = "__method";
 
-    private Map<String, Controller> urlControllerMap = new HashMap<>();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -54,60 +54,30 @@ public class DispatcherServlet extends HttpServlet {
     }
 
     private void dispatch(HttpServletRequest req, HttpServletResponse resp) {
-        Controller controller = getController(req);
-        RequestService requestService = new RequestService(req, resp);
-        if (controller == null) {
-            sendError(resp, HttpServletResponse.SC_NOT_FOUND);
-        } else {
-            controller.execute(requestService);
-        }
-
-        if (requestService.isRedirect()) {
-            tryRedirect(req, resp, requestService);
-        } else if (requestService.isRender()) {
-            tryRender(req, resp, requestService);
-            requestService.clearFlash();
-        } else if (requestService.isAjaxRedirect()) {
-            tryRedirectAjax(req, resp, requestService);
-        }
-
         ConnectionManager cm = ServiceLocator.INSTANCE.get(ConnectionManager.class);
-        if (cm != null) {
-            cm.clean();
+        try{
+            Controller controller = ControllerResolver.INSTANCE.getController(req.getPathInfo());
+
+            RequestService requestService = new RequestService(req);
+            ResponseService responseService = new ResponseService(req, resp);
+
+            if (controller == null) {
+                sendError(resp, HttpServletResponse.SC_NOT_FOUND);
+            } else {
+                ControllerUtil.service(controller, requestService, responseService);
+            }
+
+            responseService.resolveResponse();
+
+        } finally {
+            if (cm != null) {
+                cm.clean();
+            }
         }
     }
 
     public void addMapping(String url, Controller controller) {
-        urlControllerMap.put(url, controller);
-    }
-
-    private Controller getController(HttpServletRequest req) {
-        String path = req.getPathInfo();
-
-        return urlControllerMap.get(UrlUtil.getControllerUrl(path));
-    }
-
-    private void tryRedirect(HttpServletRequest req, HttpServletResponse resp, RequestService requestService) {
-        try {
-            //req.getRequestDispatcher(requestService.getRedirectPath()).forward(req, resp);
-            resp.sendRedirect(requestService.getRedirectPath());
-        } catch (IOException e) {
-            LOGGER.warn("An exception happened at redirecting");
-        }
-    }
-
-    private void tryRender(HttpServletRequest req, HttpServletResponse resp, RequestService requestService) {
-        LOGGER.info("tryRender:" + req.getPathInfo());
-        try {
-            requestService.setPageAttribute("loggedIn", req.getUserPrincipal() != null);
-            req.getRequestDispatcher(requestService.getRenderPage()).forward(req, resp);
-        } catch (ServletException | IOException e) {
-            LOGGER.warn("An exception happened at page rendering phase", e);
-        } catch (NullPointerException e) {
-            LOGGER.error("NULL POINTER", e);
-            throw e;
-            //TODO: delete NullPointerException catcher
-        }
+        ControllerResolver.INSTANCE.addMapping(url, controller);
     }
 
     private void sendError(HttpServletResponse resp, int status) {
@@ -118,12 +88,4 @@ public class DispatcherServlet extends HttpServlet {
         }
     }
 
-    private void tryRedirectAjax(HttpServletRequest req, HttpServletResponse resp, RequestService requestService) {
-        try {
-            resp.setContentType("application/json");
-            resp.getWriter().write("{\"redirect\":\"" + requestService.getAjaxRedirectPath() + "\"}");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 }

@@ -2,6 +2,10 @@ package com.gmail.at.sichyuriyy.onlinestore.controller;
 
 import com.gmail.at.sichyuriyy.onlinestore.dispatcher.Controller;
 import com.gmail.at.sichyuriyy.onlinestore.dispatcher.RequestService;
+import com.gmail.at.sichyuriyy.onlinestore.dispatcher.ResponseResolver.AjaxRedirectResolver;
+import com.gmail.at.sichyuriyy.onlinestore.dispatcher.ResponseResolver.RedirectResolver;
+import com.gmail.at.sichyuriyy.onlinestore.dispatcher.ResponseResolver.RenderResolver;
+import com.gmail.at.sichyuriyy.onlinestore.dispatcher.ResponseService;
 import com.gmail.at.sichyuriyy.onlinestore.entity.User;
 import com.gmail.at.sichyuriyy.onlinestore.persistance.dao.UserDao;
 import com.gmail.at.sichyuriyy.onlinestore.service.AuthService;
@@ -22,39 +26,39 @@ public class AdminUsersController extends Controller {
 
 
     @Override
-    public void doGet(RequestService reqService) {
+    public void doGet(RequestService reqService, ResponseService respService) {
         List<User> users = userService.findAll();
 
         reqService.setPageAttribute("users", users);
-        reqService.setRenderPage("/pages/admin/users.jsp");
+        respService.setResponseResolver(new RenderResolver("/pages/admin/users.jsp"));
     }
 
 
 
     @Override
-    public void doPut(RequestService reqService) {
+    public void doPut(RequestService reqService, ResponseService respService) {
         Long id = reqService.getLong("id");
         Boolean blackList = reqService.getBool("blackList");
         userService.changeBlackListStatus(id, blackList);
-        reqService.setAjaxRedirectPath("/admin/users");
+        respService.setResponseResolver(new AjaxRedirectResolver("/admin/users"));
     }
 
     @Override
-    public void doPost(RequestService reqService) {
+    public void doPost(RequestService reqService, ResponseService respService) {
         User user = new UserRequestMapper().map(reqService);
         boolean  validationStatus = new UserValidator().getValidationStatus(user);
         if (!validationStatus) {
             reqService.putFlashParameter("error", "register.error.validation");
             reqService.putFlashParameter("username", user.getLogin());
-            reqService.setRedirectPath("/admin/newAdmin.jsp?failed=true");
+            respService.setResponseResolver(new RedirectResolver("/admin/newAdmin.jsp?failed=true"));
             return;
         }
 
         if(!authService.registerAdministrator(user)) {
             reqService.putFlashParameter("error", "register.error.username");
-            reqService.setRedirectPath("/admin/newAdmin.jsp?failed=true");
+            respService.setResponseResolver(new RedirectResolver("/admin/newAdmin.jsp?failed=true"));
             return;
         }
-        reqService.setRedirectPath("/admin/users");
+        respService.setResponseResolver(new RedirectResolver("/admin/users"));
     }
 }

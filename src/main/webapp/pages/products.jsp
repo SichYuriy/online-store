@@ -67,7 +67,7 @@
                 </c:if>
                 <c:if test="${pagesCount > 1}">
                     <a class="btn btn-primary" href="/products?categoryId=${category.id}&pageNum=${pagesCount}" role="button">
-                        ${pageount}
+                        ${pagesCount}
                     </a>
                 </c:if>
 

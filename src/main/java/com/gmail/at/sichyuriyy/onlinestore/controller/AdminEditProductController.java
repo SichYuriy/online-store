@@ -2,6 +2,8 @@ package com.gmail.at.sichyuriyy.onlinestore.controller;
 
 import com.gmail.at.sichyuriyy.onlinestore.dispatcher.Controller;
 import com.gmail.at.sichyuriyy.onlinestore.dispatcher.RequestService;
+import com.gmail.at.sichyuriyy.onlinestore.dispatcher.ResponseResolver.RenderResolver;
+import com.gmail.at.sichyuriyy.onlinestore.dispatcher.ResponseService;
 import com.gmail.at.sichyuriyy.onlinestore.entity.Category;
 import com.gmail.at.sichyuriyy.onlinestore.entity.Product;
 import com.gmail.at.sichyuriyy.onlinestore.service.CategoryService;
@@ -18,7 +20,7 @@ public class AdminEditProductController extends Controller {
     private CategoryService categoryService = ServiceLocator.INSTANCE.get(CategoryService.class);
 
     @Override
-    public void doGet(RequestService reqService) {
+    public void doGet(RequestService reqService, ResponseService respService) {
         Product product = productService.findById(reqService.getLong("id"));
         Boolean failed = reqService.getBool("failed") != null;
         Category category = categoryService.findById(product.getCategory().getId());
@@ -28,6 +30,6 @@ public class AdminEditProductController extends Controller {
         }
         reqService.setPageAttribute("product", product);
         reqService.setPageAttribute("category", category);
-        reqService.setRenderPage("/pages/admin/edit-product.jsp");
+        respService.setResponseResolver(new RenderResolver("/pages/admin/edit-product.jsp"));
     }
 }

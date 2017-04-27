@@ -2,6 +2,8 @@ package com.gmail.at.sichyuriyy.onlinestore.controller;
 
 import com.gmail.at.sichyuriyy.onlinestore.dispatcher.Controller;
 import com.gmail.at.sichyuriyy.onlinestore.dispatcher.RequestService;
+import com.gmail.at.sichyuriyy.onlinestore.dispatcher.ResponseResolver.RenderResolver;
+import com.gmail.at.sichyuriyy.onlinestore.dispatcher.ResponseService;
 import com.gmail.at.sichyuriyy.onlinestore.entity.Category;
 import org.apache.logging.log4j.LogManager;
 
@@ -11,9 +13,9 @@ import org.apache.logging.log4j.LogManager;
 public class AdminNewCategoryController extends Controller {
 
     @Override
-    public void doGet(RequestService reqService) {
+    public void doGet(RequestService reqService, ResponseService respService) {
         Category category = (Category) reqService.getFlashParameter("category");
         reqService.setPageAttribute("category", category);
-        reqService.setRenderPage("/pages/admin/new-category.jsp");
+        respService.setResponseResolver(new RenderResolver("/pages/admin/new-category.jsp"));
     }
 }

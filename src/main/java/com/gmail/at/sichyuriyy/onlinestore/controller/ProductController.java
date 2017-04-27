@@ -2,6 +2,7 @@ package com.gmail.at.sichyuriyy.onlinestore.controller;
 
 import com.gmail.at.sichyuriyy.onlinestore.dispatcher.Controller;
 import com.gmail.at.sichyuriyy.onlinestore.dispatcher.RequestService;
+import com.gmail.at.sichyuriyy.onlinestore.dispatcher.ResponseService;
 import com.gmail.at.sichyuriyy.onlinestore.entity.*;
 import com.gmail.at.sichyuriyy.onlinestore.service.ProductImageService;
 import com.gmail.at.sichyuriyy.onlinestore.service.ProductService;
@@ -20,7 +21,7 @@ public class ProductController extends Controller {
     private ProductImageService productImageService = ServiceLocator.INSTANCE.get(ProductImageService.class);
 
     @Override
-    public void doGet(RequestService reqService) {
+    public void doGet(RequestService reqService, ResponseService respService) {
         Long id = reqService.getLong("id");
         Product product = productService.findById(id);
         User user = reqService.getUser();
@@ -45,6 +46,6 @@ public class ProductController extends Controller {
 
         reqService.setPageAttribute("oldReview", oldReview);
 
-        useDefaultRenderPage(reqService);
+        useDefaultRenderPage(reqService, respService);
     }
 }

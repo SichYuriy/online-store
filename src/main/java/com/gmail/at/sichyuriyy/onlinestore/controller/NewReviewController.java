@@ -2,6 +2,9 @@ package com.gmail.at.sichyuriyy.onlinestore.controller;
 
 import com.gmail.at.sichyuriyy.onlinestore.dispatcher.Controller;
 import com.gmail.at.sichyuriyy.onlinestore.dispatcher.RequestService;
+import com.gmail.at.sichyuriyy.onlinestore.dispatcher.ResponseResolver.RedirectResolver;
+import com.gmail.at.sichyuriyy.onlinestore.dispatcher.ResponseResolver.RenderResolver;
+import com.gmail.at.sichyuriyy.onlinestore.dispatcher.ResponseService;
 import com.gmail.at.sichyuriyy.onlinestore.entity.Product;
 import com.gmail.at.sichyuriyy.onlinestore.entity.Review;
 import com.gmail.at.sichyuriyy.onlinestore.entity.User;
@@ -19,7 +22,7 @@ public class NewReviewController extends Controller {
     private ReviewService reviewService = ServiceLocator.INSTANCE.get(ReviewService.class);
 
     @Override
-    public void doGet(RequestService reqService) {
+    public void doGet(RequestService reqService, ResponseService respService) {
         Boolean failed = reqService.getBool("failed") != null;
         Long productId = reqService.getLong("productId");
         Review review = (Review) reqService.getFlashParameter("review");
@@ -27,13 +30,13 @@ public class NewReviewController extends Controller {
         User user = reqService.getUser();
         Review oldReview = reviewService.findByUserIdProductId(user.getId(), product.getId());
         if (oldReview != null) {
-            reqService.setRedirectPath("/user/editReview?id=" + oldReview.getId());
+            respService.setResponseResolver(new RedirectResolver("/user/editReview?id=" + oldReview.getId()));
         }
         if (failed) {
             reqService.setPageAttribute("failed", true);
             reqService.setPageAttribute("review", review);
         }
         reqService.setPageAttribute("product", product);
-        reqService.setRenderPage("/pages/user/new-review.jsp");
+        respService.setResponseResolver(new RenderResolver("/pages/user/new-review.jsp"));
     }
 }

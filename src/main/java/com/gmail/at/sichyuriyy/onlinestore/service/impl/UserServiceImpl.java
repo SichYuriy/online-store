@@ -5,8 +5,10 @@ import com.gmail.at.sichyuriyy.onlinestore.persistance.ConnectionManager;
 import com.gmail.at.sichyuriyy.onlinestore.persistance.dao.Dao;
 import com.gmail.at.sichyuriyy.onlinestore.persistance.dao.UserDao;
 import com.gmail.at.sichyuriyy.onlinestore.persistance.transaction.Transaction;
+import com.gmail.at.sichyuriyy.onlinestore.persistance.transaction.TransactionManager;
 import com.gmail.at.sichyuriyy.onlinestore.service.AbstractCrudService;
 import com.gmail.at.sichyuriyy.onlinestore.service.UserService;
+import com.gmail.at.sichyuriyy.onlinestore.util.ServiceLocator;
 
 /**
  * Created by Yuriy on 4/7/2017.
@@ -14,11 +16,10 @@ import com.gmail.at.sichyuriyy.onlinestore.service.UserService;
 public class UserServiceImpl extends AbstractCrudService<User, Long> implements UserService {
 
     private UserDao userDao;
-    private ConnectionManager cm;
+    private TransactionManager transactionManager = ServiceLocator.INSTANCE.get(TransactionManager.class);
 
-    public UserServiceImpl(UserDao userDao, ConnectionManager cm) {
+    public UserServiceImpl(UserDao userDao) {
         this.userDao = userDao;
-        this.cm = cm;
     }
 
     @Override
@@ -34,7 +35,7 @@ public class UserServiceImpl extends AbstractCrudService<User, Long> implements 
 
     @Override
     public void changeBlackListStatus(Long id, boolean blackList) {
-        Transaction.tx(cm, () -> {
+        transactionManager.tx(() -> {
             User user = userDao.findById(id);
             user.setBlackList(blackList);
             userDao.update(user);

@@ -14,4 +14,6 @@ public interface ProductDao extends Dao<Product, Long> {
     int getProductsCount(Long categoryId);
 
     List<Product> findEnabledByCategory(Long categoryId, int limit, int offset);
+
+    Integer getEnabledProductsCount(Long categoryId);
 }

@@ -18,22 +18,13 @@ public class RequestService {
 
     private HttpMethod httpMethod;
     private HttpServletRequest request;
-    private HttpServletResponse response;
 
     /**
      * Page that will be rendered as the result of the request
      */
-    private String renderPage = null;
 
-    /**
-     * If not null than the dispatcher server will redirect the request to this path
-     */
-    private String redirectPath = null;
-    private String ajaxRedirectPath = null;
-
-    public RequestService(HttpServletRequest request, HttpServletResponse response) {
+    public RequestService(HttpServletRequest request) {
         this.request = request;
-        this.response = response;
         this.httpMethod = UrlUtil.getMethod(request);
     }
 
@@ -70,33 +61,6 @@ public class RequestService {
         return httpMethod;
     }
 
-    public boolean isRedirect() {
-       return redirectPath != null;
-    }
-
-    public boolean isAjaxRedirect() {
-        return ajaxRedirectPath != null;
-    }
-
-    public boolean isRender() {
-        return renderPage != null;
-    }
-
-    public String getRenderPage() {
-        return renderPage;
-    }
-
-    public void setRenderPage(String renderPage) {
-        this.renderPage = renderPage;
-    }
-
-    public String getRedirectPath() {
-        return redirectPath;
-    }
-
-    public void setRedirectPath(String redirectPath) {
-        this.redirectPath = redirectPath;
-    }
 
 
     public void putFlashParameter(String param, Object o) {
@@ -121,41 +85,14 @@ public class RequestService {
         return flash.get(param);
     }
 
-    public void clearFlash() {
-        Map<String, Object> flash =
-                (Map<String, Object>) request.getSession().getAttribute(DispatcherServlet.FLASH_KEY);
 
-        if(flash == null) {
-            flash = new HashMap<>();
-        }
-
-        flash.clear();
-
-        request.getSession().setAttribute(DispatcherServlet.FLASH_KEY, flash);
-    }
 
     public void setPageAttribute(String key, Object val) {
         request.setAttribute(key, val);
     }
 
-    public void setResponseStatus(int status) {
-        response.setStatus(status);
-    }
-
-    public HttpServletResponse getResponse() {
-        return this.response;
-    }
-
     public HttpServletRequest getRequest() {
         return request;
-    }
-
-    public void setAjaxRedirectPath(String path) {
-        this.ajaxRedirectPath = path;
-    }
-
-    public String getAjaxRedirectPath() {
-        return ajaxRedirectPath;
     }
 
     public User getUser() {

@@ -2,6 +2,9 @@ package com.gmail.at.sichyuriyy.onlinestore.controller;
 
 import com.gmail.at.sichyuriyy.onlinestore.dispatcher.Controller;
 import com.gmail.at.sichyuriyy.onlinestore.dispatcher.RequestService;
+import com.gmail.at.sichyuriyy.onlinestore.dispatcher.ResponseResolver.AjaxRedirectResolver;
+import com.gmail.at.sichyuriyy.onlinestore.dispatcher.ResponseResolver.RenderResolver;
+import com.gmail.at.sichyuriyy.onlinestore.dispatcher.ResponseService;
 import com.gmail.at.sichyuriyy.onlinestore.entity.Order;
 import com.gmail.at.sichyuriyy.onlinestore.entity.OrderStatus;
 import com.gmail.at.sichyuriyy.onlinestore.entity.Role;
@@ -22,7 +25,7 @@ public class AdminOrdersController extends Controller {
     private UserService userService = ServiceLocator.INSTANCE.get(UserService.class);
 
     @Override
-    public void doGet(RequestService reqService) {
+    public void doGet(RequestService reqService, ResponseService respService) {
         Long requestUserId = reqService.getLong("userId");
 
         List<Order> orders;
@@ -33,15 +36,15 @@ public class AdminOrdersController extends Controller {
         }
 
         reqService.setPageAttribute("orders", orders);
-        reqService.setRenderPage("/pages/admin/orders.jsp");
+        respService.setResponseResolver(new RenderResolver("/pages/admin/orders.jsp"));
     }
 
     @Override
-    public void doPut(RequestService reqService) {
+    public void doPut(RequestService reqService, ResponseService respService) {
         Long orderId = reqService.getLong("orderId");
         OrderStatus status = OrderStatus.valueOf(reqService.getString("status"));
 
         orderService.changeOrderStatus(orderId, status);
-        reqService.setAjaxRedirectPath("/admin/orders");
+        respService.setResponseResolver(new AjaxRedirectResolver("/admin/orders"));
     }
 }

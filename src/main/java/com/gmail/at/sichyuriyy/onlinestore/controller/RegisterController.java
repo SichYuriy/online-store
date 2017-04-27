@@ -2,6 +2,8 @@ package com.gmail.at.sichyuriyy.onlinestore.controller;
 
 import com.gmail.at.sichyuriyy.onlinestore.dispatcher.Controller;
 import com.gmail.at.sichyuriyy.onlinestore.dispatcher.RequestService;
+import com.gmail.at.sichyuriyy.onlinestore.dispatcher.ResponseResolver.RedirectResolver;
+import com.gmail.at.sichyuriyy.onlinestore.dispatcher.ResponseService;
 import com.gmail.at.sichyuriyy.onlinestore.entity.User;
 import com.gmail.at.sichyuriyy.onlinestore.service.AuthService;
 import com.gmail.at.sichyuriyy.onlinestore.util.ServiceLocator;
@@ -18,34 +20,37 @@ public class RegisterController extends Controller {
     AuthService authService = ServiceLocator.INSTANCE.get(AuthService.class);
 
     @Override
-    public void doGet(RequestService reqService) {
+    public void doGet(RequestService reqService, ResponseService respService) {
 
         String error = (String) reqService.getFlashParameter("error");
         String username = (String) reqService.getFlashParameter("username");
-        useDefaultRenderPage(reqService);
-        org.apache.logging.log4j.LogManager.getLogger().info(reqService.getRenderPage());
+
         if (error != null) {
             reqService.setPageAttribute("error", error);
         }
         reqService.setPageAttribute("username", username);
+        useDefaultRenderPage(reqService, respService);
     }
 
     @Override
-    public void doPost(RequestService reqService) {
+    public void doPost(RequestService reqService, ResponseService respService) {
         User user = new UserRequestMapper().map(reqService);
         boolean  validationStatus = new UserValidator().getValidationStatus(user);
         if (!validationStatus) {
             reqService.putFlashParameter("error", "register.error.validation");
             reqService.putFlashParameter("username", user.getLogin());
-            reqService.setRedirectPath("/login.jsp?failed=true");
+            respService.setResponseResolver(
+                    new RedirectResolver("/login.jsp?failed=true"));
             return;
         }
 
         if(!authService.registerCustomer(user)) {
             reqService.putFlashParameter("error", "register.error.username");
-            reqService.setRedirectPath("/register.jsp?failed=true");
+            respService.setResponseResolver(
+                    new RedirectResolver("/register.jsp?failed=true"));
             return;
         }
-        reqService.setRedirectPath("/login.jsp");
+        respService.setResponseResolver(
+                new RedirectResolver("/login.jsp"));
     }
 }

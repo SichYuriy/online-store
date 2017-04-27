@@ -2,6 +2,8 @@ package com.gmail.at.sichyuriyy.onlinestore.controller;
 
 import com.gmail.at.sichyuriyy.onlinestore.dispatcher.Controller;
 import com.gmail.at.sichyuriyy.onlinestore.dispatcher.RequestService;
+import com.gmail.at.sichyuriyy.onlinestore.dispatcher.ResponseResolver.RenderResolver;
+import com.gmail.at.sichyuriyy.onlinestore.dispatcher.ResponseService;
 import com.gmail.at.sichyuriyy.onlinestore.entity.Product;
 import com.gmail.at.sichyuriyy.onlinestore.entity.Review;
 import com.gmail.at.sichyuriyy.onlinestore.security.AccessDeniedException;
@@ -18,7 +20,7 @@ public class EditReviewController extends Controller {
     private ReviewService reviewService = ServiceLocator.INSTANCE.get(ReviewService.class);
 
     @Override
-    public void doGet(RequestService reqService) {
+    public void doGet(RequestService reqService, ResponseService respService) {
         Boolean failed = reqService.getBool("failed") != null;
         Review review = reviewService.findById(reqService.getLong("id"));
         if (!reqService.getUser().getId().equals(review.getAuthor().getId())) {
@@ -30,6 +32,6 @@ public class EditReviewController extends Controller {
         }
         reqService.setPageAttribute("product", product);
         reqService.setPageAttribute("review", review);
-        reqService.setRenderPage("/pages/user/edit-review.jsp");
+        respService.setResponseResolver(new RenderResolver("/pages/user/edit-review.jsp"));
     }
 }

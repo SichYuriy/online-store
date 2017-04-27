@@ -23,9 +23,6 @@
             <a class="btn btn-warning" href="/admin/orders" role="button">
                 <fmt:message key="adminOrders" bundle="${rb}"/>
             </a>
-            <a class="btn btn-warning" href="/admin/products" role="button">
-                <fmt:message key="adminProducts" bundle="${rb}"/>
-            </a>
             <a class="btn btn-warning" href="/admin/users" role="button">
                 <fmt:message key="adminUsers" bundle="${rb}"/>
             </a>

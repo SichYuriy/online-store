@@ -20,7 +20,7 @@ public interface Transaction {
     static void tx(ConnectionManager cm, Transaction transaction, int transactionIsolationLevel) {
         Connection conn = cm.getConnection();
         if (conn == null) {
-            throw new TransactionFailedException();//TODO:
+            throw new TransactionFailedException();
         }
 
         boolean autoCommit;

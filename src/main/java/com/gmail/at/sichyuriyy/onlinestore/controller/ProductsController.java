@@ -2,6 +2,9 @@ package com.gmail.at.sichyuriyy.onlinestore.controller;
 
 import com.gmail.at.sichyuriyy.onlinestore.dispatcher.Controller;
 import com.gmail.at.sichyuriyy.onlinestore.dispatcher.RequestService;
+import com.gmail.at.sichyuriyy.onlinestore.dispatcher.ResponseResolver.RedirectResolver;
+import com.gmail.at.sichyuriyy.onlinestore.dispatcher.ResponseResolver.RenderResolver;
+import com.gmail.at.sichyuriyy.onlinestore.dispatcher.ResponseService;
 import com.gmail.at.sichyuriyy.onlinestore.entity.Category;
 import com.gmail.at.sichyuriyy.onlinestore.entity.Product;
 import com.gmail.at.sichyuriyy.onlinestore.service.CategoryService;
@@ -23,7 +26,7 @@ public class ProductsController extends Controller {
     private CategoryService categoryService = ServiceLocator.INSTANCE.get(CategoryService.class);
 
     @Override
-    public void doGet(RequestService reqService) {
+    public void doGet(RequestService reqService, ResponseService respService) {
         Long categoryId = reqService.getLong("categoryId");
         Integer pageNumber = reqService.getInt("pageNum");
         if (pageNumber == null) {
@@ -33,14 +36,17 @@ public class ProductsController extends Controller {
         int offset = PAGE_SIZE * (pageNumber - 1);
 
 
-        List<Product> products = null;
+        List<Product> products;
+        Integer productsCount;
         if (reqService.getRequest().isUserInRole("ADMINISTRATOR")) {
             products = productService.findByCategory(categoryId, limit, offset);
+            productsCount = productService.getProductsCount(categoryId);
         } else {
             products = productService.findEnabledByCategory(categoryId, limit, offset);
+            productsCount = productService.getEnabledProductsCount(categoryId);
         }
 
-        Integer pagesCount = getPagesCount(productService.getProductsCount(categoryId));
+        Integer pagesCount = getPagesCount(productsCount);
         Category category = categoryService.findById(categoryId);
 
         reqService.setPageAttribute("category", category);
@@ -48,7 +54,8 @@ public class ProductsController extends Controller {
         reqService.setPageAttribute("pagesCount", pagesCount);
         reqService.setPageAttribute("products", products);
 
-        reqService.setRenderPage("/pages/products.jsp");
+        respService.setResponseResolver(new RenderResolver("/pages/products.jsp"));
+
     }
 
     private int getPagesCount(int productsCount) {
@@ -61,31 +68,37 @@ public class ProductsController extends Controller {
 
 
     @Override
-    public void doPost(RequestService reqService) {
+    public void doPost(RequestService reqService, ResponseService respService) {
         Product product = new ProductRequestMapper().map(reqService);
         boolean validationStatus = new ProductValidator().getValidationStatus(product);
 
         if (!validationStatus) {
             reqService.putFlashParameter("product", product);
-            reqService.setRedirectPath("/admin/newProduct?failed=true&categoryId=" + product.getCategory().getId());
+            respService.setResponseResolver(
+                    new RedirectResolver("/admin/newProduct?failed=true&categoryId="
+                            + product.getCategory().getId()));
             return;
         }
         productService.create(product);
-        reqService.setRedirectPath("/products?categoryId=" + product.getCategory().getId());
+        respService.setResponseResolver(
+                new RedirectResolver("/products?categoryId="
+                        + product.getCategory().getId()));
     }
 
     @Override
-    public void doPut(RequestService reqService) {
+    public void doPut(RequestService reqService, ResponseService respService) {
         Product product = new ProductRequestMapper().map(reqService);
         boolean validationStatus = new ProductValidator().getValidationStatus(product);
 
         if (!validationStatus) {
             reqService.putFlashParameter("product", product);
-            reqService.setRedirectPath("/admin/editProduct?failed=true&id=" + product.getId());
+            respService.setResponseResolver(
+                    new RedirectResolver("/admin/editProduct?failed=true&id=" + product.getId()));
             return;
         }
         productService.update(product);
-        reqService.setRedirectPath("/products?categoryId=" + product.getCategory().getId());
+        respService.setResponseResolver(
+                new RedirectResolver("/products?categoryId=" + product.getCategory().getId()));
     }
 
 }
