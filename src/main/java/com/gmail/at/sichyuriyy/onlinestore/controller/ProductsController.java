@@ -75,14 +75,14 @@ public class ProductsController extends Controller {
         if (!validationStatus) {
             reqService.putFlashParameter("product", product);
             respService.setResponseResolver(
-                    new RedirectResolver("/admin/newProduct?failed=true&categoryId="
-                            + product.getCategory().getId()));
+                new RedirectResolver("/admin/newProduct?failed=true&categoryId=" + product.getCategory().getId())
+            );
             return;
         }
         productService.create(product);
         respService.setResponseResolver(
-                new RedirectResolver("/products?categoryId="
-                        + product.getCategory().getId()));
+            new RedirectResolver("/products?categoryId=" + product.getCategory().getId())
+        );
     }
 
     @Override
@@ -93,12 +93,14 @@ public class ProductsController extends Controller {
         if (!validationStatus) {
             reqService.putFlashParameter("product", product);
             respService.setResponseResolver(
-                    new RedirectResolver("/admin/editProduct?failed=true&id=" + product.getId()));
+                new RedirectResolver("/admin/editProduct?failed=true&id=" + product.getId())
+            );
             return;
         }
         productService.update(product);
         respService.setResponseResolver(
-                new RedirectResolver("/products?categoryId=" + product.getCategory().getId()));
+            new RedirectResolver("/products?categoryId=" + product.getCategory().getId())
+        );
     }
 
 }

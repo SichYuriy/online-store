@@ -34,7 +34,7 @@
                 <thead>
                     <th><fmt:message key="category.title" bundle="${rb}"/></th>
                     <th></th>
-                    <th></th>
+
                 </thead>
                 <tbody>
                     <c:forEach var="category" items="${categories}">
@@ -50,12 +50,6 @@
                                     <fmt:message key="admin.delete_category" bundle="${rb}"/>
                                 </a>
                             </td>
-                            <td>
-                                <a class="btn btn-success" role="button">
-                                    <fmt:message key="admin.products_btn" bundle="${rb}"/>
-                                </a>
-                            </td>
-
                         </tr>
                     </tbody>
                 </c:forEach>

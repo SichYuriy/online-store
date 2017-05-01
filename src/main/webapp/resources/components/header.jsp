@@ -11,6 +11,10 @@
         <h3>Online-store</h3>
     </div>
     <div class="col-md-3 col-md-offset-4">
+        <a href="#" id="lang" data-alt="${locale eq 'ua_UA' ? 'en' : 'ua'}"
+           style="border-right: solid 1px blue"><span>${locale eq 'ua_UA' ? 'ua' : 'en'}</span>
+            <img src="/resources/img/lang.png"/>
+        </a>
         <c:if test="${not loggedIn}">
 
             <a class="btn btn-default" href="/login" role="button">

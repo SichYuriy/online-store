@@ -82,7 +82,7 @@
             <u:if-user role="ADMINISTRATOR">
                 <div class="col-md-12">
                     <hr/>
-                    <a class="btn btn-warning" href="/admin/productImages?productId=${product.id}">${edit_images}</a>
+                    <a class="btn btn-warning" href="/admin/images?productId=${product.id}">${edit_images}</a>
                 </div>
             </u:if-user>
 

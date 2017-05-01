@@ -91,6 +91,11 @@ public class WebApplication {
                     .httpMethods(HttpMethod.all()).roles(Role.all()).endConstraints()
                 .withSecurity("/user/cartItems", new CartItemsController())
                     .httpMethods(HttpMethod.all()).roles(Role.all()).endConstraints()
+                .withSecurity("/admin/images", new ProductImagesController())
+                    .httpMethods(HttpMethod.all()).roles(Role.adminRoles()).endConstraints()
+                .withSecurity("/admin/newProductImage", new AdminNewImageController())
+                    .httpMethods(HttpMethod.all()).roles(Role.adminRoles()).endConstraints()
+                .addMapping("/lang", new LocaleController())
                 .buildAndRegister("Command Dispatcher Servlet", "/app/*", servletContext);
     }
 
