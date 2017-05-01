@@ -1,7 +1,6 @@
-package com.gmail.at.sichyuriyy.onlinestore.entity;
+package com.gmail.at.sichyuriyy.onlinestore.domain;
 
 import java.math.BigDecimal;
-import java.net.URL;
 import java.util.Objects;
 
 /**

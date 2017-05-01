@@ -1,4 +1,4 @@
-package com.gmail.at.sichyuriyy.onlinestore.dispatcher.ResponseResolver;
+package com.gmail.at.sichyuriyy.onlinestore.dispatcher.responseresolver;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

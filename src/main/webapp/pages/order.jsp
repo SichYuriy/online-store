@@ -25,7 +25,7 @@
 
     <div class="row">
         <div class="col-md-10 col-md-offset-1 floating-plane">
-            <hr>
+            <hr />
 
             <table class="table table-hover table-bordered">
                 <thead>

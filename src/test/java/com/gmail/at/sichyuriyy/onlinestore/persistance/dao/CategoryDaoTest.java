@@ -1,6 +1,6 @@
 package com.gmail.at.sichyuriyy.onlinestore.persistance.dao;
 
-import com.gmail.at.sichyuriyy.onlinestore.entity.Category;
+import com.gmail.at.sichyuriyy.onlinestore.domain.Category;
 import com.gmail.at.sichyuriyy.onlinestore.persistance.ConnectionManager;
 import com.gmail.at.sichyuriyy.onlinestore.persistance.H2Db;
 import com.gmail.at.sichyuriyy.onlinestore.persistance.TestData;
@@ -12,7 +12,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import static org.junit.Assert.*;

@@ -1,6 +1,6 @@
 package com.gmail.at.sichyuriyy.onlinestore.validation.validator;
 
-import com.gmail.at.sichyuriyy.onlinestore.entity.Product;
+import com.gmail.at.sichyuriyy.onlinestore.domain.Product;
 import com.gmail.at.sichyuriyy.onlinestore.validation.EntityValidator;
 
 /**

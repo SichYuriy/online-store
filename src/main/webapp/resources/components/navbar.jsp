@@ -11,7 +11,7 @@
         <a class="btn btn-default" href="/index" role="button">
             <fmt:message key="home" bundle="${rb}"/>
         </a>
-        <a class="btn btn-default" href="/cart" role="button">
+        <a class="btn btn-default" href="/user/shoppingCart" role="button">
             <fmt:message key="cart" bundle="${rb}"/>
         </a>
         <u:if-user role="CUSTOMER">

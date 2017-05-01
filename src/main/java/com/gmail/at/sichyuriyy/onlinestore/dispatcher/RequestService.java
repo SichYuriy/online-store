@@ -1,12 +1,11 @@
 package com.gmail.at.sichyuriyy.onlinestore.dispatcher;
 
 import com.gmail.at.sichyuriyy.onlinestore.dispatcher.util.UrlUtil;
-import com.gmail.at.sichyuriyy.onlinestore.entity.User;
+import com.gmail.at.sichyuriyy.onlinestore.domain.User;
 import com.gmail.at.sichyuriyy.onlinestore.security.SecurityContext;
 import org.apache.logging.log4j.LogManager;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;

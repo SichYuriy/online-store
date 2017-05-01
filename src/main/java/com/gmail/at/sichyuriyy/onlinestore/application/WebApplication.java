@@ -4,7 +4,7 @@ import com.gmail.at.sichyuriyy.onlinestore.controller.*;
 import com.gmail.at.sichyuriyy.onlinestore.dispatcher.DispatcherServlet;
 import com.gmail.at.sichyuriyy.onlinestore.dispatcher.DispatcherServletBuilder;
 import com.gmail.at.sichyuriyy.onlinestore.dispatcher.HttpMethod;
-import com.gmail.at.sichyuriyy.onlinestore.entity.Role;
+import com.gmail.at.sichyuriyy.onlinestore.domain.Role;
 import com.gmail.at.sichyuriyy.onlinestore.persistance.ConnectionManager;
 import com.gmail.at.sichyuriyy.onlinestore.persistance.dao.factory.DaoFactory;
 import com.gmail.at.sichyuriyy.onlinestore.persistance.dao.factory.JdbcDaoFactory;
@@ -16,8 +16,6 @@ import com.gmail.at.sichyuriyy.onlinestore.util.PropertiesLoader;
 import com.gmail.at.sichyuriyy.onlinestore.util.ServiceLocator;
 
 import javax.servlet.ServletContext;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.Properties;
 
 /**
@@ -89,6 +87,10 @@ public class WebApplication {
                     .httpMethods(HttpMethod.all()).roles(Role.adminRoles()).endConstraints()
                 .withSecurity("/admin/editProduct", new AdminEditProductController())
                     .httpMethods(HttpMethod.all()).roles(Role.adminRoles()).endConstraints()
+                .withSecurity("/user/shoppingCart", new ShoppingCartController())
+                    .httpMethods(HttpMethod.all()).roles(Role.all()).endConstraints()
+                .withSecurity("/user/cartItems", new CartItemsController())
+                    .httpMethods(HttpMethod.all()).roles(Role.all()).endConstraints()
                 .buildAndRegister("Command Dispatcher Servlet", "/app/*", servletContext);
     }
 
@@ -122,6 +124,8 @@ public class WebApplication {
         OrderService orderService =
                 new OrderServiceImpl(daoFactory.getOrderDao(), daoFactory.getUserDao(),
                         daoFactory.getLineItemDao(), daoFactory.getProductDao());
+        CartService cartService =
+                new CartServiceImpl(daoFactory.getCartItemDao(), daoFactory.getProductDao());
 
         //TODO: add all services
 
@@ -132,6 +136,8 @@ public class WebApplication {
         serviceLocator.add(ReviewService.class, reviewService);
         serviceLocator.add(ProductImageService.class, productImageService);
         serviceLocator.add(OrderService.class, orderService);
+        serviceLocator.add(CartService.class, cartService);
+
     }
 
 }

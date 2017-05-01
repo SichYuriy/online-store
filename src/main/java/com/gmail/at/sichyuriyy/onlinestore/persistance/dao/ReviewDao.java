@@ -1,6 +1,6 @@
 package com.gmail.at.sichyuriyy.onlinestore.persistance.dao;
 
-import com.gmail.at.sichyuriyy.onlinestore.entity.Review;
+import com.gmail.at.sichyuriyy.onlinestore.domain.Review;
 
 import java.util.List;
 

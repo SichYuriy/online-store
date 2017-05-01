@@ -88,14 +88,28 @@
 
             <fmt:message key="product.toCart" var="buy" bundle="${rb}"/>
 
-            <div class="col-md-12">
-                <hr/>
-                <c:if test="${product.count > 0}" >
-                    <a class="btn btn-success" onclick="toCart(${product.id})">${buy}</a>
-                </c:if>
-                  <fmt:message key="product.left" bundle="${rb}" /> ${product.count}
-                <hr/>
-            </div>
+            <c:if test="${loggedIn}" >
+                <div class="col-md-12">
+                    <hr/>
+                    <c:if test="${product.count > 0}" >
+                        <a class="btn btn-success" onclick="toCart(${product.id})">${buy}</a>
+                    </c:if>
+                      <fmt:message key="product.left" bundle="${rb}" /> ${product.count}
+                    <hr/>
+                    <div class="alert alert-danger" id="add_error_alert" style="display:none">
+                        <fmt:message key="cart.add_product_error_alert" bundle="${rb}" />
+                    </div>
+                    <div class="alert alert-success" id="add_success_alert" style="display:none">
+                        <fmt:message key="cart.add_product_success_alert" bundle="${rb}" />
+                    </div>
+                </div>
+            </c:if>
+            <c:if test="${!loggedIn}" >
+                <div class="col-md-12 alert-warning">
+                    <hr/>
+                    <fmt:message key="product.to_cart_auth" bundle="${rb}" />
+                </div>
+            </c:if>
 
 
             <div class="col-md-12">
@@ -136,5 +150,6 @@
     </div>
 </div>
 <script src="/resources/js/components/galery.js"></script>
+<script src="/resources/js/product.js"></script>
 </body>
 </html>

@@ -1,4 +1,4 @@
-package com.gmail.at.sichyuriyy.onlinestore.entity;
+package com.gmail.at.sichyuriyy.onlinestore.domain;
 
 /**
  * Created by Yuriy on 3/27/2017.

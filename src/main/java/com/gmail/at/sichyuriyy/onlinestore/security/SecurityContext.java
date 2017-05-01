@@ -1,13 +1,12 @@
 package com.gmail.at.sichyuriyy.onlinestore.security;
 
 import com.gmail.at.sichyuriyy.onlinestore.dispatcher.HttpMethod;
-import com.gmail.at.sichyuriyy.onlinestore.entity.Role;
-import com.gmail.at.sichyuriyy.onlinestore.entity.User;
+import com.gmail.at.sichyuriyy.onlinestore.domain.Role;
+import com.gmail.at.sichyuriyy.onlinestore.domain.User;
 import com.gmail.at.sichyuriyy.onlinestore.persistance.dao.UserDao;
 import com.gmail.at.sichyuriyy.onlinestore.util.ServiceLocator;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.xml.ws.Service;
 import java.util.ArrayList;
 import java.util.List;
 

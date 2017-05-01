@@ -3,7 +3,7 @@ package com.gmail.at.sichyuriyy.onlinestore.controller;
 import com.gmail.at.sichyuriyy.onlinestore.dispatcher.Controller;
 import com.gmail.at.sichyuriyy.onlinestore.dispatcher.DispatcherServlet;
 import com.gmail.at.sichyuriyy.onlinestore.dispatcher.RequestService;
-import com.gmail.at.sichyuriyy.onlinestore.dispatcher.ResponseResolver.RedirectResolver;
+import com.gmail.at.sichyuriyy.onlinestore.dispatcher.responseresolver.RedirectResolver;
 import com.gmail.at.sichyuriyy.onlinestore.dispatcher.ResponseService;
 import com.gmail.at.sichyuriyy.onlinestore.service.AuthService;
 import com.gmail.at.sichyuriyy.onlinestore.util.ServiceLocator;

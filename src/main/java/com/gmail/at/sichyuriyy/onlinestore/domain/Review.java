@@ -1,8 +1,6 @@
-package com.gmail.at.sichyuriyy.onlinestore.entity;
+package com.gmail.at.sichyuriyy.onlinestore.domain;
 
-import java.sql.DataTruncation;
 import java.sql.Timestamp;
-import java.util.Date;
 import java.util.Objects;
 
 /**

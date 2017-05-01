@@ -21,6 +21,8 @@ CREATE TABLE IF NOT EXISTS `product` (
         REFERENCES `category` (`id`)
 );
 
+ALTER TABLE `product` MODIFY `count` INT UNSIGNED NOT NULL;
+
 CREATE TABLE IF NOT EXISTS `user` (
 	`id` INT(11) NOT NULL AUTO_INCREMENT,
     `login` VARCHAR(45) NOT NULL UNIQUE,
@@ -105,6 +107,21 @@ CREATE TABLE IF NOT EXISTS `product_image` (
     INDEX `fk_image_product_index` (`product_id` ASC),
     CONSTRAINT `fk_image_product`
 		FOREIGN KEY (`product_id`)
+        REFERENCES `product` (`id`)
+);
+
+CREATE TABLE IF NOT EXISTS `cart_item` (
+	`id` INT(11) NOT NULL AUTO_INCREMENT,
+    `user_id` INT(11) NOT NULL,
+    `product_id` INT(11) NOT NULL,
+    `count` INT UNSIGNED NOT NULL,
+    
+    PRIMARY KEY(`id`),
+    CONSTRAINT `fk_cart_item_user`
+		FOREIGN KEY(`user_id`)
+        REFERENCES `user` (`id`),
+	CONSTRAINT `fk_cart_item_product`
+		FOREIGN KEY(`product_id`)
         REFERENCES `product` (`id`)
 );
 

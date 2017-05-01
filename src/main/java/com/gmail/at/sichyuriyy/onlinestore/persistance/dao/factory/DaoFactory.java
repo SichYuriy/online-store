@@ -13,4 +13,5 @@ public interface DaoFactory {
     ProductImageDao getProductImageDao();
     ReviewDao getReviewDao();
     UserDao getUserDao();
+    CartItemDao getCartItemDao();
 }

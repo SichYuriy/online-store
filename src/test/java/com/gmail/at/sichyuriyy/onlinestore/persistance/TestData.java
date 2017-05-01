@@ -1,12 +1,9 @@
 package com.gmail.at.sichyuriyy.onlinestore.persistance;
 
-import com.gmail.at.sichyuriyy.onlinestore.entity.*;
+import com.gmail.at.sichyuriyy.onlinestore.domain.*;
 
 import java.math.BigDecimal;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.sql.Timestamp;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 

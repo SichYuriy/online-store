@@ -1,8 +1,8 @@
 package com.gmail.at.sichyuriyy.onlinestore.persistance.mapper;
 
-import com.gmail.at.sichyuriyy.onlinestore.entity.Product;
-import com.gmail.at.sichyuriyy.onlinestore.entity.Review;
-import com.gmail.at.sichyuriyy.onlinestore.entity.User;
+import com.gmail.at.sichyuriyy.onlinestore.domain.Product;
+import com.gmail.at.sichyuriyy.onlinestore.domain.Review;
+import com.gmail.at.sichyuriyy.onlinestore.domain.User;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

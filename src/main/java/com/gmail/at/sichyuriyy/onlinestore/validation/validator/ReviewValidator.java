@@ -1,8 +1,7 @@
 package com.gmail.at.sichyuriyy.onlinestore.validation.validator;
 
-import com.gmail.at.sichyuriyy.onlinestore.entity.Review;
+import com.gmail.at.sichyuriyy.onlinestore.domain.Review;
 import com.gmail.at.sichyuriyy.onlinestore.validation.EntityValidator;
-import org.apache.logging.log4j.LogManager;
 
 /**
  * Created by Yuriy on 4/22/2017.

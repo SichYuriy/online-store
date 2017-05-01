@@ -1,12 +1,11 @@
 package com.gmail.at.sichyuriyy.onlinestore.persistance.mapper;
 
-import com.gmail.at.sichyuriyy.onlinestore.entity.Order;
-import com.gmail.at.sichyuriyy.onlinestore.entity.OrderStatus;
-import com.gmail.at.sichyuriyy.onlinestore.entity.User;
+import com.gmail.at.sichyuriyy.onlinestore.domain.Order;
+import com.gmail.at.sichyuriyy.onlinestore.domain.OrderStatus;
+import com.gmail.at.sichyuriyy.onlinestore.domain.User;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 
 /**
  * Created by Yuriy on 3/29/2017.

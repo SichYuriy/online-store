@@ -2,9 +2,9 @@ package com.gmail.at.sichyuriyy.onlinestore.controller;
 
 import com.gmail.at.sichyuriyy.onlinestore.dispatcher.Controller;
 import com.gmail.at.sichyuriyy.onlinestore.dispatcher.RequestService;
-import com.gmail.at.sichyuriyy.onlinestore.dispatcher.ResponseResolver.RenderResolver;
+import com.gmail.at.sichyuriyy.onlinestore.dispatcher.responseresolver.RenderResolver;
 import com.gmail.at.sichyuriyy.onlinestore.dispatcher.ResponseService;
-import com.gmail.at.sichyuriyy.onlinestore.entity.Category;
+import com.gmail.at.sichyuriyy.onlinestore.domain.Category;
 import com.gmail.at.sichyuriyy.onlinestore.service.CategoryService;
 import com.gmail.at.sichyuriyy.onlinestore.util.ServiceLocator;
 

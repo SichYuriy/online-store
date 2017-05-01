@@ -1,6 +1,6 @@
 package com.gmail.at.sichyuriyy.onlinestore.persistance.dao.jdbc;
 
-import com.gmail.at.sichyuriyy.onlinestore.entity.Review;
+import com.gmail.at.sichyuriyy.onlinestore.domain.Review;
 import com.gmail.at.sichyuriyy.onlinestore.persistance.ConnectionManager;
 import com.gmail.at.sichyuriyy.onlinestore.persistance.JdbcTemplate;
 import com.gmail.at.sichyuriyy.onlinestore.persistance.dao.ReviewDao;

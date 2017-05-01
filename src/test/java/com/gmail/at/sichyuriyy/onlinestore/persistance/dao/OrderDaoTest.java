@@ -1,7 +1,7 @@
 package com.gmail.at.sichyuriyy.onlinestore.persistance.dao;
 
-import com.gmail.at.sichyuriyy.onlinestore.entity.Order;
-import com.gmail.at.sichyuriyy.onlinestore.entity.OrderStatus;
+import com.gmail.at.sichyuriyy.onlinestore.domain.Order;
+import com.gmail.at.sichyuriyy.onlinestore.domain.OrderStatus;
 import com.gmail.at.sichyuriyy.onlinestore.persistance.ConnectionManager;
 import com.gmail.at.sichyuriyy.onlinestore.persistance.H2Db;
 import com.gmail.at.sichyuriyy.onlinestore.persistance.TestData;

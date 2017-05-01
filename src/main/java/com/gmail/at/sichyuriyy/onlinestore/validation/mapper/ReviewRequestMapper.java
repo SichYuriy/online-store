@@ -1,8 +1,8 @@
 package com.gmail.at.sichyuriyy.onlinestore.validation.mapper;
 
 import com.gmail.at.sichyuriyy.onlinestore.dispatcher.RequestService;
-import com.gmail.at.sichyuriyy.onlinestore.entity.Product;
-import com.gmail.at.sichyuriyy.onlinestore.entity.Review;
+import com.gmail.at.sichyuriyy.onlinestore.domain.Product;
+import com.gmail.at.sichyuriyy.onlinestore.domain.Review;
 import com.gmail.at.sichyuriyy.onlinestore.validation.RequestMapper;
 
 /**

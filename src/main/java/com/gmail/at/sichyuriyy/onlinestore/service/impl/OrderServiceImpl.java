@@ -1,15 +1,17 @@
 package com.gmail.at.sichyuriyy.onlinestore.service.impl;
 
-import com.gmail.at.sichyuriyy.onlinestore.entity.*;
-import com.gmail.at.sichyuriyy.onlinestore.persistance.ConnectionManager;
+import com.gmail.at.sichyuriyy.onlinestore.domain.*;
 import com.gmail.at.sichyuriyy.onlinestore.persistance.dao.*;
-import com.gmail.at.sichyuriyy.onlinestore.persistance.transaction.Transaction;
+import com.gmail.at.sichyuriyy.onlinestore.persistance.exception.SQLRuntimeException;
+import com.gmail.at.sichyuriyy.onlinestore.persistance.exception.TransactionFailedException;
 import com.gmail.at.sichyuriyy.onlinestore.persistance.transaction.TransactionManager;
 import com.gmail.at.sichyuriyy.onlinestore.service.AbstractCrudService;
+import com.gmail.at.sichyuriyy.onlinestore.service.CartService;
 import com.gmail.at.sichyuriyy.onlinestore.service.OrderService;
 import com.gmail.at.sichyuriyy.onlinestore.util.ServiceLocator;
 
-import javax.sound.sampled.Line;
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -22,6 +24,8 @@ public class OrderServiceImpl extends AbstractCrudService<Order, Long> implement
     private LineItemDao lineItemDao;
     private ProductDao productDao;
     private TransactionManager transactionManager = ServiceLocator.INSTANCE.get(TransactionManager.class);
+
+    private CartService cartService = ServiceLocator.INSTANCE.get(CartService.class);
 
     public OrderServiceImpl(OrderDao orderDao, UserDao userDao, LineItemDao lineItemDao, ProductDao productDao) {
         this.orderDao = orderDao;
@@ -117,6 +121,65 @@ public class OrderServiceImpl extends AbstractCrudService<Order, Long> implement
         });
     }
 
+    @Override
+    public boolean makeOrder(Long userId) {
+        final boolean[] result = new boolean[1];
+        try {
+            transactionManager.tx(() -> {
+                List<CartItem> cartItems = cartService.findCartItemsByUser(userId);
+                if (!checkItemsState(cartItems)) {
+                    return;
+                }
+
+                Order order = createNewOrder(userId);
+                create(order);
+
+                for (CartItem cartItem: cartItems) {
+                    LineItem lineItem = createNewLineItem(order, cartItem);
+                    lineItemDao.create(lineItem);
+                    Product product = cartItem.getProduct();
+                    product.setCount(product.getCount() - cartItem.getCount());
+                    productDao.update(product);
+                }
+                result[0] = true;
+            });
+        } catch (SQLRuntimeException | TransactionFailedException e) {
+            return result[0] = false;
+        }
+
+        cartService.clearCart(userId);
+        return result[0];
+    }
+
+    private boolean checkItemsState(List<CartItem> cartItems) {
+        if (cartItems.size() == 0) {
+            return false;
+        }
+        for (CartItem item: cartItems) {
+            if (item.getProduct().getCount() < item.getCount()
+                    || !item.getProduct().getEnabled()) {
+                return false;
+            }
+        }
+        return  true;
+    }
+
+    private Order createNewOrder(Long userId) {
+        Order order = new Order();
+        order.setUser(new User(userId));
+        order.setStatus(OrderStatus.CREATED);
+        order.setDate(new Timestamp(new Date().getTime()));
+        return order;
+    }
+
+    private LineItem createNewLineItem(Order order, CartItem cartItem) {
+        LineItem lineItem = new LineItem();
+        lineItem.setOrder(order);
+        lineItem.setProduct(cartItem.getProduct());
+        lineItem.setCount(cartItem.getCount());
+        lineItem.setTempPrice(cartItem.getProduct().getPrice());
+        return lineItem;
+    }
 
 
     @Override

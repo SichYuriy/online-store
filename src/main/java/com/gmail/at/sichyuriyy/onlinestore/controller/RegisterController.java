@@ -2,15 +2,13 @@ package com.gmail.at.sichyuriyy.onlinestore.controller;
 
 import com.gmail.at.sichyuriyy.onlinestore.dispatcher.Controller;
 import com.gmail.at.sichyuriyy.onlinestore.dispatcher.RequestService;
-import com.gmail.at.sichyuriyy.onlinestore.dispatcher.ResponseResolver.RedirectResolver;
+import com.gmail.at.sichyuriyy.onlinestore.dispatcher.responseresolver.RedirectResolver;
 import com.gmail.at.sichyuriyy.onlinestore.dispatcher.ResponseService;
-import com.gmail.at.sichyuriyy.onlinestore.entity.User;
+import com.gmail.at.sichyuriyy.onlinestore.domain.User;
 import com.gmail.at.sichyuriyy.onlinestore.service.AuthService;
 import com.gmail.at.sichyuriyy.onlinestore.util.ServiceLocator;
 import com.gmail.at.sichyuriyy.onlinestore.validation.mapper.UserRequestMapper;
 import com.gmail.at.sichyuriyy.onlinestore.validation.validator.UserValidator;
-
-import java.util.logging.LogManager;
 
 /**
  * Created by Yuriy on 4/21/2017.

@@ -1,11 +1,9 @@
 package com.gmail.at.sichyuriyy.onlinestore.service.impl;
 
-import com.gmail.at.sichyuriyy.onlinestore.entity.Product;
-import com.gmail.at.sichyuriyy.onlinestore.persistance.ConnectionManager;
+import com.gmail.at.sichyuriyy.onlinestore.domain.Product;
 import com.gmail.at.sichyuriyy.onlinestore.persistance.dao.Dao;
 import com.gmail.at.sichyuriyy.onlinestore.persistance.dao.ProductDao;
 import com.gmail.at.sichyuriyy.onlinestore.persistance.dao.ProductDynamicFilter;
-import com.gmail.at.sichyuriyy.onlinestore.persistance.transaction.Transaction;
 import com.gmail.at.sichyuriyy.onlinestore.persistance.transaction.TransactionManager;
 import com.gmail.at.sichyuriyy.onlinestore.service.AbstractCrudService;
 import com.gmail.at.sichyuriyy.onlinestore.service.ProductService;

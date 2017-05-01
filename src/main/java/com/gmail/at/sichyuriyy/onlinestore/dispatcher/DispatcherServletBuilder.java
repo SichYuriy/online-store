@@ -1,6 +1,6 @@
 package com.gmail.at.sichyuriyy.onlinestore.dispatcher;
 
-import com.gmail.at.sichyuriyy.onlinestore.entity.Role;
+import com.gmail.at.sichyuriyy.onlinestore.domain.Role;
 import com.gmail.at.sichyuriyy.onlinestore.filter.StaticResourceFilter;
 import com.gmail.at.sichyuriyy.onlinestore.security.SecurityContext;
 import com.gmail.at.sichyuriyy.onlinestore.util.Pair;
@@ -53,7 +53,6 @@ public class DispatcherServletBuilder {
         filterDynamic.addMappingForUrlPatterns(EnumSet.of(DispatcherType.REQUEST, DispatcherType.FORWARD), true, "/*");
 
         return servlet;
-
     }
 
 

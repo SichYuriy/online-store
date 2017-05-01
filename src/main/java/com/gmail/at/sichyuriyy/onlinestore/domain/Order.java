@@ -1,13 +1,6 @@
-package com.gmail.at.sichyuriyy.onlinestore.entity;
+package com.gmail.at.sichyuriyy.onlinestore.domain;
 
-import com.gmail.at.sichyuriyy.onlinestore.util.Pair;
-
-import java.math.BigDecimal;
-import java.sql.Time;
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 import java.util.Objects;
 
 /**

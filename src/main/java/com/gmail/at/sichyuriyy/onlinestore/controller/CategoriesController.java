@@ -2,19 +2,16 @@ package com.gmail.at.sichyuriyy.onlinestore.controller;
 
 import com.gmail.at.sichyuriyy.onlinestore.dispatcher.Controller;
 import com.gmail.at.sichyuriyy.onlinestore.dispatcher.RequestService;
-import com.gmail.at.sichyuriyy.onlinestore.dispatcher.ResponseResolver.AjaxRedirectResolver;
-import com.gmail.at.sichyuriyy.onlinestore.dispatcher.ResponseResolver.RedirectResolver;
-import com.gmail.at.sichyuriyy.onlinestore.dispatcher.ResponseResolver.RenderResolver;
+import com.gmail.at.sichyuriyy.onlinestore.dispatcher.responseresolver.AjaxRedirectResolver;
+import com.gmail.at.sichyuriyy.onlinestore.dispatcher.responseresolver.RedirectResolver;
+import com.gmail.at.sichyuriyy.onlinestore.dispatcher.responseresolver.RenderResolver;
 import com.gmail.at.sichyuriyy.onlinestore.dispatcher.ResponseService;
-import com.gmail.at.sichyuriyy.onlinestore.entity.Category;
-import com.gmail.at.sichyuriyy.onlinestore.persistance.exception.TransactionFailedException;
+import com.gmail.at.sichyuriyy.onlinestore.domain.Category;
 import com.gmail.at.sichyuriyy.onlinestore.service.CategoryService;
 import com.gmail.at.sichyuriyy.onlinestore.util.ServiceLocator;
 import com.gmail.at.sichyuriyy.onlinestore.validation.mapper.CategoryRequestMapper;
 import com.gmail.at.sichyuriyy.onlinestore.validation.validator.CategoryValidator;
-import com.sun.media.jfxmedia.logging.Logger;
 import org.apache.logging.log4j.LogManager;
-import sun.rmi.runtime.Log;
 
 import java.util.List;
 

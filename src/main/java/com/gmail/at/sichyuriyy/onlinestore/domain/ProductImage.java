@@ -1,8 +1,5 @@
-package com.gmail.at.sichyuriyy.onlinestore.entity;
+package com.gmail.at.sichyuriyy.onlinestore.domain;
 
-import sun.nio.cs.US_ASCII;
-
-import java.net.URL;
 import java.util.Objects;
 
 /**

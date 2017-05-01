@@ -1,4 +1,4 @@
-package com.gmail.at.sichyuriyy.onlinestore.entity;
+package com.gmail.at.sichyuriyy.onlinestore.domain;
 
 import java.util.Arrays;
 import java.util.Collections;

@@ -3,8 +3,8 @@ package com.gmail.at.sichyuriyy.onlinestore.security;
 import com.gmail.at.sichyuriyy.onlinestore.dispatcher.DispatcherServlet;
 import com.gmail.at.sichyuriyy.onlinestore.dispatcher.HttpMethod;
 import com.gmail.at.sichyuriyy.onlinestore.dispatcher.util.UrlUtil;
-import com.gmail.at.sichyuriyy.onlinestore.entity.Role;
-import com.gmail.at.sichyuriyy.onlinestore.entity.User;
+import com.gmail.at.sichyuriyy.onlinestore.domain.Role;
+import com.gmail.at.sichyuriyy.onlinestore.domain.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

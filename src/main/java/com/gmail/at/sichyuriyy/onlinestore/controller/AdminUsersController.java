@@ -2,12 +2,11 @@ package com.gmail.at.sichyuriyy.onlinestore.controller;
 
 import com.gmail.at.sichyuriyy.onlinestore.dispatcher.Controller;
 import com.gmail.at.sichyuriyy.onlinestore.dispatcher.RequestService;
-import com.gmail.at.sichyuriyy.onlinestore.dispatcher.ResponseResolver.AjaxRedirectResolver;
-import com.gmail.at.sichyuriyy.onlinestore.dispatcher.ResponseResolver.RedirectResolver;
-import com.gmail.at.sichyuriyy.onlinestore.dispatcher.ResponseResolver.RenderResolver;
+import com.gmail.at.sichyuriyy.onlinestore.dispatcher.responseresolver.AjaxRedirectResolver;
+import com.gmail.at.sichyuriyy.onlinestore.dispatcher.responseresolver.RedirectResolver;
+import com.gmail.at.sichyuriyy.onlinestore.dispatcher.responseresolver.RenderResolver;
 import com.gmail.at.sichyuriyy.onlinestore.dispatcher.ResponseService;
-import com.gmail.at.sichyuriyy.onlinestore.entity.User;
-import com.gmail.at.sichyuriyy.onlinestore.persistance.dao.UserDao;
+import com.gmail.at.sichyuriyy.onlinestore.domain.User;
 import com.gmail.at.sichyuriyy.onlinestore.service.AuthService;
 import com.gmail.at.sichyuriyy.onlinestore.service.UserService;
 import com.gmail.at.sichyuriyy.onlinestore.util.ServiceLocator;

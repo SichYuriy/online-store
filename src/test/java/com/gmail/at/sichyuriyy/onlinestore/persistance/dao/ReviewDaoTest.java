@@ -1,13 +1,12 @@
 package com.gmail.at.sichyuriyy.onlinestore.persistance.dao;
 
-import com.gmail.at.sichyuriyy.onlinestore.entity.Review;
+import com.gmail.at.sichyuriyy.onlinestore.domain.Review;
 import com.gmail.at.sichyuriyy.onlinestore.persistance.ConnectionManager;
 import com.gmail.at.sichyuriyy.onlinestore.persistance.H2Db;
 import com.gmail.at.sichyuriyy.onlinestore.persistance.TestData;
 import com.gmail.at.sichyuriyy.onlinestore.persistance.dao.jdbc.JdbcReviewDao;
 import com.gmail.at.sichyuriyy.onlinestore.persistance.util.ScriptRunner;
 import com.gmail.at.sichyuriyy.onlinestore.util.ResourcesUtil;
-import jdk.nashorn.internal.runtime.RewriteException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

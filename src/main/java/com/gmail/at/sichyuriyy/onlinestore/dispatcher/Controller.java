@@ -1,7 +1,6 @@
 package com.gmail.at.sichyuriyy.onlinestore.dispatcher;
 
-import com.gmail.at.sichyuriyy.onlinestore.dispatcher.ResponseResolver.RenderResolver;
-import com.gmail.at.sichyuriyy.onlinestore.dispatcher.ResponseResolver.ResponseResolver;
+import com.gmail.at.sichyuriyy.onlinestore.dispatcher.responseresolver.RenderResolver;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

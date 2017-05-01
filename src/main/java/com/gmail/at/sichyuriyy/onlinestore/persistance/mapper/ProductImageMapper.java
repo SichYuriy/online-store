@@ -1,10 +1,8 @@
 package com.gmail.at.sichyuriyy.onlinestore.persistance.mapper;
 
-import com.gmail.at.sichyuriyy.onlinestore.entity.Product;
-import com.gmail.at.sichyuriyy.onlinestore.entity.ProductImage;
+import com.gmail.at.sichyuriyy.onlinestore.domain.Product;
+import com.gmail.at.sichyuriyy.onlinestore.domain.ProductImage;
 
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 

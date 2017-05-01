@@ -1,8 +1,8 @@
 package com.gmail.at.sichyuriyy.onlinestore.service;
 
-import com.gmail.at.sichyuriyy.onlinestore.entity.LineItem;
-import com.gmail.at.sichyuriyy.onlinestore.entity.Order;
-import com.gmail.at.sichyuriyy.onlinestore.entity.OrderStatus;
+import com.gmail.at.sichyuriyy.onlinestore.domain.LineItem;
+import com.gmail.at.sichyuriyy.onlinestore.domain.Order;
+import com.gmail.at.sichyuriyy.onlinestore.domain.OrderStatus;
 
 import java.util.List;
 
@@ -20,5 +20,7 @@ public interface OrderService extends CrudService<Order, Long> {
     Double countTotal(List<LineItem> lineItems);
 
     void cancelOrder(Long id);
+
+    boolean makeOrder(Long userId);
 
 }

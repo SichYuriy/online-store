@@ -1,6 +1,6 @@
 package com.gmail.at.sichyuriyy.onlinestore.persistance.dao;
 
-import com.gmail.at.sichyuriyy.onlinestore.entity.LineItem;
+import com.gmail.at.sichyuriyy.onlinestore.domain.LineItem;
 
 import java.util.List;
 

@@ -1,6 +1,6 @@
 package com.gmail.at.sichyuriyy.onlinestore.dispatcher;
 
-import com.gmail.at.sichyuriyy.onlinestore.dispatcher.ResponseResolver.ResponseResolver;
+import com.gmail.at.sichyuriyy.onlinestore.dispatcher.responseresolver.ResponseResolver;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

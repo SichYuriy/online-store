@@ -1,6 +1,6 @@
 package com.gmail.at.sichyuriyy.onlinestore.security;
 
-import com.gmail.at.sichyuriyy.onlinestore.entity.User;
+import com.gmail.at.sichyuriyy.onlinestore.domain.User;
 import com.gmail.at.sichyuriyy.onlinestore.persistance.dao.UserDao;
 
 import javax.servlet.ServletException;

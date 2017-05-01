@@ -3,7 +3,7 @@ package com.gmail.at.sichyuriyy.onlinestore.controller;
 import com.gmail.at.sichyuriyy.onlinestore.dispatcher.Controller;
 import com.gmail.at.sichyuriyy.onlinestore.dispatcher.RequestService;
 import com.gmail.at.sichyuriyy.onlinestore.dispatcher.ResponseService;
-import com.gmail.at.sichyuriyy.onlinestore.entity.*;
+import com.gmail.at.sichyuriyy.onlinestore.domain.*;
 import com.gmail.at.sichyuriyy.onlinestore.service.ProductImageService;
 import com.gmail.at.sichyuriyy.onlinestore.service.ProductService;
 import com.gmail.at.sichyuriyy.onlinestore.service.ReviewService;

@@ -49,4 +49,9 @@ public class JdbcDaoFactory implements DaoFactory {
     public UserDao getUserDao() {
         return new JdbcUserDao(connectionManager);
     }
+
+    @Override
+    public CartItemDao getCartItemDao() {
+        return new JdbcCartItemDao(connectionManager);
+    }
 }

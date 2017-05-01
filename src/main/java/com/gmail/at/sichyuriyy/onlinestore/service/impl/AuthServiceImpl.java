@@ -1,7 +1,7 @@
 package com.gmail.at.sichyuriyy.onlinestore.service.impl;
 
-import com.gmail.at.sichyuriyy.onlinestore.entity.Role;
-import com.gmail.at.sichyuriyy.onlinestore.entity.User;
+import com.gmail.at.sichyuriyy.onlinestore.domain.Role;
+import com.gmail.at.sichyuriyy.onlinestore.domain.User;
 import com.gmail.at.sichyuriyy.onlinestore.service.AuthService;
 import com.gmail.at.sichyuriyy.onlinestore.service.UserService;
 import org.apache.logging.log4j.LogManager;

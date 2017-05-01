@@ -1,6 +1,6 @@
 package com.gmail.at.sichyuriyy.onlinestore.service;
 
-import com.gmail.at.sichyuriyy.onlinestore.entity.ProductImage;
+import com.gmail.at.sichyuriyy.onlinestore.domain.ProductImage;
 
 import java.util.List;
 

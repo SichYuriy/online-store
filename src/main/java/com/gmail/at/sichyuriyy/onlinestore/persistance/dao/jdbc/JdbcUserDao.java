@@ -1,7 +1,7 @@
 package com.gmail.at.sichyuriyy.onlinestore.persistance.dao.jdbc;
 
-import com.gmail.at.sichyuriyy.onlinestore.entity.Role;
-import com.gmail.at.sichyuriyy.onlinestore.entity.User;
+import com.gmail.at.sichyuriyy.onlinestore.domain.Role;
+import com.gmail.at.sichyuriyy.onlinestore.domain.User;
 import com.gmail.at.sichyuriyy.onlinestore.persistance.ConnectionManager;
 import com.gmail.at.sichyuriyy.onlinestore.persistance.JdbcTemplate;
 import com.gmail.at.sichyuriyy.onlinestore.persistance.dao.UserDao;

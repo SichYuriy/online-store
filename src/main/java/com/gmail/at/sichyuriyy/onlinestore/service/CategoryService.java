@@ -1,7 +1,6 @@
 package com.gmail.at.sichyuriyy.onlinestore.service;
 
-import com.gmail.at.sichyuriyy.onlinestore.entity.Category;
-import com.gmail.at.sichyuriyy.onlinestore.persistance.dao.Dao;
+import com.gmail.at.sichyuriyy.onlinestore.domain.Category;
 
 /**
  * Created by Yuriy on 4/7/2017.

@@ -1,6 +1,6 @@
 package com.gmail.at.sichyuriyy.onlinestore.persistance.mapper;
 
-import com.gmail.at.sichyuriyy.onlinestore.entity.Category;
+import com.gmail.at.sichyuriyy.onlinestore.domain.Category;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

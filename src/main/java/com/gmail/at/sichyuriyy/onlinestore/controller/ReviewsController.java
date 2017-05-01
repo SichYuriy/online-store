@@ -2,20 +2,18 @@ package com.gmail.at.sichyuriyy.onlinestore.controller;
 
 import com.gmail.at.sichyuriyy.onlinestore.dispatcher.Controller;
 import com.gmail.at.sichyuriyy.onlinestore.dispatcher.RequestService;
-import com.gmail.at.sichyuriyy.onlinestore.dispatcher.ResponseResolver.AjaxRedirectResolver;
-import com.gmail.at.sichyuriyy.onlinestore.dispatcher.ResponseResolver.RedirectResolver;
+import com.gmail.at.sichyuriyy.onlinestore.dispatcher.responseresolver.AjaxRedirectResolver;
+import com.gmail.at.sichyuriyy.onlinestore.dispatcher.responseresolver.RedirectResolver;
 import com.gmail.at.sichyuriyy.onlinestore.dispatcher.ResponseService;
-import com.gmail.at.sichyuriyy.onlinestore.entity.Review;
-import com.gmail.at.sichyuriyy.onlinestore.entity.Role;
-import com.gmail.at.sichyuriyy.onlinestore.entity.User;
+import com.gmail.at.sichyuriyy.onlinestore.domain.Review;
+import com.gmail.at.sichyuriyy.onlinestore.domain.Role;
+import com.gmail.at.sichyuriyy.onlinestore.domain.User;
 import com.gmail.at.sichyuriyy.onlinestore.security.AccessDeniedException;
 import com.gmail.at.sichyuriyy.onlinestore.service.ReviewService;
 import com.gmail.at.sichyuriyy.onlinestore.util.ServiceLocator;
 import com.gmail.at.sichyuriyy.onlinestore.validation.mapper.ReviewRequestMapper;
 import com.gmail.at.sichyuriyy.onlinestore.validation.validator.ReviewValidator;
 import org.apache.logging.log4j.LogManager;
-
-import java.util.logging.Logger;
 
 /**
  * Created by Yuriy on 4/22/2017.

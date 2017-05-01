@@ -1,7 +1,6 @@
 package com.gmail.at.sichyuriyy.onlinestore.service;
 
-import com.gmail.at.sichyuriyy.onlinestore.entity.Review;
-import com.gmail.at.sichyuriyy.onlinestore.entity.User;
+import com.gmail.at.sichyuriyy.onlinestore.domain.Review;
 
 import java.util.List;
 

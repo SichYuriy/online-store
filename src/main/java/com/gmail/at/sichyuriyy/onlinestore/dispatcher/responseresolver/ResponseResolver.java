@@ -1,4 +1,4 @@
-package com.gmail.at.sichyuriyy.onlinestore.dispatcher.ResponseResolver;
+package com.gmail.at.sichyuriyy.onlinestore.dispatcher.responseresolver;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

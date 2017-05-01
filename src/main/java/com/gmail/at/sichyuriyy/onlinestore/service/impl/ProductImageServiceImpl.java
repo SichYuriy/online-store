@@ -1,6 +1,6 @@
 package com.gmail.at.sichyuriyy.onlinestore.service.impl;
 
-import com.gmail.at.sichyuriyy.onlinestore.entity.ProductImage;
+import com.gmail.at.sichyuriyy.onlinestore.domain.ProductImage;
 import com.gmail.at.sichyuriyy.onlinestore.persistance.dao.Dao;
 import com.gmail.at.sichyuriyy.onlinestore.persistance.dao.ProductImageDao;
 import com.gmail.at.sichyuriyy.onlinestore.service.AbstractCrudService;
