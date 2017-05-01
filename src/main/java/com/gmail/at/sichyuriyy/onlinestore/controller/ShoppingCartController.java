@@ -38,9 +38,9 @@ public class ShoppingCartController extends Controller {
         boolean result = orderService.makeOrder(user.getId());
 
         if (result) {
-            respService.setResponseResolver(new RedirectResolver("/user/orderSuccess"));
+            respService.setResponseResolver(new RedirectResolver("/user/orders"));
         } else {
-            respService.setResponseResolver(new RedirectResolver("/user/orderFail"));
+            respService.setResponseResolver(new RenderResolver("/pages/user/order-fail.jsp"));
         }
     }
 

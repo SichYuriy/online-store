@@ -39,9 +39,8 @@ public class AdminOrdersController extends Controller {
     @Override
     public void doPut(RequestService reqService, ResponseService respService) {
         Long orderId = reqService.getLong("orderId");
-        OrderStatus status = OrderStatus.valueOf(reqService.getString("status"));
 
-        orderService.changeOrderStatus(orderId, status);
+        orderService.overdueOrder(orderId);
         respService.setResponseResolver(new AjaxRedirectResolver("/admin/orders"));
     }
 }

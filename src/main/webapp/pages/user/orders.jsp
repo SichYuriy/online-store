@@ -58,9 +58,13 @@
                     </td>
                     <td>
                         <c:if test="${order.status == 'CREATED'}" >
+                            <a class="btn btn-success" onclick="pay_ajax(${order.id})" role="button">
+                                <fmt:message key="user.payOrder" bundle="${rb}"/>
+                            </a>
                             <a class="btn btn-primary" onclick="cancel_ajax(${order.id})" role="button">
                                 <fmt:message key="user.cancelOrder" bundle="${rb}"/>
                             </a>
+
                         </c:if>
                     </td>
 

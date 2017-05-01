@@ -25,13 +25,15 @@ public class OrderServiceImpl extends AbstractCrudService<Order, Long> implement
     private ProductDao productDao;
     private TransactionManager transactionManager = ServiceLocator.INSTANCE.get(TransactionManager.class);
 
-    private CartService cartService = ServiceLocator.INSTANCE.get(CartService.class);
+    private CartService cartService;
 
-    public OrderServiceImpl(OrderDao orderDao, UserDao userDao, LineItemDao lineItemDao, ProductDao productDao) {
+    public OrderServiceImpl(OrderDao orderDao, UserDao userDao, LineItemDao lineItemDao, ProductDao productDao,
+                             CartService cartService) {
         this.orderDao = orderDao;
         this.userDao = userDao;
         this.lineItemDao = lineItemDao;
         this.productDao = productDao;
+        this.cartService = cartService;
     }
 
     @Override
@@ -80,15 +82,6 @@ public class OrderServiceImpl extends AbstractCrudService<Order, Long> implement
     }
 
     @Override
-    public void changeOrderStatus(Long id, OrderStatus status) {
-        transactionManager.tx(() -> {
-            Order order = orderDao.findById(id);
-            order.setStatus(status);
-            orderDao.update(order);
-        });
-    }
-
-    @Override
     public List<LineItem> findItems(Long orderId) {
         final Object[] result = new Object[1];
         transactionManager.tx(() -> {
@@ -112,13 +105,17 @@ public class OrderServiceImpl extends AbstractCrudService<Order, Long> implement
 
     @Override
     public void cancelOrder(Long id) {
-        transactionManager.tx(() -> {
-            Order order = orderDao.findById(id);
-            if (order.getStatus().equals(OrderStatus.CREATED)) {
-                order.setStatus(OrderStatus.CANCELED);
-                orderDao.update(order);
-            }
-        });
+        changeStatus(id, OrderStatus.CANCELED);
+    }
+
+    @Override
+    public void overdueOrder(Long id) {
+        changeStatus(id, OrderStatus.OVERDUE);
+    }
+
+    @Override
+    public void payOrder(Long id) {
+        changeStatus(id, OrderStatus.PAID);
     }
 
     @Override
@@ -181,6 +178,15 @@ public class OrderServiceImpl extends AbstractCrudService<Order, Long> implement
         return lineItem;
     }
 
+    private void changeStatus(Long orderId, OrderStatus status) {
+        transactionManager.tx(() -> {
+            Order order = orderDao.findById(orderId);
+            if (order.getStatus().equals(OrderStatus.CREATED)) {
+                order.setStatus(status);
+                orderDao.update(order);
+            }
+        });
+    }
 
     @Override
     public Dao<Order, Long> getBackingDao() {

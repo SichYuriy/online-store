@@ -15,11 +15,12 @@ public interface OrderService extends CrudService<Order, Long> {
     List<Order> findPart(int limit, int offset);
     List<Order> findByStatusPart(OrderStatus status, int limit, int offset);
 
-    void changeOrderStatus(Long id, OrderStatus status);
     List<LineItem> findItems(Long orderId);
     Double countTotal(List<LineItem> lineItems);
 
     void cancelOrder(Long id);
+    void payOrder(Long id);
+    void overdueOrder(Long id);
 
     boolean makeOrder(Long userId);
 

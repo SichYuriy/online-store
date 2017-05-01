@@ -121,14 +121,15 @@ public class WebApplication {
                         daoFactory.getUserDao(), daoFactory.getProductDao());
         ProductImageService productImageService =
                 new ProductImageServiceImpl(daoFactory.getProductImageDao());
-        OrderService orderService =
-                new OrderServiceImpl(daoFactory.getOrderDao(), daoFactory.getUserDao(),
-                        daoFactory.getLineItemDao(), daoFactory.getProductDao());
         CartService cartService =
                 new CartServiceImpl(daoFactory.getCartItemDao(), daoFactory.getProductDao());
+        OrderService orderService =
+                new OrderServiceImpl(daoFactory.getOrderDao(), daoFactory.getUserDao(),
+                        daoFactory.getLineItemDao(), daoFactory.getProductDao(), cartService);
+
 
         //TODO: add all services
-
+        serviceLocator.add(CartService.class, cartService);
         serviceLocator.add(UserService.class, userService);
         serviceLocator.add(AuthService.class, authService);
         serviceLocator.add(CategoryService.class, categoryService);
@@ -136,7 +137,7 @@ public class WebApplication {
         serviceLocator.add(ReviewService.class, reviewService);
         serviceLocator.add(ProductImageService.class, productImageService);
         serviceLocator.add(OrderService.class, orderService);
-        serviceLocator.add(CartService.class, cartService);
+
 
     }
 

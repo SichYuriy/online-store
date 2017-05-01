@@ -3,7 +3,7 @@
  */
 function overdue_ajax(id){
     $.ajax({
-        url : '/admin/orders?orderStatus=OVERDUE&id=' + id,
+        url : '/admin/orders?orderStatus=OVERDUE&orderId=' + id,
         type : 'PUT',
         success : function(data) {
             if (data.redirect) {
@@ -15,8 +15,20 @@ function overdue_ajax(id){
 
 function cancel_ajax(id){
     $.ajax({
-        url : '/user/orders?id=' + id,
+        url : '/user/orders?orderId=' + id,
         type : 'PUT',
+        success : function(data) {
+            if (data.redirect) {
+                location.href = data.redirect;
+            }
+        }
+    });
+};
+
+function pay_ajax(id){
+    $.ajax({
+        url : '/user/orders?orderId=' + id,
+        type : 'POST',
         success : function(data) {
             if (data.redirect) {
                 location.href = data.redirect;

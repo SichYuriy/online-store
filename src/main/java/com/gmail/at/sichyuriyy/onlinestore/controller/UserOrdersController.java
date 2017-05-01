@@ -31,6 +31,20 @@ public class UserOrdersController extends Controller {
     }
 
     @Override
+    public void doPost(RequestService reqService, ResponseService respService) {
+        Long orderId = reqService.getLong("orderId");
+        User user = reqService.getUser();
+
+        Order order = orderService.findById(orderId);
+        if (!order.getUser().getId().equals(user.getId())) {
+            throw new AccessDeniedException();
+        }
+
+        orderService.payOrder(orderId);
+        respService.setResponseResolver(new AjaxRedirectResolver("/user/orders"));
+    }
+
+    @Override
     public void doPut(RequestService reqService, ResponseService respService) {
         Long orderId = reqService.getLong("orderId");
         User user = reqService.getUser();
