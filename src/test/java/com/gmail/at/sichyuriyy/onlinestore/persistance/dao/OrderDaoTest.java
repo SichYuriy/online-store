@@ -4,7 +4,7 @@ import com.gmail.at.sichyuriyy.onlinestore.domain.Order;
 import com.gmail.at.sichyuriyy.onlinestore.domain.OrderStatus;
 import com.gmail.at.sichyuriyy.onlinestore.persistance.ConnectionManager;
 import com.gmail.at.sichyuriyy.onlinestore.persistance.H2Db;
-import com.gmail.at.sichyuriyy.onlinestore.persistance.TestData;
+import com.gmail.at.sichyuriyy.onlinestore.TestData;
 import com.gmail.at.sichyuriyy.onlinestore.persistance.dao.jdbc.JdbcOrderDao;
 import com.gmail.at.sichyuriyy.onlinestore.persistance.util.ScriptRunner;
 import com.gmail.at.sichyuriyy.onlinestore.util.ResourcesUtil;

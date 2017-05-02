@@ -1,9 +1,10 @@
-package com.gmail.at.sichyuriyy.onlinestore.persistance;
+package com.gmail.at.sichyuriyy.onlinestore;
 
 import com.gmail.at.sichyuriyy.onlinestore.domain.*;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,6 +20,7 @@ public class TestData {
     private Map<Long, LineItem> lineItemTable = new HashMap<>();
     private Map<Long, ProductImage> productImageTable = new HashMap<>();
     private Map<Long, Review> reviewTable = new HashMap<>();
+    private Map<Long, ShoppingCart> shoppingCartMap = new HashMap<>();
 
 
     public TestData() {
@@ -38,7 +40,7 @@ public class TestData {
         Product product3 = new Product(3L, "pr3_t", "pr3_d", category2,
                 new BigDecimal(33), 1, 1, 3d, "https://img3", true);
         Product product4 = new Product(4L, "pr4_t", "pr4_d", category2,
-                new BigDecimal(44), 1, 1, 3d, "https://img4", true);
+                new BigDecimal(44), 1, 0, 0d, "https://img4", true);
 
         ProductImage image1 = new ProductImage(1L, product1,"https://pr1_img1", "https://pr1_s_img1");
         ProductImage image2 = new ProductImage(2L, product1, "https://pr1_img2", "https://pr1_s_img2");
@@ -58,6 +60,11 @@ public class TestData {
         LineItem item2 = new LineItem(2L, order1, product2, new BigDecimal(22), 1);
         LineItem item3 = new LineItem(3L, order2, product3, new BigDecimal(33), 1);
         LineItem item4 = new LineItem(4L, order3, product3, new BigDecimal(32), 1);
+
+        ShoppingCart shoppingCart1 = new ShoppingCart();
+        CartItem cartItem1 = new CartItem(1L, product1, 1, user1);
+        shoppingCart1.setCartItems(Collections.singletonList(cartItem1));
+        shoppingCart1.setTotal(product1.getPrice());
 
         categoryTable.put(1L, category1);
         categoryTable.put(2L, category2);
@@ -91,6 +98,9 @@ public class TestData {
         lineItemTable.put(2L, item2);
         lineItemTable.put(3L, item3);
         lineItemTable.put(4L, item4);
+
+        shoppingCartMap.put(1L, shoppingCart1);
+
     }
 
     public Category getCategory(Long id) {
@@ -121,4 +131,7 @@ public class TestData {
         return lineItemTable.get(id);
     }
 
+    public ShoppingCart getShoppingCart(Long userId) {
+        return shoppingCartMap.get(1L);
+    }
 }

@@ -3,7 +3,7 @@ package com.gmail.at.sichyuriyy.onlinestore.persistance.dao;
 import com.gmail.at.sichyuriyy.onlinestore.domain.ProductImage;
 import com.gmail.at.sichyuriyy.onlinestore.persistance.ConnectionManager;
 import com.gmail.at.sichyuriyy.onlinestore.persistance.H2Db;
-import com.gmail.at.sichyuriyy.onlinestore.persistance.TestData;
+import com.gmail.at.sichyuriyy.onlinestore.TestData;
 import com.gmail.at.sichyuriyy.onlinestore.persistance.dao.jdbc.JdbcProductImageDao;
 import com.gmail.at.sichyuriyy.onlinestore.persistance.util.ScriptRunner;
 import com.gmail.at.sichyuriyy.onlinestore.util.ResourcesUtil;

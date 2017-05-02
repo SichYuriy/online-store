@@ -19,7 +19,6 @@ public class LocaleController extends Controller {
 
     @Override
     public void doPost(RequestService reqService, ResponseService respService) {
-        LogManager.getLogger().info("locale change");
         String lang = reqService.getString(FORM_LANG);
 
         if(lang != null && !lang.isEmpty()) {

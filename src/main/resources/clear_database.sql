@@ -1,3 +1,4 @@
+DELETE FROM `cart_item`;
 DELETE FROM `product_image`;
 DELETE FROM `review`;
 DELETE FROM `line_item`;

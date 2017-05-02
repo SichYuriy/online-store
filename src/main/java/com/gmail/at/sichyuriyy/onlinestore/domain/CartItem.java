@@ -13,6 +13,13 @@ public class CartItem {
     public CartItem() {
     }
 
+    public CartItem(Long id, Product product, Integer count, User user) {
+        this.id = id;
+        this.product = product;
+        this.count = count;
+        this.user = user;
+    }
+
     public CartItem(Long id) {
         this.id = id;
     }

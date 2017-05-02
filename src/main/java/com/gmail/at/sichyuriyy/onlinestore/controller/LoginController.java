@@ -33,14 +33,12 @@ public class LoginController extends Controller {
 
     @Override
     public void doPost(RequestService reqService, ResponseService respService) {
-        LOGGER.info("login request");
         String username = reqService.getString("username");
         String password = reqService.getString("password");
         String destination = (String) reqService.getRequest().getSession().getAttribute(DispatcherServlet.DESTINATION_KEY);
 
 
         if (authService.login(reqService.getRequest(), username, password)) {
-            LOGGER.info("user: " + username + " login success");
             if(destination == null) {
                 respService.setResponseResolver(new RedirectResolver("/"));
             } else {

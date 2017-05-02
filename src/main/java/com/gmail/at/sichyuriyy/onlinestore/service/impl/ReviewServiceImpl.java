@@ -35,23 +35,19 @@ public class ReviewServiceImpl extends AbstractCrudService<Review, Long> impleme
 
     @Override
     public void create(Review review) {
-        LogManager.getLogger().info("inserted0");
         transactionManager.tx(() -> {
             if (canVote(review.getAuthor().getId())) {
                 review.setDate(new Timestamp(new Date().getTime()));
                 Long id = reviewDao.create(review);
                 review.setId(id);
-                LogManager.getLogger().info("inserted1");
                 Product product = productDao.findById(review.getProduct().getId());
                 double rating = product.getAvgRating() == null ? 0 : product.getAvgRating();
-                LogManager.getLogger().info("inserted2");
                 rating = rating * product.getVotesCount() + review.getRating();
                 rating /= product.getVotesCount() + 1;
                 product.setVotesCount(product.getVotesCount() + 1);
                 product.setAvgRating(rating);
 
                 productDao.update(product);
-                LogManager.getLogger().info("inserted3");
            }
         });
     }

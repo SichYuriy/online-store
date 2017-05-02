@@ -29,7 +29,7 @@ INSERT INTO `product`(`id`, `category_id`, `title`, `description`,
 VALUES (3, 2, 'pr3_t', 'pr3_d', 33, 1, '1', 1, 3, 'https://img3');
 INSERT INTO `product`(`id`, `category_id`, `title`, `description`,
 	`price`, `count`, `enabled`, `votes_count`, `avg_rating`, `main_image_url`)
-VALUES (4, 2, 'pr4_t', 'pr4_d', 44, 1, '1', 1, 3, 'https://img4');
+VALUES (4, 2, 'pr4_t', 'pr4_d', 44, 1, '1', 0, 0, 'https://img4');
 
 INSERT INTO `product_image`(`id`, `product_id`, `image_url`, `small_image_url`)
 VALUES (1, 1, 'https://pr1_img1', 'https://pr1_s_img1');
@@ -64,3 +64,6 @@ INSERT INTO `line_item`(`id`, `order_id`, `product_id`, `temp_price`, `count`)
 VALUES (3, 2, 3, 33, 1);
 INSERT INTO `line_item`(`id`, `order_id`, `product_id`, `temp_price`, `count`)
 VALUES (4, 3, 3, 32, 1);
+
+INSERT INTO `cart_item`(`id`, `user_id`, `product_id`, `count`)
+VALUES(1, 1, 1, 1);
