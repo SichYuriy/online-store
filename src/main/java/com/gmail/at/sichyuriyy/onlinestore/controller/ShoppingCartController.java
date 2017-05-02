@@ -47,7 +47,6 @@ public class ShoppingCartController extends Controller {
     @Override
     public void doDelete(RequestService reqService, ResponseService respService) {
         User user = reqService.getUser();
-        LogManager.getLogger().info("clear cart");
         cartService.clearCart(user.getId());
         respService.setResponseResolver(
                 new RedirectResolver("/user/shoppingCart")

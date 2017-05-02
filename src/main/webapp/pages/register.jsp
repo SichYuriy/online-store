@@ -38,7 +38,8 @@
                     </label>
 
                     <input  name="username" placeholder="vasya_pupkin" class="form-control input-md"
-                            type="text" value="${username}">
+                            type="text" value="${username}"
+                            pattern="^[\wа-яА-ЯіІїЇ@#$%^&+\-= ]{1,64}$">
                 </div>
 
                 <div class="form-group">
@@ -46,7 +47,8 @@
                         <fmt:message key="login.password" bundle="${rb}"/>
                     </label>
 
-                    <input  name="password" class="form-control input-md" type="password">
+                    <input  name="password" class="form-control input-md" type="password"
+                            pattern="^[\wа-яА-ЯіІїЇ@#$%^&+\-= ]{1,64}$">
                 </div>
 
             </fieldset>

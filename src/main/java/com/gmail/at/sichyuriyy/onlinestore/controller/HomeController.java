@@ -20,7 +20,6 @@ public class HomeController extends Controller {
 
     @Override
     public void doGet(RequestService reqService, ResponseService respService) {
-        LogManager.getLogger().info("home get request");
         List<Category> categories = categoryService.findAll();
         reqService.setPageAttribute("categories", categories);
         respService.setResponseResolver(new RenderResolver("/pages/index.jsp"));

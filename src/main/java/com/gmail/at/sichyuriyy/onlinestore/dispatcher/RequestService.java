@@ -48,7 +48,6 @@ public class RequestService {
     }
 
     public Boolean getBool(String param) {
-        LogManager.getLogger().info(param + ":" + getParameter(param));
         return getParameter(param).map((s) -> s.equals("1") || s.equals("true")).orElse(null);
     }
 

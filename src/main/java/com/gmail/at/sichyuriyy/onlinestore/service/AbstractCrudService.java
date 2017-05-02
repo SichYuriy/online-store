@@ -34,7 +34,6 @@ public abstract class AbstractCrudService<T, PK extends Serializable> implements
     @Override
     public boolean delete(PK id) {
         try {
-            LogManager.getLogger().info("try delete " + id);
             getBackingDao().delete(id);
         } catch(TransactionFailedException | SQLRuntimeException e) {
             return false;

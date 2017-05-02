@@ -24,7 +24,6 @@ public class ProductRequestMapper implements RequestMapper<Product> {
         product.setMainImageUrl(requestService.getString("mainImageUrl").trim());
 
         Boolean enabled = requestService.getBool("enabled");
-        LogManager.getLogger().info(enabled);
         product.setEnabled(enabled == null ? false : enabled);
         product.setPrice(new BigDecimal(requestService.getDouble("price")));
         product.setTitle(requestService.getString("title").trim());

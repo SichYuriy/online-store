@@ -5,7 +5,8 @@
         <fmt:message key="product.title" bundle="${rb}"/>
     </label>
     <input  name="title" class="form-control input-md"
-            type="text" value="${fn:escapeXml(product.title)}">
+            type="text" value="${fn:escapeXml(product.title)}"
+            pattern="^[\wа-яА-ЯіІїЇ@#$%^&+\-= ]{1,64}$">
 </div>
 <div class="form-group">
     <label class="col-md-3 control-label">
@@ -19,7 +20,7 @@
         <fmt:message key="product.description" bundle="${rb}"/>
     </label>
     <textarea  name="description" class="form-control input-md"
-            type="text"
+            type="text" pattern="^[\wа-яА-ЯіІїЇ@#$%^&+\-= ]{1,255}$"
             rows="4" ><c:out value="${product.description}" /></textarea>
 </div>
 <div class="form-group">
@@ -27,7 +28,8 @@
         <fmt:message key="product.mainImageUrl" bundle="${rb}"/>
     </label>
     <input  name="mainImageUrl" class="form-control input-md"
-            type="text" value="${fn:escapeXml(product.mainImageUrl)}">
+            type="text" value="${fn:escapeXml(product.mainImageUrl)}"
+            pattern="^[\wа-яА-ЯіІїЇ@#$%^&+\-= ]{1,255}$">
 </div>
 <div class="form-group">
     <label class="col-md-3 control-label">

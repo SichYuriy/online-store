@@ -17,7 +17,8 @@
                 title: {
                     required: true,
                     minlength: 3,
-                    maxlength: 30
+                    maxlength: 30,
+                    pattern: /^[/\\:,.\wа-яА-ЯіІїЇ@#$%^&+\-= ]{1,64}$/
                 },
                 categoryId: {
                     required: true
@@ -27,11 +28,13 @@
                 },
                 description: {
                     required: true,
-                    maxlength: 255
+                    maxlength: 255,
+                    pattern: /^[/\\:,.()\s\wа-яА-ЯіІїЇ@#$%^&+\-= ]{1,255}$/
                 },
                 mainImageUrl: {
                     required: true,
-                    maxlength: 255
+                    maxlength: 255,
+                    pattern: /^[_:./\\\s\wа-яА-ЯіІїЇ@#$%^&+\-= ]{1,255}$/
                 },
                 count: {
                     required: true,

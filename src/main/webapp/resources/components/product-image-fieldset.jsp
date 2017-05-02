@@ -6,5 +6,5 @@
     </label>
     <input  name="imageUrl" class="form-control input-md"
             type="text" value="${fn:escapeXml(productImage.imageUrl)}"
-            required />
+            required pattern="^[\wа-яА-ЯіІїЇ@#$%^&+\-= ]{1,64}$"/>
 </div>

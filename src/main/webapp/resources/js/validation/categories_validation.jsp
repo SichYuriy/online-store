@@ -13,7 +13,8 @@
                 title: {
                     required: true,
                     minlength: 4,
-                    maxlength: 25
+                    maxlength: 25,
+                    pattern: /^[\wа-яА-ЯіІїЇ@#$%^&+\-= ]{1,64}$/
                 },
             },
             messages: {

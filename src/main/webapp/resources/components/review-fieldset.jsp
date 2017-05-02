@@ -12,7 +12,8 @@
         <fmt:message key="review.description" bundle="${rb}"/>
     </label>
     <input  name="description" class="form-control input-md"
-            type="text" value="${fn:escapeXml(review.description)}">
+            type="text" value="${fn:escapeXml(review.description)}"
+            pattern="^[\wа-яА-ЯіІїЇ@#$%^&+\-= ]{1,255}$">
 </div>
 
 <div class="form-group">

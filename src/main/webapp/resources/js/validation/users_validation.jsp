@@ -14,12 +14,14 @@
                 username: {
                     required: true,
                     minlength: 5,
-                    maxlength: 25
+                    maxlength: 25,
+                    pattern: /^[\wа-яА-ЯіІїЇ@#$%^&+\-= ]{1,64}$/
                 },
                 password : {
                     required: true,
                     minlength: 6,
-                    maxlength: 25
+                    maxlength: 25,
+                    pattern: /^[\wа-яА-ЯіІїЇ@#$%^&+\-= ]{1,64}$/
                 }
             },
             messages: {

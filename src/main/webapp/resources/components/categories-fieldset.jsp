@@ -5,5 +5,5 @@
         <fmt:message key="category.title" bundle="${rb}"/>
     </label>
     <input  name="title" class="form-control input-md"
-            type="text" value="${fn:escapeXml(category.title)}">
+            type="text" value="${fn:escapeXml(category.title)}"/>
 </div>
