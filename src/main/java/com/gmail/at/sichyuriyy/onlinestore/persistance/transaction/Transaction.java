@@ -43,7 +43,6 @@ public interface Transaction {
 
             throw new TransactionFailedException(e);
         } catch (RuntimeException e) {
-            LogManager.getLogger().error("transaction failed", e);
             throw new TransactionFailedException(e);
         } finally {
             try {

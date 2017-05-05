@@ -80,7 +80,6 @@ public class JdbcTemplate {
 
             return stmt.executeUpdate();
         } catch (SQLException e) {
-            LOGGER.error("Cannot execute update query", e);
             throw new SQLRuntimeException(e);
         } finally {
             tryClose(conn);
@@ -110,7 +109,6 @@ public class JdbcTemplate {
             return null;
 
         } catch (SQLException e) {
-            LOGGER.error("Cannot insert values into DB", e);
             throw new SQLRuntimeException(e);
         } finally {
             tryClose(conn);
