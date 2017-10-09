@@ -38,6 +38,7 @@ public class CartServiceTest {
     public void setUp() throws Exception {
         connectionManager = H2Db.initWithTx();
         ServiceLocator.INSTANCE.add(TransactionManager.class, new TransactionManager(connectionManager));
+
         ScriptRunner scriptRunner = new ScriptRunner(connectionManager);
         scriptRunner.executeScript(ResourcesUtil.getResourceFile("database.sql"));
         scriptRunner.executeScript(ResourcesUtil.getResourceFile("test_data.sql"));

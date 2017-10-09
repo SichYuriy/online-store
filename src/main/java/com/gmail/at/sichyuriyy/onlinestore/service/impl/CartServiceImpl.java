@@ -47,7 +47,7 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public boolean addProduct(Long userId, Long productId) {
-        final boolean[] result = new boolean[1];
+        boolean[] result = new boolean[1];
         transactionManager.tx(() -> {
             CartItem cartItem = cartItemDao.findByUserProduct(userId, productId);
             Product product = productDao.findById(productId);
