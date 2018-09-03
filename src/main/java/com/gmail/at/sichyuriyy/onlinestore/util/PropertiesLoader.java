@@ -39,8 +39,6 @@ public enum PropertiesLoader {
             properties.load(is);
         } catch (IOException e) {
             throw new RuntimeException(e);
-        } catch (IllegalArgumentException e) {
-            throw e;
         }
 
         return properties;
